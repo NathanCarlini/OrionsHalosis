@@ -40,6 +40,7 @@ export default function Home() {
           Look at the data 👀
         </p>
         <div className="flex w-full flex-row items-center justify-between">
+          {/* divs for graphs  */}
           <div></div>
           <div></div>
           <div></div>
