@@ -18,7 +18,17 @@ module.exports = {
         'main-blue' : '#523FFC',
         'main-purple' : '#BB2EE6',
         'main-red' : '#FF0D41',
-        'darkdark-blue' : '#051d40'
+        'darkdark-blue' : '#051d40',
+        'random-grey' : '#D9D9D9'
+
+      },
+      padding: {
+        '84' : '84px',
+        '88' : '88px',
+      },
+      backgroundImage: {
+        'mars' : '/mars.png',
+        'planSys' : '/Planetary_System.png',
       },
     },
   },
