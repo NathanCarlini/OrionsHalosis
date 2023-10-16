@@ -11,7 +11,7 @@ export default function Home() {
           loop
           className="fixed z-[-1] h-full w-full object-cover"
         >
-          <source src="" type="video/mp4" />
+          <source src="/mars101.mp4" type="video/mp4" />
         </video>
         <Link href="/game/inscription">
           <div className="mb-6 bg-main-blue p-2 text-2xl font-bold text-white">
