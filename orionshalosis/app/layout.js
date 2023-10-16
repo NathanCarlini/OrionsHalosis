@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-black">
         <header className="flex w-full flex-row items-center justify-between bg-marine-blue px-3 py-2 text-xl font-bold">
           <Link className="flex items-center" href="/">
             <Image
@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
           </div>
         </header>
         <main className="h-full w-full">{children}</main>
-        <footer className="flex w-full flex-row px-4 py-3">
+        <footer className="flex w-full flex-row px-4 py-3 bg-darkdark-blue">
           2023 Orions's Halosis ©
         </footer>
       </body>
