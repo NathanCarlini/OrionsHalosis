@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 
-export default function Header({vis}) {
+export default function Header({ vis }) {
   return (
     <>
       <header className="flex w-full flex-row items-center justify-between bg-marine-blue px-3 py-[0.10rem] text-xl font-bold">
@@ -29,12 +29,16 @@ export default function Header({vis}) {
         </div>
         {vis == 1 ? (
           <div className="flex flex-row gap-3">
-            <div className=" rounded-full bg-black px-8 py-2 capitalize text-white">
-              sign up
-            </div>
-            <div className=" rounded-full bg-white px-8 py-2 capitalize text-black">
-              Log In
-            </div>
+            <Link href="/signup">
+              <div className=" rounded-full bg-black px-8 py-2 capitalize text-white">
+                sign up
+              </div>
+            </Link>
+            <Link>
+              <div className=" rounded-full bg-white px-8 py-2 capitalize text-black">
+                Log In
+              </div>
+            </Link>
           </div>
         ) : (
           <></>
