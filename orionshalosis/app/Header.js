@@ -17,25 +17,25 @@ export default function Header({ vis }) {
           Orion's Halosis
         </Link>
         <div className="flex flex-row gap-16">
-          <Link className="flex items-center" href="/wiki">
+          <Link className="flex items-center hover:underline" href="/wiki">
             Wiki
           </Link>
-          <Link className="flex items-center" href="/forum">
+          <Link className="flex items-center hover:underline" href="/forum">
             Forum
           </Link>
-          <Link className="flex items-center" href="/game/overview">
+          <Link className="flex items-center hover:underline" href="/game/overview">
             The Game
           </Link>
         </div>
         {vis == 1 ? (
           <div className="flex flex-row gap-3">
             <Link href="/signup">
-              <div className=" rounded-full bg-black px-8 py-2 capitalize text-white">
+              <div className=" rounded-full bg-black px-8 py-2 text-white duration-500 hover:bg-slate-500">
                 sign up
               </div>
             </Link>
             <Link href="/login">
-              <div className=" rounded-full bg-white px-8 py-2 capitalize text-black">
+              <div className=" rounded-full bg-white px-8 py-2 text-black duration-500 hover:text-white hover:bg-slate-500">
                 Log In
               </div>
             </Link>

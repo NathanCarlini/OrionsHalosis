@@ -1,7 +1,7 @@
 export default function Page() {
 
   return (
-    <div className="flex pt-20 pb-20 h-full flex-col items-center justify-center bg-[url('/galaxy.png')] bg-cover bg-no-repeat">
+    <div className="flex pt-20 pb-20 h-full w-full absolute flex-col items-center justify-center bg-[url('/galaxy.png')] bg-cover bg-no-repeat">
       <section className="bg-random-grey flex flex-col gap-5 p-8 w-[70vw] lg:h-[70vh] lg:w-[45vw]">
         <h1 className="text-center text-3xl font-bold capitalize text-black">
           Sign Up

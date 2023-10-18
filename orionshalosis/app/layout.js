@@ -9,7 +9,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="flex min-h-screen flex-col">
         <Header vis="1" />
-        <main className="h-full w-full grow">{children}</main>
+        <main className="h-full w-full grow relative overflow-x-hidden">{children}</main>
         <Footer vis="1" />
       </body>
     </html>

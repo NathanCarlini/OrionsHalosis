@@ -1,7 +1,8 @@
+import Link from "next/link";
 export default function Page() {
 
   return (
-    <div className="flex h-full flex-col items-center justify-center bg-[url('/galaxy.png')] bg-cover bg-no-repeat">
+    <div className="flex h-full w-full pt-20 pb-20 absolute flex-col items-center justify-center bg-[url('/galaxy.png')] bg-cover bg-no-repeat">
       <section className="bg-random-grey flex flex-col gap-5 p-8 w-[70vw] lg:h-[70vh] lg:w-[45vw]">
         <h1 className="text-center text-3xl font-bold capitalize text-black">
           Log In
@@ -20,9 +21,9 @@ export default function Page() {
             Log In
           </a>
           <p>Create an account : </p>
-          <a className="max-w-fit self-center rounded-full bg-black px-16 py-2 text-xl font-black capitalize text-white">
+          <Link href="/signup" className="max-w-fit self-center rounded-full bg-black px-16 py-2 text-xl font-black capitalize text-white">
             Sign Up
-          </a>
+          </Link>
         </div>
       </section>
     </div>
