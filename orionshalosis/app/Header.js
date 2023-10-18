@@ -5,7 +5,7 @@ import "./globals.css";
 export default function Header({ vis }) {
   return (
     <>
-      <header className="flex w-full flex-row items-center justify-between bg-marine-blue px-3 py-[0.10rem] text-xl font-bold">
+      <header className="flex z-[2] w-full flex-row items-center justify-between bg-marine-blue px-3 py-[0.10rem] text-xl font-bold">
         <Link className="flex items-center" href="/">
           <Image
             src="/orionsLogo.png"

@@ -9,7 +9,7 @@ export default function Home() {
           autoPlay
           muted
           loop
-          className="absolute z-[1] h-full w-full object-cover"
+          className="absolute top z-[1] h-full w-full object-cover"
         >
           <source src="/mars101.mp4" type="video/mp4" />
         </video>
