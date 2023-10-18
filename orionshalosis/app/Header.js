@@ -6,7 +6,7 @@ export default function Header({ vis }) {
   return (
     <>
       <header className="flex w-full flex-row items-center justify-between bg-marine-blue px-3 py-[0.10rem] text-xl font-bold">
-        <Link className="flex items-center" href="/">
+        <Link className="flex items-center" href="/signup">
           <Image
             src="/orionsLogo.png"
             alt="Logo de Orions Halosis"
@@ -34,7 +34,7 @@ export default function Header({ vis }) {
                 sign up
               </div>
             </Link>
-            <Link>
+            <Link href="/signup">
               <div className=" rounded-full bg-white px-8 py-2 capitalize text-black">
                 Log In
               </div>
