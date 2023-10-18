@@ -34,7 +34,7 @@ export default function Header({ vis }) {
                 sign up
               </div>
             </Link>
-            <Link href="/signup">
+            <Link href="/login">
               <div className=" rounded-full bg-white px-8 py-2 capitalize text-black">
                 Log In
               </div>
