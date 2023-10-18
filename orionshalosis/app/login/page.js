@@ -17,11 +17,11 @@ export default function Page() {
           <p className="text-blue-700">You forgot your password ?</p>
         </div>
         <div className="mb-6 mt-2 flex grow flex-col justify-evenly">
-          <a className="mb-4 max-w-fit self-center rounded-full bg-white px-16 py-2 text-xl font-black capitalize text-black">
+          <Link href="/" className="mb-4 max-w-[175px] w-full text-center self-center rounded-full bg-white px-12 py-2 text-xl font-black capitalize text-black duration-300 hover:bg-slate-500">
             Log In
-          </a>
+          </Link>
           <p>Create an account : </p>
-          <Link href="/signup" className="max-w-fit self-center rounded-full bg-black px-16 py-2 text-xl font-black capitalize text-white">
+          <Link href="/signup" className="max-w-[175px] w-full text-center self-center rounded-full bg-black px-12 py-2 text-xl font-black capitalize text-white duration-300 hover:bg-slate-500">
             Sign Up
           </Link>
         </div>

@@ -31,7 +31,7 @@ export default function Header({ vis }) {
           <div className="flex flex-row gap-3">
             <Link href="/signup">
               <div className=" rounded-full bg-black px-8 py-2 text-white duration-500 hover:bg-slate-500">
-                sign up
+                Sign up
               </div>
             </Link>
             <Link href="/login">

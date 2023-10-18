@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function Page() {
 
   return (
@@ -19,9 +20,9 @@ export default function Page() {
           <input type="password" id="Password" className="h-8 w-full border border-black text-black"></input>
         </div>
         <div className="mb-6 mt-2 flex grow flex-col justify-evenly">
-          <a className="max-w-fit self-center rounded-full bg-black px-16 py-2 text-xl font-black capitalize text-white">
+          <Link href="/" className="max-w-[200px] w-full text-center self-center rounded-full bg-black px-12 py-2 text-xl font-black capitalize text-white duration-300 hover:bg-slate-500">
             Sign Up
-          </a>
+          </Link>
         </div>
       </section>
     </div>
