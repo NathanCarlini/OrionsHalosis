@@ -5,18 +5,18 @@ import "./globals.css";
 export default function Header({ vis }) {
   return (
     <>
-      <header className="flex z-[2] w-full flex-row items-center justify-between bg-marine-blue px-3 py-[0.10rem] text-xl font-bold">
-        <Link className="flex items-center" href="/">
+      <header className="flex z-[2] w-full flex-row items-center justify-between bg-marine-blue px-1 md:px-2 lg:px-4 py-[0.5rem] text-sm md:text-lg lg:text-xl font-bold">
+        <Link className="flex text-center items-center" href="/">
           <Image
             src="/orionsLogo.png"
             alt="Logo de Orions Halosis"
-            height={75}
-            width={75}
-            className="mr-2 p-0"
+            height={55}
+            width={55}
+            className="p-0 md:w-14 lg:w-20"
           />
           Orion's Halosis
         </Link>
-        <div className="flex flex-row gap-16">
+        <div className="flex flex-row gap-2 md:gap-10 lg:gap-16">
           <Link className="flex items-center hover:underline" href="/wiki">
             Wiki
           </Link>
@@ -30,12 +30,12 @@ export default function Header({ vis }) {
         {vis == 1 ? (
           <div className="flex flex-row gap-3">
             <Link href="/signup">
-              <div className=" rounded-full bg-black px-8 py-2 text-white duration-500 hover:bg-slate-500">
+              <div className=" rounded-full bg-black px-2 py-1 md:px-8 md:py-2 text-white duration-500 hover:bg-slate-500">
                 Sign up
               </div>
             </Link>
             <Link href="/login">
-              <div className=" rounded-full bg-white px-8 py-2 text-black duration-500 hover:text-white hover:bg-slate-500">
+              <div className=" rounded-full bg-white px-2 py-1 md:px-8 md:py-2 text-black duration-500 hover:text-white hover:bg-slate-500">
                 Log In
               </div>
             </Link>
