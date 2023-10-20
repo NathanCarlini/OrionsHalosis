@@ -1,17 +1,29 @@
 const express = require("express");
 const app = express();
 const port = 3001;
-const programmingLanguagesRouter = require("./routes/prog");
+const prog = require("./services/prog");
+const bodyParser = require('body-parser')
+
 app.use(express.json());
 app.use(
   express.urlencoded({
     extended: true,
-  })
+  }),
 );
+app.use(bodyParser.json());
 app.get("/", (req, res) => {
   res.json({ message: "ok" });
 });
-app.use("/prog", programmingLanguagesRouter);
+app.post("/", async function (req, res, next) {
+  console.log(req.body);
+  try {
+    res.json(await prog.create(req.body));
+  } catch (err) {
+    console.error(`Error while creating programming language`, err.message);
+    next(err);
+  }
+});
+
 /* Error handler middleware */
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

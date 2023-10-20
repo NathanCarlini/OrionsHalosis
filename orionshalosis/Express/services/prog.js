@@ -12,23 +12,23 @@ async function getMultiple(page = 1) {
     meta,
   };
 }
-// async function create(programmingLanguage) {
-//   const result = await db.query(
-//     `INSERT INTO user
-//       (name, released_year, githut_rank, pypl_rank, tiobe_rank)
-//       VALUES
-//       ('${programmingLanguage.name}', ${programmingLanguage.released_year}, ${programmingLanguage.githut_rank}, ${programmingLanguage.pypl_rank}, ${programmingLanguage.tiobe_rank})`,
-//   );
+async function create(programmingLanguage) {
+  // console.log(programmingLanguage);
+  const result = await db.query(
+    `INSERT INTO user(username, email, password, creationdate) VALUES
+      ('${programmingLanguage.username}', '${programmingLanguage.email}', '${programmingLanguage.password}', '2023-10-20')`,
+  );
 
-//   let message = "Error in creating programming language";
+  let message = "Error in creating programming language";
 
-//   if (result.affectedRows) {
-//     message = "Programming language created successfully";
-//   }
+  if (result.affectedRows) {
+    message = "Programming language created successfully";
+  }
 
-//   return { message };
-// }
+  return { message };
+}
 
 module.exports = {
   getMultiple,
+  create,
 };
