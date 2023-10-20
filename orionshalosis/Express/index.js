@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3001;
 const prog = require("./services/prog");
-const bodyParser = require('body-parser')
+const bodyParser = require("body-parser");
 
 app.use(express.json());
 app.use(
@@ -14,14 +14,9 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => {
   res.json({ message: "ok" });
 });
-app.post("/", async function (req, res, next) {
+app.post("/", (req, res, ) => {
   console.log(req.body);
-  try {
-    res.json(await prog.create(req.body));
-  } catch (err) {
-    console.error(`Error while creating programming language`, err.message);
-    next(err);
-  }
+  res.json(prog.create(req.body));
 });
 
 /* Error handler middleware */
