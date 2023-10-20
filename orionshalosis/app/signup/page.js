@@ -3,28 +3,28 @@ export default function Page() {
 
   return (
     <div className="flex pt-20 pb-20 h-full w-full absolute flex-col items-center justify-center bg-[url('/galaxy.png')] bg-cover bg-no-repeat">
-      <section className="bg-random-grey flex flex-col gap-5 p-8 w-[70vw] lg:h-[70vh] lg:w-[45vw]">
+      <form className="bg-random-grey flex flex-col gap-5 p-8 w-[70vw] lg:h-[70vh] lg:w-[45vw]">
         <h1 className="text-center text-3xl font-bold capitalize text-black">
           Sign Up
         </h1>
         <div className="">
-          <p className="text-xl font-bold">Username :</p>
+          <label className="text-xl font-bold">Username :</label>
           <input  type="text" id="Username" className="h-8 w-full border border-black text-black"></input>
         </div>
         <div className="">
-          <p className="text-xl font-bold">E-mail :</p>
-          <input  type="text" id="Email" className="h-8 w-full border border-black text-black"></input>
+          <label className="text-xl font-bold">E-mail :</label>
+          <input  type="email" id="Email" className="h-8 w-full border border-black text-black"></input>
         </div>
         <div>
-          <p className="text-xl font-bold">Password :</p>
+          <label className="text-xl font-bold">Password :</label>
           <input type="password" id="Password" className="h-8 w-full border border-black text-black"></input>
         </div>
         <div className="mb-6 mt-2 flex grow flex-col justify-evenly">
-          <Link href="/" className="max-w-[200px] w-full text-center self-center rounded-full bg-black px-12 py-2 text-xl font-black capitalize text-white duration-300 hover:bg-slate-500">
+          <button type="submit" action="http://localhost:3001/createAcc" className="max-w-[200px] w-full text-center self-center rounded-full bg-black px-12 py-2 text-xl font-black capitalize text-white duration-300 hover:bg-slate-500">
             Sign Up
-          </Link>
+          </button>
         </div>
-      </section>
+      </form>
     </div>
   );
 }
