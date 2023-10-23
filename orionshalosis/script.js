@@ -97,6 +97,14 @@ const SaturnMesh = new THREE.Mesh(SaturnGeometry, SaturnMaterial);
 SaturnMesh.position.x = 60;
 scene.add(SaturnMesh);
 
+const SaturnRingGeometry = new THREE.RingGeometry( 3, 5, 32 ); 
+const textureSaturnRing = new THREE.TextureLoader().load('resources/saturn_ring.png' ); 
+const SaturnRingMaterial = new THREE.MeshPhongMaterial( { map: textureSaturnRing, side: THREE.DoubleSide } );
+const SaturnRingMesh = new THREE.Mesh( SaturnRingGeometry, SaturnRingMaterial ); 
+SaturnRingMesh.position.x = 50;
+SaturnRingMesh.rotateX(Math.PI/2);
+scene.add( SaturnRingMesh );
+
 const UranusGeometry = new THREE.SphereGeometry( 1, 32, 32 );
 const textureUranus = new THREE.TextureLoader().load('resources/uranus.jpg' ); 
 const UranusMaterial = new THREE.MeshPhongMaterial({map: textureUranus});
