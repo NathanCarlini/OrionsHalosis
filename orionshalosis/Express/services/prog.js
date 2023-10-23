@@ -13,8 +13,8 @@ async function getMultiple(page = 1) {
 async function create(programmingLanguage) {
   // console.log(programmingLanguage);
   const result = await db.query(
-    `INSERT INTO user(username, email, password, creationdate) VALUES
-      ('${programmingLanguage.username}', '${programmingLanguage.email}', '${programmingLanguage.password}', '2023-10-20')`,
+    `INSERT INTO user(username, email, password, creationdate, avatar) VALUES
+      ('${programmingLanguage.username}', '${programmingLanguage.email}', '${programmingLanguage.password}', '${programmingLanguage.creationDate}', '${programmingLanguage.avatar}')`,
   );
 
   let message = "Error in creating programming language";

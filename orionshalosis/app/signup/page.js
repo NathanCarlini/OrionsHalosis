@@ -4,10 +4,14 @@ import { useState } from "react";
 
 export default function Page() {
   var data = {};
+  const date = new Date()
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
+    avatar: "defaultuser.png",
+    creationDate: date
   });
   const handleInput = (e) => {
     const fieldName = e.target.id;

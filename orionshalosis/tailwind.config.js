@@ -30,6 +30,7 @@ module.exports = {
         'mars' : '/mars.png',
         'planSys' : '/Planetary_System.png',
         'galaxy' : '/galaxy.png',
+        'bg' : '/bg.png'
       },
     },
   },
