@@ -4,19 +4,15 @@ const port = 3001;
 const prog = require("./services/prog");
 const bodyParser = require("body-parser");
 
-app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: true,
-  }),
-);
+var cors = require("cors");
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.get("/", (req, res) => {
-  res.json({ message: "ok" });
-});
-app.post("/", (req, res, ) => {
-  console.log(req.body);
+app.use(cors());
+app.post("/", (req, res, next) => {
   res.json(prog.create(req.body));
+  // res.status(201).json({
+  //   message: "Objet créé !",
+  // });
 });
 
 /* Error handler middleware */

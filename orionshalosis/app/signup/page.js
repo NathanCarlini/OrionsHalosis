@@ -25,15 +25,19 @@ export default function Page() {
     Object.entries(formData).forEach(([key, value]) => {
       data[key] = value;
     });
-
     console.log(data);
-    await fetch("http://localhost:3001/", {
-      method: "POST",
-      headers: {
-        accept: "application/x-www-form-urlencoded",
-      },
-      body: JSON.stringify(data),
-    }).then((resp) => resp.json());
+    try {
+      await fetch("http://localhost:3001/", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
   // const postData = async (entity) => {
@@ -87,16 +91,14 @@ export default function Page() {
           ></input>
         </div>
         <div className="mb-6 mt-2 flex grow flex-col justify-evenly">
-          <button
-            type="submit"
-            onSubmit={submitForm}
+          <p
+            onClick={submitForm}
             className="w-full max-w-[200px] self-center rounded-full bg-black px-12 py-2 text-center text-xl font-black capitalize text-white duration-300 hover:bg-slate-500"
           >
             Sign Up
-          </button>
+          </p>
         </div>
       </form>
-      <p onClick={submitForm}>gjhgjhgjhgjgjgjhgjhgjhg</p>
     </div>
   );
 }
