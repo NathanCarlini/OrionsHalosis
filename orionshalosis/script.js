@@ -6,12 +6,6 @@ const sizes = {
     width: window.innerWidth,
     height: window.innerHeight
 }
-
-function degrees_to_radians(degrees)
-{
-  return degrees * (Math.PI/180);
-}
-
 const scene = new THREE.Scene();
 
 const cubeTextureLoader = new THREE.CubeTextureLoader();
@@ -29,6 +23,7 @@ const rocket = new GLTFLoader();
 rocket.load('./resources/rocketfuture.glb', function ( gltf ) {
 // rocket.load('./resources/rocket.glb', function ( gltf ) {
 // rocket.load('./resources/Rocketship.glb', function ( gltf ) {
+    let rocketCurrent = new THREE.Group() // group pour la cam (test)
     scene.add( gltf.scene );
     gltf.animations;
     rocketscene = gltf.scene;
@@ -120,6 +115,7 @@ const NeptuneMesh = new THREE.Mesh(NeptuneGeometry, NeptuneMaterial);
 NeptuneMesh.position.x = 100;
 scene.add(NeptuneMesh);
 
+// light
 let light = new THREE.DirectionalLight(0xFFFFFF, 1.0);
 let light2 = new THREE.AmbientLight(0xFFFFFF, 1);
 light.position.set(20, 60, 10);
@@ -127,10 +123,11 @@ light.target.position.set(0, 0, 0);
 light.castShadow = true;
 scene.add(light, light2);
 
+// camera
 const camera = new THREE.PerspectiveCamera(45,
     sizes.width / sizes.height);
-camera.position.set(100, 20, 0);
-camera.lookAt(0, 0, 0);
+camera.position.set(100, 50, 75);
+camera.lookAt(scene);
 scene.add(camera);
 
 const canvas = document.querySelector("canvas");
