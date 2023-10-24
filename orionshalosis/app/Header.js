@@ -12,7 +12,7 @@ export default function Header({ vis }) {
             alt="Logo de Orions Halosis"
             height={55}
             width={55}
-            className="p-0 md:w-14 lg:w-20"
+            className="p-0 md:w-14 lg:w-15"
           />
           Orion's Halosis
         </Link>
