@@ -24,6 +24,7 @@ function init(){
         './resources/back.png',
     ]);
 
+    // rocket loader
     let rocketscene = null;
     let rocketCurrent = null;
     rocketCurrent = new THREE.Group();
@@ -40,6 +41,45 @@ function init(){
         scene.add( rocketCurrent );
     },);
     rocketCurrent.position.set(35, 2, 0);
+
+    // flags loader
+    var flag = new GLTFLoader();
+    let flag0, flag1, flag2, flag3, flag4, flag5, flag6, flag7 = null;
+    let flagCurrent = null;
+    flagCurrent = new THREE.Group();
+    flag.load('./resources/Flag.glb', function ( gltf ) {
+        gltf.animations;
+        flag0 = gltf.scene;
+        flagCurrent.add(flag0);
+        flag0.scale.set(0.5, 0.4, 0.5);
+        flag0.rotateZ(Math.PI/8); 
+        flag0.visible = false;
+        flag1 = flag0.clone(true);
+        flag1.position.x = 10
+        flag1.position.y = 1
+        flag2 = flag0.clone(true);
+        flag2.position.x = 20
+        flag2.position.y = 1.25
+        flag3 = flag0.clone(true);
+        flag3.position.x = 30
+        flag3.position.y = 0.5
+        flag4 = flag0.clone(true);
+        flag4.position.x = 45
+        flag4.position.y = 4
+        flag5 = flag0.clone(true);
+        flag5.position.x = 60
+        flag5.position.y = 3.75
+        flag6 = flag0.clone(true);
+        flag6.position.x = 75
+        flag6.position.y = 2.5
+        flag7 = flag0.clone(true);
+        flag7.position.x = 85
+        flag7.position.y = 2
+        flag2.visible = true;
+        flagCurrent.add(flag1, flag2, flag3, flag4, flag5, flag6, flag7);
+        scene.add( flagCurrent );
+    },);
+    flagCurrent.position.set(14.5, 0.75, 0);
 
     const geometry = new THREE.PlaneGeometry( 100, 100 );
     const material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
@@ -130,6 +170,7 @@ function init(){
     light.castShadow = true;
     scene.add(light, light2);
 
+    // renderer
     const canvas = document.querySelector("canvas");
     const renderer = new THREE.WebGLRenderer({ canvas });
     renderer.setSize(sizes.width, sizes.height);
@@ -137,7 +178,10 @@ function init(){
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
+    // select of the text area
+    const text = document.querySelector(".halosis");
 
+// if the window is resize the game will too
     window.addEventListener('resize', () => {
         sizes.width = window.innerWidth;
         sizes.height = window.innerHeight;
@@ -146,11 +190,7 @@ function init(){
         renderer.setSize(sizes.width, sizes.height);
     })
 
-
-    // Pour tester les planetes capturés il faudra créer un objet avec 
-    // les planètes et un champ capturé ou non qu'on mettra a jour 
-    // lorsqu'on sera sur une nouvelle planète.
-
+    // capture of planets
     let currentPlanet = "";
     let way = 0;
     let targetPositionX = earthMesh.position.x;
@@ -166,6 +206,7 @@ function init(){
         {planet: "neptune", capt: false},
     ];
 
+    //find what planet we are currently on
     function whatPlanet(){
         if (round(rocketCurrent.position.x) == MercuryMesh.position.x){
             currentPlanet = "mercury";
@@ -193,122 +234,135 @@ function init(){
         }
     }
 
+    // round a number
     function round(num){
         return Math.round(1000*num)/1000;
     }
 
+    // if action the keyboard action in the game
     function onDocumentKeyDown(event) {
         whatPlanet()
         if (event.key == "ArrowLeft" || event.key == "q") {
             switch (currentPlanet) {
                 case "mercury":
                     targetPositionX = sunMesh.position.x;
-                    console.log("In the sun? Really? Well you lost...")
+                    text.innerHTML = "In the sun? Really? Well you lost...";
                     break;
                 case "venus":
                     targetPositionX = MercuryMesh.position.x;
-                    targetPositionY = round(MercuryGeometry.parameters.radius)
-                    console.log("You are at Mercury")
-                    halosis[0].capt = true
+                    targetPositionY = round(MercuryGeometry.parameters.radius);
+                    text.innerHTML = "You are on Mercury";
+                    halosis[0].capt = true;
+                    flagCurrent.children[0].visible = true;
                     break;
                 case "earth":
                     targetPositionX = VenusMesh.position.x;
-                    targetPositionY = round(VenusGeometry.parameters.radius)
-                    console.log("You are at Venus")
-                    halosis[1].capt = true
+                    targetPositionY = round(VenusGeometry.parameters.radius);
+                    text.innerHTML = "You are on Venus";
+                    halosis[1].capt = true;
+                    flagCurrent.children[1].visible = true;
                     break;
                 case "mars":
                     targetPositionX = earthMesh.position.x;
-                    targetPositionY = round(earthGeometry.parameters.radius)
-                    console.log("You are at Earth")
-                    halosis[2].capt = true
+                    targetPositionY = round(earthGeometry.parameters.radius);
+                    text.innerHTML = "You are on Earth";
+                    halosis[2].capt = true;
+                    flagCurrent.children[2].visible = true;
                     break;
                 case "jupiter":
                     targetPositionX = MarsMesh.position.x;
-                    targetPositionY = round(MarsGeometry.parameters.radius)
-                    console.log("You are at Mars")
-                    halosis[3].capt = true
+                    targetPositionY = round(MarsGeometry.parameters.radius);
+                    text.innerHTML = "You are on Mars";
+                    flagCurrent.children[3].visible = true;
+                    halosis[3].capt = true;
                     break;
                 case "saturn":
                     targetPositionX = JupiterMesh.position.x;
-                    targetPositionY = round(JupiterGeometry.parameters.radius)
-                    console.log("You are at Jupiter")
-                    halosis[4].capt = true
+                    targetPositionY = round(JupiterGeometry.parameters.radius);
+                    text.innerHTML = "You are on Jupiter";
+                    halosis[4].capt = true;
+                    flagCurrent.children[4].visible = true;
                     break;
                 case "uranus":
                     targetPositionX = SaturnMesh.position.x;
-                    targetPositionY = round(SaturnGeometry.parameters.radius)
-                    console.log("You are at Saturn")
-                    halosis[5].capt = true
+                    targetPositionY = round(SaturnGeometry.parameters.radius);
+                    text.innerHTML = "You are on Saturn";
+                    halosis[5].capt = true;
+                    flagCurrent.children[5].visible = true;
                     break;
                 case "neptune":
                     targetPositionX = UranusMesh.position.x;
-                    targetPositionY = round(UranusGeometry.parameters.radius)
-                    console.log("You are at Uranus")
-                    halosis[6].capt = true
+                    targetPositionY = round(UranusGeometry.parameters.radius);
+                    text.innerHTML = "You are on Uranus";
+                    halosis[6].capt = true;
+                    flagCurrent.children[6].visible = true;
                     break;
             }
             way = -1;
-            console.log(halosis);
             if(halosis[0].capt == true && halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true){
-                console.log("You won the game!");
+                text.innerHTML = "You won the game!";
             }
         }
         if (event.key == "ArrowRight" || event.key == "d") {
             switch (currentPlanet) {
                 case "mercury":
                     targetPositionX = VenusMesh.position.x;
-                    targetPositionY = round(VenusGeometry.parameters.radius)
-                    console.log("You are at Venus")
-                    halosis[1].capt = true
+                    targetPositionY = round(VenusGeometry.parameters.radius);
+                    text.innerHTML = "You are on Venus";
+                    halosis[1].capt = true;
+                    flagCurrent.children[1].visible = true;
                     break;
                 case "venus":
                     targetPositionX = earthMesh.position.x;
-                    targetPositionY = round(earthGeometry.parameters.radius)
-                    console.log("You are at Earth")
-                    halosis[2].capt = true
+                    targetPositionY = round(earthGeometry.parameters.radius);
+                    text.innerHTML = "You are on Earth";
+                    halosis[2].capt = true;
+                    flagCurrent.children[2].visible = true;
                     break;
                 case "earth":
                     targetPositionX = MarsMesh.position.x;
-                    targetPositionY = round(MarsGeometry.parameters.radius)
-                    console.log("You are at Mars")
-                    halosis[3].capt = true
+                    targetPositionY = round(MarsGeometry.parameters.radius);
+                    text.innerHTML = "You are on Mars";
+                    halosis[3].capt = true;
+                    flagCurrent.children[3].visible = true;
                     break;
                 case "mars":
                     targetPositionX = JupiterMesh.position.x;
-                    targetPositionY = round(JupiterGeometry.parameters.radius)
-                    console.log("You are at Jupiter")
-                    halosis[4].capt = true
+                    targetPositionY = round(JupiterGeometry.parameters.radius);
+                    text.innerHTML = "You are on Jupiter";
+                    halosis[4].capt = true;
+                    flagCurrent.children[4].visible = true
                     break;
                 case "jupiter":
                     targetPositionX = SaturnMesh.position.x;
-                    targetPositionY = round(SaturnGeometry.parameters.radius)
-                    console.log("You are at Saturn")
-                    halosis[5].capt = true
+                    targetPositionY = round(SaturnGeometry.parameters.radius);
+                    text.innerHTML = "You are on Saturn";
+                    halosis[5].capt = true;
+                    flagCurrent.children[5].visible = true;
                     break;
                 case "saturn":
                     targetPositionX = UranusMesh.position.x;
-                    targetPositionY = round(UranusGeometry.parameters.radius)
-                    console.log("You are at Uranus")
-                    halosis[6].capt = true
+                    targetPositionY = round(UranusGeometry.parameters.radius);
+                    text.innerHTML = "You are on Uranus";
+                    halosis[6].capt = true;
+                    flagCurrent.children[6].visible = true;
                     break;
                 case "uranus":
                     targetPositionX = NeptuneMesh.position.x;
-                    targetPositionY = round(NeptuneGeometry.parameters.radius)
-                    console.log("You are at Neptune")
-                    halosis[7].capt = true
+                    targetPositionY = round(NeptuneGeometry.parameters.radius);
+                    text.innerHTML = "You are on Neptune";
+                    halosis[7].capt = true;
+                    flagCurrent.children[7].visible = true;
                     break;
                 case "neptune":
-                    console.log("Where are you going? Pluto is not a planet...")
+                    text.innerHTML = "Where are you going? Pluto is not a planet..."
                     break
             }
             way = 1;
-            console.log(halosis);
             if(halosis[0].capt == true && halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true){
-                console.log("You won the game!");
+                text.innerHTML = "You won the game!";
             }
         }
-        // console.log(targetPositionX, rocketCurrent.position.x, whatPlanet());
         if(way == 1){
             if (rocketCurrent.position.x <= targetPositionX) {
                 rocketCurrent.position.x += 0.1;
@@ -332,8 +386,7 @@ function init(){
         }    
     }
 
-
-
+// loop for the render and cam
     function loop(){
         document.addEventListener("keydown", onDocumentKeyDown, false);
         camera.lookAt(rocketCurrent.position.x, rocketCurrent.position.y, rocketCurrent.position.z);

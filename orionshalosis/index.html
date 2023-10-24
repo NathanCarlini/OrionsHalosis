@@ -13,13 +13,26 @@
     }
     </script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
         *{
         margin:0;
         overflow: hidden;
+        font-family: 'Space Mono', monospace;
+        }
+        .halosis{
+            position: absolute;
+            top: 50px;
+            width: 100%;
+            text-align: center;
+            z-index: 100;
+            font-size: 1.5rem;
+            display:block;
+            color: white
         }
     </style>
 </head>
 <body>
+    <p class="halosis">Welcome to Orion's Halosis!</p>
     <canvas></canvas>
     <script src="./script.js" type="module"></script>
 </body>
