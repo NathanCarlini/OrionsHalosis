@@ -53,7 +53,7 @@ export default function Page() {
   // };
 
   return (
-    <div className="absolute flex h-full w-full flex-col items-center justify-center bg-[url('/galaxy.png')] bg-cover bg-no-repeat pb-20 pt-20">
+    <div className="absolute flex h-full w-full flex-col items-center justify-center bg-[url('/backgrounds/galaxy.png')] bg-cover bg-no-repeat pb-20 pt-20">
       <form className="flex w-[70vw] flex-col gap-5 bg-random-grey p-8 lg:h-[70vh] lg:w-[45vw]">
         <h1 className="text-center text-3xl font-bold capitalize text-black">
           Sign Up

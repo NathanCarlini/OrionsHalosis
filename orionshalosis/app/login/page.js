@@ -1,7 +1,25 @@
+'use client'
 import Link from "next/link";
 export default function Page() {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  
+  const handleInput = (e) => {
+    const fieldName = e.target.id;
+    const fieldValue = e.target.value;
+    setFormData((prevState) => ({
+      ...prevState,
+      [fieldName]: fieldValue,
+    }));
+    Object.entries(formData).forEach(([key, value]) => {
+      data[key] = value;
+    });
+  };
   return (
-    <div className="absolute flex h-full w-full flex-col items-center justify-center bg-[url('/galaxy.png')] bg-cover bg-no-repeat pb-20 pt-20">
+    <div className="absolute flex h-full w-full flex-col items-center justify-center bg-[url('/backgrounds/galaxy.png')] bg-cover bg-no-repeat pb-20 pt-20">
       <section className="flex w-[70vw] flex-col gap-5 bg-random-grey p-8 lg:h-[70vh] lg:w-[45vw]">
         <h1 className="text-center text-3xl font-bold capitalize text-black">
           Log In
@@ -9,6 +27,7 @@ export default function Page() {
         <div className="">
           <p className="text-xl font-bold">Username :</p>
           <input
+            onChange={handleInput}
             type="text"
             id="Username"
             className="h-8 w-full border border-black text-black"
@@ -17,6 +36,7 @@ export default function Page() {
         <div>
           <p className="text-xl font-bold">Password :</p>
           <input
+            onChange={handleInput}
             type="password"
             id="Password"
             className="h-8 w-full border border-black text-black"
