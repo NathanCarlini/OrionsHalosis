@@ -147,114 +147,115 @@ function init(){
     })
 
     let currentPlanet = "";
+    let way = 0;
+    let targetPositionX = earthMesh.position.x;
     function whatPlanet(){
-        if (rocketCurrent.position.x == MercuryMesh.position.x){
+        if (Math.floor(rocketCurrent.position.x) == MercuryMesh.position.x){
             currentPlanet = "mercury";
         }
-        if (rocketCurrent.position.x == VenusMesh.position.x){
+        if (Math.floor(rocketCurrent.position.x) == VenusMesh.position.x){
             currentPlanet = "venus";
         }
-        if (rocketCurrent.position.x == earthMesh.position.x){
+        if (Math.floor(rocketCurrent.position.x) == earthMesh.position.x){
             currentPlanet = "earth";
         }
-        if (rocketCurrent.position.x == MarsMesh.position.x){
+        if (Math.floor(rocketCurrent.position.x) == MarsMesh.position.x){
             currentPlanet = "mars";
         }
-        if (rocketCurrent.position.x == JupiterMesh.position.x){
+        if (Math.floor(rocketCurrent.position.x) == JupiterMesh.position.x){
             currentPlanet = "jupiter";
         }
-        if (rocketCurrent.position.x == SaturnMesh.position.x){
+        if (Math.floor(rocketCurrent.position.x) == SaturnMesh.position.x){
             currentPlanet = "saturn";
         }
-        if (rocketCurrent.position.x == UranusMesh.position.x){
+        if (Math.floor(rocketCurrent.position.x) == UranusMesh.position.x){
             currentPlanet = "uranus";
         }
-        if (rocketCurrent.position.x == NeptuneMesh.position.x){
+        if (Math.floor(rocketCurrent.position.x) == NeptuneMesh.position.x){
             currentPlanet = "neptune";
         }
     }
 
-    document.addEventListener("keydown", onDocumentKeyDown, false);
     function onDocumentKeyDown(event) {
-	// console.log(event.key);
-    whatPlanet()
+        whatPlanet()
         if (event.key == "ArrowLeft" || event.key == "q") {
             switch (currentPlanet) {
                 case "mercury":
-                    rocketCurrent.position.x = sunMesh.position.x;
+                    targetPositionX = sunMesh.position.x;
                     console.log("In the sun? Really? Well you lost...")
                     break;
                 case "venus":
-                    rocketCurrent.position.x = MercuryMesh.position.x;
+                    targetPositionX = MercuryMesh.position.x;
                     rocketCurrent.position.y = MercuryGeometry.parameters.radius
                     console.log("You are at Mercury")
                     break;
                 case "earth":
-                    rocketCurrent.position.x = VenusMesh.position.x;
+                    targetPositionX = VenusMesh.position.x;
                     rocketCurrent.position.y = VenusGeometry.parameters.radius
                     console.log("You are at Venus")
                     break;
                 case "mars":
-                    rocketCurrent.position.x = earthMesh.position.x;
+                    targetPositionX = earthMesh.position.x;
                     rocketCurrent.position.y = earthGeometry.parameters.radius
                     console.log("You are at Earth")
                     break;
                 case "jupiter":
-                    rocketCurrent.position.x = MarsMesh.position.x;
+                    targetPositionX = MarsMesh.position.x;
                     rocketCurrent.position.y = MarsGeometry.parameters.radius
                     console.log("You are at Mars")
                     break;
                 case "saturn":
-                    rocketCurrent.position.x = JupiterMesh.position.x;
+                    targetPositionX = JupiterMesh.position.x;
                     rocketCurrent.position.y = JupiterGeometry.parameters.radius
                     console.log("You are at Jupiter")
                     break;
                 case "uranus":
-                    rocketCurrent.position.x = SaturnMesh.position.x;
+                    targetPositionX = SaturnMesh.position.x;
                     rocketCurrent.position.y = SaturnGeometry.parameters.radius
                     console.log("You are at Saturn")
                     break;
                 case "neptune":
-                    rocketCurrent.position.x = UranusMesh.position.x;
+                    targetPositionX = UranusMesh.position.x;
                     rocketCurrent.position.y = UranusGeometry.parameters.radius
                     console.log("You are at Uranus")
                     break;
             }
+            way = -1;
         }
         if (event.key == "ArrowRight" || event.key == "d") {
             switch (currentPlanet) {
                 case "mercury":
-                    rocketCurrent.position.x = VenusMesh.position.x;
+                    targetPositionX = VenusMesh.position.x;
                     rocketCurrent.position.y = VenusGeometry.parameters.radius
                     console.log("You are at Venus")
                     break;
                 case "venus":
-                    rocketCurrent.position.x = earthMesh.position.x;
+                    targetPositionX = earthMesh.position.x;
                     rocketCurrent.position.y = earthGeometry.parameters.radius
                     console.log("You are at Earth")
                     break;
                 case "earth":
-                    rocketCurrent.position.x = MarsMesh.position.x;
+                    targetPositionX = MarsMesh.position.x;
                     rocketCurrent.position.y = MarsGeometry.parameters.radius
                     console.log("You are at Mars")
                     break;
                 case "mars":
-                    rocketCurrent.position.x = JupiterMesh.position.x;
+                    targetPositionX = JupiterMesh.position.x;
                     rocketCurrent.position.y = JupiterGeometry.parameters.radius
                     console.log("You are at Jupiter")
                     break;
                 case "jupiter":
-                    rocketCurrent.position.x = SaturnMesh.position.x;
+                    targetPositionX = SaturnMesh.position.x;
                     rocketCurrent.position.y = SaturnGeometry.parameters.radius
                     console.log("You are at Saturn")
                     break;
                 case "saturn":
-                    rocketCurrent.position.x = UranusMesh.position.x;
+                    targetPositionX = UranusMesh.position.x;
                     rocketCurrent.position.y = UranusGeometry.parameters.radius
                     console.log("You are at Uranus")
                     break;
                 case "uranus":
-                    rocketCurrent.position.x = NeptuneMesh.position.x;
+                    targetPositionX = NeptuneMesh.position.x;
                     rocketCurrent.position.y = NeptuneGeometry.parameters.radius
                     console.log("You are at Neptune")
                     break;
@@ -262,10 +263,25 @@ function init(){
                     console.log("Where are you going? Pluto is not a planet...")
                     break
             }
+            way = 1;
+        }
+        console.log(targetPositionX, rocketCurrent.position.x, whatPlanet());
+        if(way == 1){
+            if (rocketCurrent.position.x <= targetPositionX) {
+                rocketCurrent.position.x += 0.1;
+                window.requestAnimationFrame(onDocumentKeyDown);
+            }
+        } else {
+            if (rocketCurrent.position.x >= targetPositionX) {
+                rocketCurrent.position.x -= 0.1;
+                window.requestAnimationFrame(onDocumentKeyDown); 
+            }
         }
     }
 
     function loop(){
+        document.addEventListener("keydown", onDocumentKeyDown, false);
+        // if (rocketCurrent.position.x == targetPositionX) move = 0;
         camera.lookAt(rocketCurrent.position.x, rocketCurrent.position.y, rocketCurrent.position.z);
         camera.updateProjectionMatrix();
         renderer.render(scene, camera);
