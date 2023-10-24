@@ -19,20 +19,20 @@ scene.background = cubeTextureLoader.load([
 ]);
 
 let rocketscene = null;
-const rocket = new GLTFLoader();
+let rocketCurrent = null;
+rocketCurrent = new THREE.Group();
+scene.add(rocketCurrent);
+var rocket = new GLTFLoader();
 rocket.load('./resources/rocketfuture.glb', function ( gltf ) {
 // rocket.load('./resources/rocket.glb', function ( gltf ) {
 // rocket.load('./resources/Rocketship.glb', function ( gltf ) {
-    let rocketCurrent = new THREE.Group() // group pour la cam (test)
-    scene.add( gltf.scene );
     gltf.animations;
     rocketscene = gltf.scene;
+    rocketCurrent.add(rocketscene);
     rocketscene.position.y =0;
-    gltf.scene.scale.set(0.1, 0.1, 0.1); 
-    gltf.scene.position.set(35, 1.95, 0)
-    gltf.scenes;
-    gltf.cameras; 
-    gltf.asset; 
+    rocketscene.scale.set(0.1, 0.1, 0.1); 
+    rocketscene.position.set(35, 1.95, 0);
+    scene.add( rocketCurrent );
 },);
 
 const geometry = new THREE.PlaneGeometry( 100, 100 );
@@ -42,10 +42,11 @@ plane.rotateX(Math.PI/2)
 // scene.add( plane );
 
 // planets
-const sunGeometry = new THREE.SphereGeometry( 10, 32, 32 );
+const sunGeometry = new THREE.SphereGeometry( 15, 32, 32 );
 const textureSun = new THREE.TextureLoader().load('resources/sun.jpg' ); 
 const sunMaterial = new THREE.MeshPhongMaterial({map: textureSun});
 const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);
+sunMesh.position.x = -10;
 scene.add(sunMesh);
 
 const MercuryGeometry = new THREE.SphereGeometry( 1, 32, 32 );
@@ -126,10 +127,10 @@ scene.add(light, light2);
 // camera
 const camera = new THREE.PerspectiveCamera(45,
     sizes.width / sizes.height);
-camera.position.set(100, 50, 75);
-camera.lookAt(scene);
-scene.add(camera);
+camera.position.set(100, 50, 75); 
+// camera.lookAt(rocketscene.position.x, rocketscene.position.y, rocketscene.position.z);
 
+scene.add(camera);
 const canvas = document.querySelector("canvas");
 const renderer = new THREE.WebGLRenderer({ canvas });
 renderer.setSize(sizes.width, sizes.height);
@@ -151,6 +152,8 @@ controls.enableDamping = true;
 controls.enablePan = false;
 
 function loop(){
+    // animate()
+    // cam();
     controls.update();
     renderer.render(scene, camera);
     window.requestAnimationFrame(loop);
