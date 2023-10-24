@@ -155,7 +155,16 @@ function init(){
     let way = 0;
     let targetPositionX = earthMesh.position.x;
     let targetPositionY = earthMesh.position.y;
-
+    let halosis = [
+        {planet: "mercury", capt: false},
+        {planet: "venus", capt: false},
+        {planet: "earth", capt: true},
+        {planet: "mars", capt: false},
+        {planet: "jupiter", capt: false},
+        {planet: "saturn", capt: false},
+        {planet: "uranus", capt: false},
+        {planet: "neptune", capt: false},
+    ];
 
     function whatPlanet(){
         if (round(rocketCurrent.position.x) == MercuryMesh.position.x){
@@ -200,39 +209,50 @@ function init(){
                     targetPositionX = MercuryMesh.position.x;
                     targetPositionY = round(MercuryGeometry.parameters.radius)
                     console.log("You are at Mercury")
+                    halosis[0].capt = true
                     break;
                 case "earth":
                     targetPositionX = VenusMesh.position.x;
                     targetPositionY = round(VenusGeometry.parameters.radius)
                     console.log("You are at Venus")
+                    halosis[1].capt = true
                     break;
                 case "mars":
                     targetPositionX = earthMesh.position.x;
                     targetPositionY = round(earthGeometry.parameters.radius)
                     console.log("You are at Earth")
+                    halosis[2].capt = true
                     break;
                 case "jupiter":
                     targetPositionX = MarsMesh.position.x;
                     targetPositionY = round(MarsGeometry.parameters.radius)
                     console.log("You are at Mars")
+                    halosis[3].capt = true
                     break;
                 case "saturn":
                     targetPositionX = JupiterMesh.position.x;
                     targetPositionY = round(JupiterGeometry.parameters.radius)
                     console.log("You are at Jupiter")
+                    halosis[4].capt = true
                     break;
                 case "uranus":
                     targetPositionX = SaturnMesh.position.x;
                     targetPositionY = round(SaturnGeometry.parameters.radius)
                     console.log("You are at Saturn")
+                    halosis[5].capt = true
                     break;
                 case "neptune":
                     targetPositionX = UranusMesh.position.x;
                     targetPositionY = round(UranusGeometry.parameters.radius)
                     console.log("You are at Uranus")
+                    halosis[6].capt = true
                     break;
             }
             way = -1;
+            console.log(halosis);
+            if(halosis[0].capt == true && halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true){
+                console.log("You won the game!");
+            }
         }
         if (event.key == "ArrowRight" || event.key == "d") {
             switch (currentPlanet) {
@@ -240,42 +260,53 @@ function init(){
                     targetPositionX = VenusMesh.position.x;
                     targetPositionY = round(VenusGeometry.parameters.radius)
                     console.log("You are at Venus")
+                    halosis[1].capt = true
                     break;
                 case "venus":
                     targetPositionX = earthMesh.position.x;
                     targetPositionY = round(earthGeometry.parameters.radius)
                     console.log("You are at Earth")
+                    halosis[2].capt = true
                     break;
                 case "earth":
                     targetPositionX = MarsMesh.position.x;
                     targetPositionY = round(MarsGeometry.parameters.radius)
                     console.log("You are at Mars")
+                    halosis[3].capt = true
                     break;
                 case "mars":
                     targetPositionX = JupiterMesh.position.x;
                     targetPositionY = round(JupiterGeometry.parameters.radius)
                     console.log("You are at Jupiter")
+                    halosis[4].capt = true
                     break;
                 case "jupiter":
                     targetPositionX = SaturnMesh.position.x;
                     targetPositionY = round(SaturnGeometry.parameters.radius)
                     console.log("You are at Saturn")
+                    halosis[5].capt = true
                     break;
                 case "saturn":
                     targetPositionX = UranusMesh.position.x;
                     targetPositionY = round(UranusGeometry.parameters.radius)
                     console.log("You are at Uranus")
+                    halosis[6].capt = true
                     break;
                 case "uranus":
                     targetPositionX = NeptuneMesh.position.x;
                     targetPositionY = round(NeptuneGeometry.parameters.radius)
                     console.log("You are at Neptune")
+                    halosis[7].capt = true
                     break;
                 case "neptune":
                     console.log("Where are you going? Pluto is not a planet...")
                     break
             }
             way = 1;
+            console.log(halosis);
+            if(halosis[0].capt == true && halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true){
+                console.log("You won the game!");
+            }
         }
         // console.log(targetPositionX, rocketCurrent.position.x, whatPlanet());
         if(way == 1){
@@ -298,9 +329,10 @@ function init(){
                 }
                 window.requestAnimationFrame(onDocumentKeyDown);
             }
-        }
-        
+        }    
     }
+
+
 
     function loop(){
         document.addEventListener("keydown", onDocumentKeyDown, false);
