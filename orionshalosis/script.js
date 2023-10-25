@@ -258,8 +258,8 @@ function init(){
 
     // if action the keyboard action in the game
     function onDocumentKeyDown(event) {
-        whatPlanet()
         if (event.key == "ArrowLeft" || event.key == "q") {
+            whatPlanet()
             switch (currentPlanet) {
                 case "mercury":
                     targetPositionX = SunMesh.position.x;
@@ -318,6 +318,7 @@ function init(){
             way = -1;
         }
         if (event.key == "ArrowRight" || event.key == "d") {
+            whatPlanet()
             switch (currentPlanet) {
                 case "mercury":
                     targetPositionX = VenusMesh.position.x;
@@ -400,6 +401,7 @@ function init(){
         }    
     }
 
+    // control rocket with mouse
     function onMouseDown(e) {
         whatPlanet()
         pointer.x = ( e.clientX / window.innerWidth ) * 2 - 1;
@@ -407,7 +409,6 @@ function init(){
 
         raycaster.setFromCamera( pointer, camera );
         const intersects = raycaster.intersectObjects( scene.children );
-        // intersects[0].object.material.color.set( 0xff0000 );
         if(intersects[0]){
             for (let i = 0; i < planets.children.length; i++) {
                 if(halosis[i].right == intersects[0].object.name && halosis[i].right == "venus" && currentPlanet == halosis[i].planet){
@@ -517,7 +518,6 @@ function init(){
                 window.requestAnimationFrame(onDocumentKeyDown);
             }
         }
-        
     }
 
 // loop for the render and cam
