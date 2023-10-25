@@ -258,8 +258,8 @@ function init(){
 
     // if action the keyboard action in the game
     function onDocumentKeyDown(event) {
+        whatPlanet()
         if (event.key == "ArrowLeft" || event.key == "q") {
-            whatPlanet()
             switch (currentPlanet) {
                 case "mercury":
                     targetPositionX = SunMesh.position.x;
@@ -318,7 +318,6 @@ function init(){
             way = -1;
         }
         if (event.key == "ArrowRight" || event.key == "d") {
-            whatPlanet()
             switch (currentPlanet) {
                 case "mercury":
                     targetPositionX = VenusMesh.position.x;
