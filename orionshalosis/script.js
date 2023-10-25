@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 let camera = null;
+console.log(window.innerHeight, window.innerWidth)
 const sizes = {
     width: window.innerWidth,
     height: window.innerHeight
@@ -11,7 +12,7 @@ const scene = new THREE.Scene();
 function init(){
 
     // camera
-    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 5, 1000);
+    camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 5, 1000);
     camera.position.set(50, 15, 40);
 
     const cubeTextureLoader = new THREE.CubeTextureLoader();
@@ -174,7 +175,6 @@ function init(){
     const canvas = document.querySelector("canvas");
     const renderer = new THREE.WebGLRenderer({ canvas });
     renderer.setSize(sizes.width, sizes.height);
-    renderer.setPixelRatio(2);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
