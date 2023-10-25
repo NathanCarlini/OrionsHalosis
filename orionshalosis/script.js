@@ -492,7 +492,7 @@ function init(){
                     targetPositionY = round(EarthGeometry.parameters.radius);
                     text.innerHTML = "You are on Earth";
                     halosis[i-2].capt = true;
-                    flagCurrent.children[-2].visible = true;
+                    flagCurrent.children[i-2].visible = true;
                     way = -1;
                 } else if (halosis[i].left == intersects[0].object.name && halosis[i].left == "venus" && currentPlanet == halosis[i].planet){
                     targetPositionX = VenusMesh.position.x;
