@@ -223,31 +223,31 @@ function init(){
     //find what planet we are currently on
     function whatPlanet(){
         if (round(rocketCurrent.position.x) == SunMesh.position.x){
-            currentPlanet = "sun";
+            currentPlanet = {number:"0", name:"sun"};
         }
         if (round(rocketCurrent.position.x) == MercuryMesh.position.x){
-            currentPlanet = "mercury";
+            currentPlanet = {number:"1", name:"mercury"};
         }
         if (round(rocketCurrent.position.x) == VenusMesh.position.x){
-            currentPlanet = "venus";
+            currentPlanet = {number:"2", name:"venus"};
         }
         if (round(rocketCurrent.position.x) == EarthMesh.position.x){
-            currentPlanet = "earth";
+            currentPlanet = {number:"3", name:"earth"};
         }
         if (round(rocketCurrent.position.x) == MarsMesh.position.x){
-            currentPlanet = "mars";
+            currentPlanet = {number:"4", name:"mars"};
         }
         if (round(rocketCurrent.position.x) == JupiterMesh.position.x){
-            currentPlanet = "jupiter";
+            currentPlanet = {number:"5", name:"jupiter"};
         }
         if (round(rocketCurrent.position.x) == SaturnMesh.position.x){
-            currentPlanet = "saturn";
+            currentPlanet = {number:"6", name:"saturn"};
         }
         if (round(rocketCurrent.position.x) == UranusMesh.position.x){
-            currentPlanet = "uranus";
+            currentPlanet = {number:"7", name:"uranus"};
         }
         if (round(rocketCurrent.position.x) == NeptuneMesh.position.x){
-            currentPlanet = "neptune";
+            currentPlanet = {number:"8", name:"neptune"};
         }
     }
 
@@ -260,7 +260,7 @@ function init(){
     function onDocumentKeyDown(event) {
         whatPlanet()
         if (event.key == "ArrowLeft" || event.key == "q") {
-            switch (currentPlanet) {
+            switch (currentPlanet.name) {
                 case "mercury":
                     targetPositionX = SunMesh.position.x;
                     text.innerHTML = "In the sun? Really? Well you lost...";
@@ -318,7 +318,7 @@ function init(){
             way = -1;
         }
         if (event.key == "ArrowRight" || event.key == "d") {
-            switch (currentPlanet) {
+            switch (currentPlanet.name) {
                 case "mercury":
                     targetPositionX = VenusMesh.position.x;
                     targetPositionY = round(VenusGeometry.parameters.radius);
@@ -402,7 +402,6 @@ function init(){
 
     // control rocket with mouse
     function onMouseDown(e) {
-        whatPlanet()
         pointer.x = ( e.clientX / window.innerWidth ) * 2 - 1;
         pointer.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
 
@@ -410,111 +409,31 @@ function init(){
         const intersects = raycaster.intersectObjects( scene.children );
         if(intersects[0]){
             for (let i = 0; i < planets.children.length; i++) {
-                if(halosis[i].right == intersects[0].object.name && halosis[i].right == "venus" && currentPlanet == halosis[i].planet){
-                    targetPositionX = VenusMesh.position.x;
-                    targetPositionY = round(VenusGeometry.parameters.radius);
-                    text.innerHTML = "You are on Venus";
+                whatPlanet();
+                if(halosis[i].right == intersects[0].object.name && currentPlanet.number == i){
+                    targetPositionX = planets.children[i+1].position.x;
+                    targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
+                    text.innerHTML = "You are on " + halosis[i].right;
                     halosis[i].capt = true;
                     flagCurrent.children[i].visible = true;
                     way = 1;
-                } else if (halosis[i].right == intersects[0].object.name && halosis[i].right == "earth" && currentPlanet == halosis[i].planet){
-                    targetPositionX = EarthMesh.position.x;
-                    targetPositionY = round(EarthGeometry.parameters.radius);
-                    text.innerHTML = "You are on Earth";
-                    halosis[i].capt = true;
-                    flagCurrent.children[i].visible = true;
-                    way = 1;
-                } else if (halosis[i].right == intersects[0].object.name && halosis[i].right == "mars" && currentPlanet == halosis[i].planet){
-                    targetPositionX = MarsMesh.position.x;
-                    targetPositionY = round(MarsGeometry.parameters.radius);
-                    text.innerHTML = "You are on Mars";
-                    halosis[i].capt = true;
-                    flagCurrent.children[i].visible = true;
-                    way = 1;
-                } else if (halosis[i].right == intersects[0].object.name && halosis[i].right == "jupiter" && currentPlanet == halosis[i].planet){
-                    targetPositionX = JupiterMesh.position.x;
-                    targetPositionY = round(JupiterGeometry.parameters.radius);
-                    text.innerHTML = "You are on Jupiter";
-                    halosis[i].capt = true;
-                    flagCurrent.children[i].visible = true;
-                    way = 1;
-                } else if (halosis[i].right == intersects[0].object.name && halosis[i].right == "saturn" && currentPlanet == halosis[i].planet){
-                    targetPositionX = SaturnMesh.position.x;
-                    targetPositionY = round(SaturnGeometry.parameters.radius);
-                    text.innerHTML = "You are on Saturn";
-                    halosis[i].capt = true;
-                    flagCurrent.children[i].visible = true;
-                    way = 1;
-                } else if (halosis[i].right == intersects[0].object.name && halosis[i].right == "uranus" && currentPlanet == halosis[i].planet){
-                    targetPositionX = UranusMesh.position.x;
-                    targetPositionY = round(UranusGeometry.parameters.radius);
-                    text.innerHTML = "You are on Uranus";
-                    halosis[i].capt = true;
-                    flagCurrent.children[i].visible = true;
-                    way = 1;
-                } else if (halosis[i].right == intersects[0].object.name && halosis[i].right == "neptune" && currentPlanet == halosis[i].planet){
-                    targetPositionX = NeptuneMesh.position.x;
-                    targetPositionY = round(NeptuneGeometry.parameters.radius);
-                    text.innerHTML = "You are on Neptune";
-                    halosis[i].capt = true;
-                    flagCurrent.children[i].visible = true;
-                    way = 1;
-                } else if (halosis[i].left == intersects[0].object.name && halosis[i].left == "uranus" && currentPlanet == halosis[i].planet){
-                    targetPositionX = UranusMesh.position.x;
-                    targetPositionY = round(UranusGeometry.parameters.radius);
-                    text.innerHTML = "You are on Uranus";
-                    halosis[i-2].capt = true;
-                    flagCurrent.children[i-2].visible = true;
-                    way = -1;
-                } else if (halosis[i].left == intersects[0].object.name && halosis[i].left == "saturn" && currentPlanet == halosis[i].planet){
-                    targetPositionX = SaturnMesh.position.x;
-                    targetPositionY = round(SaturnGeometry.parameters.radius);
-                    text.innerHTML = "You are on Saturn";
-                    halosis[i-2].capt = true;
-                    flagCurrent.children[i-2].visible = true;
-                    way = -1;
-                } else if (halosis[i].left == intersects[0].object.name && halosis[i].left == "jupiter" && currentPlanet == halosis[i].planet){
-                    targetPositionX = JupiterMesh.position.x;
-                    targetPositionY = round(JupiterGeometry.parameters.radius);
-                    text.innerHTML = "You are on Jupiter";
-                    halosis[i-2].capt = true;
-                    flagCurrent.children[i-2].visible = true;
-                    way = -1;
-                } else if (halosis[i].left == intersects[0].object.name && halosis[i].left == "mars" && currentPlanet == halosis[i].planet){
-                    targetPositionX = MarsMesh.position.x;
-                    targetPositionY = round(MarsGeometry.parameters.radius);
-                    text.innerHTML = "You are on Mars";
-                    halosis[i-2].capt = true;
-                    flagCurrent.children[i-2].visible = true;
-                    way = -1;
-                } else if (halosis[i].left == intersects[0].object.name && halosis[i].left == "earth" && currentPlanet == halosis[i].planet){
-                    targetPositionX = EarthMesh.position.x;
-                    targetPositionY = round(EarthGeometry.parameters.radius);
-                    text.innerHTML = "You are on Earth";
-                    halosis[i-2].capt = true;
-                    flagCurrent.children[i-2].visible = true;
-                    way = -1;
-                } else if (halosis[i].left == intersects[0].object.name && halosis[i].left == "venus" && currentPlanet == halosis[i].planet){
-                    targetPositionX = VenusMesh.position.x;
-                    targetPositionY = round(VenusGeometry.parameters.radius);
-                    text.innerHTML = "You are on Venus";
-                    halosis[i-2].capt = true;
-                    flagCurrent.children[i-2].visible = true;
-                    way = -1;
-                } else if (halosis[i].left == intersects[0].object.name && halosis[i].left == "mercury" && currentPlanet == halosis[i].planet){
-                    targetPositionX = MercuryMesh.position.x;
-                    targetPositionY = round(MercuryGeometry.parameters.radius);
-                    text.innerHTML = "You are on Mercury";
-                    halosis[i-2].capt = true;
-                    flagCurrent.children[i-2].visible = true;
-                    way = -1;
-                } else if (halosis[i].left == intersects[0].object.name && halosis[i].left == "sun" && currentPlanet == halosis[i].planet){
+                    window.requestAnimationFrame(onDocumentKeyDown);
+                } 
+                if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && halosis[i].left == "sun"){
                     targetPositionX = SunMesh.position.x;
                     targetPositionY = round(sunGeometry.parameters.radius);
                     text.innerHTML = "In the sun? Really? Well you lost...";
                     way = -1;
+                    window.requestAnimationFrame(onDocumentKeyDown);
+                } else if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i){
+                    targetPositionX = planets.children[i-1].position.x;
+                    targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
+                    text.innerHTML = "You are on " + halosis[i].left;
+                    halosis[i-2].capt = true;
+                    flagCurrent.children[i-2].visible = true;
+                    way = -1;
+                    window.requestAnimationFrame(onDocumentKeyDown);
                 }
-                window.requestAnimationFrame(onDocumentKeyDown);
             }
         }
     }
@@ -529,7 +448,6 @@ function init(){
         window.requestAnimationFrame(loop);
     }
     loop();
-
 }
 
 init();
