@@ -1,18 +1,24 @@
+const tokenGen = require("./services/tokenGen");
+const tokenRead = require("./services/tokenRead");
 const express = require("express");
 const app = express();
 const port = 3001;
 const prog = require("./services/prog");
 const bodyParser = require("body-parser");
-
 var cors = require("cors");
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 app.post("/", (req, res, next) => {
-  res.json(prog.create(req.body));
-  // res.status(201).json({
-  //   message: "Objet créé !",
-  // });
+  // let p = tokenRead.tokenRead();
+  // console.log(tokenGen.tokenGen());
+  let p = tokenGen.tokenGen();
+  // next();
+  prog.create(req.body);
+  res.json({
+    token : p
+  });
 });
 
 /* Error handler middleware */
