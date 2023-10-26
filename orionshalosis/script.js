@@ -280,7 +280,9 @@ function init(){
         }
         if (event.key == "ArrowRight" || event.key == "d") {
             for (let i = 0; i < planets.children.length; i++) {
-                if(halosis[i].planet == currentPlanet.name){
+                if(halosis[i].planet == currentPlanet.name && halosis[i].right == "pluto"){
+                    text.innerHTML = "Where are you going? Pluto is not a planet...";
+                } else if(halosis[i].planet == currentPlanet.name){
                     targetPositionX = planets.children[i+1].position.x;
                     targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
                     text.innerHTML = "You are on " + halosis[i].right;
