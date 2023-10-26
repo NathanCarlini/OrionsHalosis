@@ -260,121 +260,36 @@ function init(){
     function onDocumentKeyDown(event) {
         whatPlanet()
         if (event.key == "ArrowLeft" || event.key == "q") {
-            switch (currentPlanet.name) {
-                case "mercury":
-                    targetPositionX = SunMesh.position.x;
+            for (let i = 0; i < planets.children.length; i++) {
+                if(halosis[i].planet == currentPlanet.name && currentPlanet.name == "mercury"){
+                    targetPositionX = planets.children[i-1].position.x;
+                    targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
                     text.innerHTML = "In the sun? Really? Well you lost...";
-                    break;
-                case "venus":
-                    targetPositionX = MercuryMesh.position.x;
-                    targetPositionY = round(MercuryGeometry.parameters.radius);
-                    text.innerHTML = "You are on Mercury";
-                    halosis[0].capt = true;
-                    flagCurrent.children[0].visible = true;
-                    break;
-                case "earth":
-                    targetPositionX = VenusMesh.position.x;
-                    targetPositionY = round(VenusGeometry.parameters.radius);
-                    text.innerHTML = "You are on Venus";
-                    halosis[1].capt = true;
-                    flagCurrent.children[1].visible = true;
-                    break;
-                case "mars":
-                    targetPositionX = EarthMesh.position.x;
-                    targetPositionY = round(EarthGeometry.parameters.radius);
-                    text.innerHTML = "You are on Earth";
-                    halosis[2].capt = true;
-                    flagCurrent.children[2].visible = true;
-                    break;
-                case "jupiter":
-                    targetPositionX = MarsMesh.position.x;
-                    targetPositionY = round(MarsGeometry.parameters.radius);
-                    text.innerHTML = "You are on Mars";
-                    flagCurrent.children[3].visible = true;
-                    halosis[3].capt = true;
-                    break;
-                case "saturn":
-                    targetPositionX = JupiterMesh.position.x;
-                    targetPositionY = round(JupiterGeometry.parameters.radius);
-                    text.innerHTML = "You are on Jupiter";
-                    halosis[4].capt = true;
-                    flagCurrent.children[4].visible = true;
-                    break;
-                case "uranus":
-                    targetPositionX = SaturnMesh.position.x;
-                    targetPositionY = round(SaturnGeometry.parameters.radius);
-                    text.innerHTML = "You are on Saturn";
-                    halosis[5].capt = true;
-                    flagCurrent.children[5].visible = true;
-                    break;
-                case "neptune":
-                    targetPositionX = UranusMesh.position.x;
-                    targetPositionY = round(UranusGeometry.parameters.radius);
-                    text.innerHTML = "You are on Uranus";
-                    halosis[6].capt = true;
-                    flagCurrent.children[6].visible = true;
-                    break;
+                    way = -1;
+                    window.requestAnimationFrame(animRocket);
+                } else if(halosis[i].planet == currentPlanet.name){
+                    targetPositionX = planets.children[i-1].position.x;
+                    targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
+                    text.innerHTML = "You are on " + halosis[i].left;
+                    halosis[currentPlanet.number-2].capt = true;
+                    flagCurrent.children[currentPlanet.number-2].visible = true;
+                    way = -1;
+                    window.requestAnimationFrame(animRocket);
+                }
             }
-            way = -1;
-            window.requestAnimationFrame(animRocket);
         }
         if (event.key == "ArrowRight" || event.key == "d") {
-            switch (currentPlanet.name) {
-                case "mercury":
-                    targetPositionX = VenusMesh.position.x;
-                    targetPositionY = round(VenusGeometry.parameters.radius);
-                    text.innerHTML = "You are on Venus";
-                    halosis[1].capt = true;
-                    flagCurrent.children[1].visible = true;
-                    break;
-                case "venus":
-                    targetPositionX = EarthMesh.position.x;
-                    targetPositionY = round(EarthGeometry.parameters.radius);
-                    text.innerHTML = "You are on Earth";
-                    halosis[2].capt = true;
-                    flagCurrent.children[2].visible = true;
-                    break;
-                case "earth":
-                    targetPositionX = MarsMesh.position.x;
-                    targetPositionY = round(MarsGeometry.parameters.radius);
-                    text.innerHTML = "You are on Mars";
-                    halosis[3].capt = true;
-                    flagCurrent.children[3].visible = true;
-                    break;
-                case "mars":
-                    targetPositionX = JupiterMesh.position.x;
-                    targetPositionY = round(JupiterGeometry.parameters.radius);
-                    text.innerHTML = "You are on Jupiter";
-                    halosis[4].capt = true;
-                    flagCurrent.children[4].visible = true
-                    break;
-                case "jupiter":
-                    targetPositionX = SaturnMesh.position.x;
-                    targetPositionY = round(SaturnGeometry.parameters.radius);
-                    text.innerHTML = "You are on Saturn";
-                    halosis[5].capt = true;
-                    flagCurrent.children[5].visible = true;
-                    break;
-                case "saturn":
-                    targetPositionX = UranusMesh.position.x;
-                    targetPositionY = round(UranusGeometry.parameters.radius);
-                    text.innerHTML = "You are on Uranus";
-                    halosis[6].capt = true;
-                    flagCurrent.children[6].visible = true;
-                    break;
-                case "uranus":
-                    targetPositionX = NeptuneMesh.position.x;
-                    targetPositionY = round(NeptuneGeometry.parameters.radius);
-                    text.innerHTML = "You are on Neptune";
-                    halosis[7].capt = true;
-                    flagCurrent.children[7].visible = true;
-                    break;
-                case "neptune":
-                    text.innerHTML = "Where are you going? Pluto is not a planet..."
-                    break
+            for (let i = 0; i < planets.children.length; i++) {
+                if(halosis[i].planet == currentPlanet.name){
+                    targetPositionX = planets.children[i+1].position.x;
+                    targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
+                    text.innerHTML = "You are on " + halosis[i].right;
+                    halosis[currentPlanet.number].capt = true;
+                    flagCurrent.children[currentPlanet.number].visible = true;
+                    way = 1;
+                    window.requestAnimationFrame(animRocket);
+                }
             }
-            way = 1;
-            window.requestAnimationFrame(animRocket);
         }
     }
 
