@@ -256,18 +256,18 @@ function init(){
         return Math.round(1000*num)/1000;
     }
 
+    let anim = false;
     // if action the keyboard action in the game
     function onDocumentKeyDown(event) {
         whatPlanet()
         if (event.key == "ArrowLeft" || event.key == "q") {
             for (let i = 0; i < planets.children.length; i++) {
-                if(halosis[i].planet == currentPlanet.name && currentPlanet.name == "mercury"){
+                if(halosis[i].planet == currentPlanet.name && currentPlanet.name == "mercury" && anim == false){
                     targetPositionX = planets.children[i-1].position.x;
-                    targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
                     text.innerHTML = "In the sun? Really? Well you lost...";
                     way = -1;
                     window.requestAnimationFrame(animRocket);
-                } else if(halosis[i].planet == currentPlanet.name){
+                } else if(halosis[i].planet == currentPlanet.name && anim == false){
                     targetPositionX = planets.children[i-1].position.x;
                     targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
                     text.innerHTML = "You are on " + halosis[i].left;
@@ -280,9 +280,9 @@ function init(){
         }
         if (event.key == "ArrowRight" || event.key == "d") {
             for (let i = 0; i < planets.children.length; i++) {
-                if(halosis[i].planet == currentPlanet.name && halosis[i].right == "pluto"){
+                if(halosis[i].planet == currentPlanet.name && halosis[i].right == "pluto" && anim == false){
                     text.innerHTML = "Where are you going? Pluto is not a planet...";
-                } else if(halosis[i].planet == currentPlanet.name){
+                } else if(halosis[i].planet == currentPlanet.name && anim == false){
                     targetPositionX = planets.children[i+1].position.x;
                     targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
                     text.innerHTML = "You are on " + halosis[i].right;
@@ -297,6 +297,7 @@ function init(){
 
     function animRocket(){
         if(way == 1){
+            anim = true;
             if (rocketCurrent.position.x <= targetPositionX) {
                 rocketCurrent.position.x += 0.1;
                 if (rocketCurrent.position.y <= targetPositionY) {
@@ -307,6 +308,7 @@ function init(){
                 window.requestAnimationFrame(animRocket);
             }        
         } else {
+            anim = true;
             if (rocketCurrent.position.x >= targetPositionX) {
                 rocketCurrent.position.x -= 0.1;
                 if (rocketCurrent.position.y <= targetPositionY) {
@@ -318,6 +320,7 @@ function init(){
             }
         }
         whatPlanet();
+        anim = false;
         if(halosis[0].capt == true && halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true){
             text.innerHTML = "You won the game!";
         }  
@@ -333,7 +336,7 @@ function init(){
         if(intersects[0]){
             for (let i = 0; i < planets.children.length; i++) {
                 whatPlanet();
-                if(halosis[i].right == intersects[0].object.name && currentPlanet.number == i){
+                if(halosis[i].right == intersects[0].object.name && currentPlanet.number == i && anim == false){
                     targetPositionX = planets.children[i+1].position.x;
                     targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
                     text.innerHTML = "You are on " + halosis[i].right;
@@ -342,13 +345,12 @@ function init(){
                     way = 1;
                     window.requestAnimationFrame(animRocket);
                 } 
-                if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && halosis[i].left == "sun"){
+                if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && halosis[i].left == "sun" && anim == false){
                     targetPositionX = SunMesh.position.x;
-                    targetPositionY = round(sunGeometry.parameters.radius);
                     text.innerHTML = "In the sun? Really? Well you lost...";
                     way = -1;
                     window.requestAnimationFrame(animRocket);
-                } else if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i){
+                } else if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false){
                     targetPositionX = planets.children[i-1].position.x;
                     targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
                     text.innerHTML = "You are on " + halosis[i].left;
