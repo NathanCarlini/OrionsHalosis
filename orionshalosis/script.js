@@ -316,6 +316,7 @@ function init(){
                     break;
             }
             way = -1;
+            window.requestAnimationFrame(animRocket);
         }
         if (event.key == "ArrowRight" || event.key == "d") {
             switch (currentPlanet.name) {
@@ -373,10 +374,11 @@ function init(){
                     break
             }
             way = 1;
+            window.requestAnimationFrame(animRocket);
         }
-        if(halosis[0].capt == true && halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true){
-            text.innerHTML = "You won the game!";
-        }
+    }
+
+    function animRocket(){
         if(way == 1){
             if (rocketCurrent.position.x <= targetPositionX) {
                 rocketCurrent.position.x += 0.1;
@@ -385,7 +387,7 @@ function init(){
                 } else if (rocketCurrent.position.y >= targetPositionY) {
                     rocketCurrent.position.y -= 0.03;
                 }
-                window.requestAnimationFrame(onDocumentKeyDown);
+                window.requestAnimationFrame(animRocket);
             }        
         } else {
             if (rocketCurrent.position.x >= targetPositionX) {
@@ -395,9 +397,13 @@ function init(){
                 } else if (rocketCurrent.position.y >= targetPositionY) {
                     rocketCurrent.position.y -= 0.03;
                 }
-                window.requestAnimationFrame(onDocumentKeyDown);
+                window.requestAnimationFrame(animRocket);
             }
-        }    
+        }
+        whatPlanet();
+        if(halosis[0].capt == true && halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true){
+            text.innerHTML = "You won the game!";
+        }  
     }
 
     // control rocket with mouse
@@ -414,25 +420,25 @@ function init(){
                     targetPositionX = planets.children[i+1].position.x;
                     targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
                     text.innerHTML = "You are on " + halosis[i].right;
-                    halosis[i].capt = true;
-                    flagCurrent.children[i].visible = true;
+                    halosis[currentPlanet.number].capt = true;
+                    flagCurrent.children[currentPlanet.number].visible = true;
                     way = 1;
-                    window.requestAnimationFrame(onDocumentKeyDown);
+                    window.requestAnimationFrame(animRocket);
                 } 
                 if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && halosis[i].left == "sun"){
                     targetPositionX = SunMesh.position.x;
                     targetPositionY = round(sunGeometry.parameters.radius);
                     text.innerHTML = "In the sun? Really? Well you lost...";
                     way = -1;
-                    window.requestAnimationFrame(onDocumentKeyDown);
+                    window.requestAnimationFrame(animRocket);
                 } else if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i){
                     targetPositionX = planets.children[i-1].position.x;
                     targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
                     text.innerHTML = "You are on " + halosis[i].left;
-                    halosis[i-2].capt = true;
-                    flagCurrent.children[i-2].visible = true;
+                    halosis[currentPlanet.number-2].capt = true;
+                    flagCurrent.children[currentPlanet.number-2].visible = true;
                     way = -1;
-                    window.requestAnimationFrame(onDocumentKeyDown);
+                    window.requestAnimationFrame(animRocket);
                 }
             }
         }
@@ -449,5 +455,4 @@ function init(){
     }
     loop();
 }
-
 init();
