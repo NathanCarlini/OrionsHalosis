@@ -281,6 +281,8 @@ function init(){
             for (let i = 0; i < planets.children.length; i++) {
                 if(halosis[i].planet == currentPlanet.name && halosis[i].right == "pluto" && anim == false){
                     text.innerHTML = "Where are you going? Pluto is not a planet...";
+                } else if (halosis[i].planet == currentPlanet.name && anim == false && halosis[i].right == "none"){
+                    text.innerHTML = "Reload the page... You have lost...";
                 } else if(halosis[i].planet == currentPlanet.name && anim == false){
                     targetPositionX = planets.children[i+1].position.x;
                     targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
