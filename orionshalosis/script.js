@@ -33,7 +33,6 @@ function init(){
     scene.add(rocketCurrent);
     var rocket = new GLTFLoader();
     rocket.load('./resources/rocketfuture.glb', function ( gltf ) {
-    // rocket.load('./resources/rocket.glb', function ( gltf ) {
     // rocket.load('./resources/Rocketship.glb', function ( gltf ) {
         gltf.animations;
         rocketscene = gltf.scene;
