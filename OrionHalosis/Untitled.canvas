@@ -1,0 +1,12 @@
+{
+	"nodes":[
+		{"id":"97dc2f2ff80978a2","x":-340,"y":-140,"width":250,"height":60,"type":"text","text":"Front App"},
+		{"id":"2ca3fd517ea7b594","x":-215,"y":120,"width":250,"height":140,"type":"text","text":"ExpressJS : \ndata send \ntoken gen\ntoken crypt\nreturn crypt"},
+		{"id":"4497f652e3eb9fb7","x":-90,"y":360,"width":250,"height":60,"type":"text","text":"DB"}
+	],
+	"edges":[
+		{"id":"f267a2137ac69567","fromNode":"97dc2f2ff80978a2","fromSide":"bottom","toNode":"2ca3fd517ea7b594","toSide":"top","label":"log"},
+		{"id":"f7b2bd4458efe1cf","fromNode":"2ca3fd517ea7b594","fromSide":"bottom","toNode":"4497f652e3eb9fb7","toSide":"top","label":"send data"},
+		{"id":"01da5afc19f0ee28","fromNode":"2ca3fd517ea7b594","fromSide":"top","toNode":"97dc2f2ff80978a2","toSide":"right","label":"return crypted tkn"}
+	]
+}
