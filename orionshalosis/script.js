@@ -8,7 +8,7 @@ const pointer = new THREE.Vector2();
 
 function init(){
 
-    // camera
+// camera
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 5000);
     camera.position.set(50, 15, 40);
 
@@ -22,7 +22,7 @@ function init(){
         './resources/back.png',
     ]);
 
-    // rocket loader
+// rocket loader
     let rocketscene = null;
     let rocketCurrent = null;
     rocketCurrent = new THREE.Group();
@@ -39,7 +39,7 @@ function init(){
     },);
     rocketCurrent.position.set(35, 2, 0);
 
-    // flags loader
+// flags loader
     var flag = new GLTFLoader();
     let flag0, flag1, flag2, flag3, flag4, flag5, flag6, flag7 = null;
     let flagCurrent = null;
@@ -84,7 +84,7 @@ function init(){
     plane.rotateX(Math.PI/2)
     // scene.add( plane );
 
-    // init planets (to optimize with class)
+// init planets (to optimize with class)
     let planets = new THREE.Group();
     const sunGeometry = new THREE.SphereGeometry( 15, 32, 32 );
     const textureSun = new THREE.TextureLoader().load('resources/sun.jpg' ); 
@@ -170,7 +170,7 @@ function init(){
     NeptuneMesh.name = "neptune";
     scene.add(planets);
         
-    // light
+// light
     let light = new THREE.DirectionalLight(0xFFFFFF, 1.0);
     let light2 = new THREE.AmbientLight(0xFFFFFF, 1);
     light.position.set(20, 60, 10);
@@ -178,14 +178,14 @@ function init(){
     light.castShadow = true;
     scene.add(light, light2);
 
-    // renderer
+// renderer
     const canvas = document.querySelector("canvas");
     const renderer = new THREE.WebGLRenderer({ canvas });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    // select of the text area
+// select of the text area
     const text = document.querySelector(".halosis");
 
 // if the window is resize the game will too
@@ -197,7 +197,7 @@ function init(){
         renderer.setSize(width, height);
     })
 
-    // capture of planets
+// capture of planets
     let currentPlanet = "";
     let way = 0;
     let targetPositionX = 0;
@@ -214,7 +214,7 @@ function init(){
         {planet: "neptune", capt: false, left:"uranus", right:"pluto"},
     ];
 
-    //find what planet we are currently on
+//find what planet we are currently on
     function whatPlanet(){
         if (round(rocketCurrent.position.x) == SunMesh.position.x){
             currentPlanet = {number:"0", name:"sun"};
@@ -237,13 +237,13 @@ function init(){
         }
     }
 
-    // round a number
+// round a number
     function round(num){
         return Math.round(1000*num)/1000;
     }
 
     let anim = false;
-    // if action the keyboard action in the game
+// if action the keyboard action in the game
     function onDocumentKeyDown(event) {
         whatPlanet()
         if (event.key == "ArrowLeft" || event.key == "q") {
@@ -279,7 +279,7 @@ function init(){
         }
     }
 
-    // animation rocket from planets to planets
+// animation rocket from planets to planets
     function animRocket(){
         anim = true;
         if(way == 1){
@@ -316,7 +316,7 @@ function init(){
         whatPlanet();
         if(halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true && halosis[8].capt == true){
             text.innerHTML = "You won the game!";
-            anim = true
+            anim = true;
         }  
     }
 
