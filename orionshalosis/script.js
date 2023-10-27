@@ -306,7 +306,10 @@ function init(){
                     rocketCurrent.position.y -= 0.03;
                 }
                 window.requestAnimationFrame(animRocket);
-            } else {
+            } else if(currentPlanet.name == "sun"){
+                anim = false;
+            }
+            else {
                 text.innerHTML = "You are on " + currentPlanet.name;
                 anim = false;
                 halosis[currentPlanet.number].capt = true;
