@@ -21,7 +21,7 @@
         }
         .halosis{
             position: absolute;
-            top: 50px;
+            top: 20px;
             width: 100%;
             text-align: center;
             z-index: 100;
@@ -30,10 +30,22 @@
             color: white;
             user-select: none;
         }
+        .resource{
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            width: 100%;
+            z-index: 100;
+            font-size: 1.25rem;
+            display:block;
+            color: white;
+            user-select: none
+        }
     </style>
 </head>
 <body>
     <p class="halosis">Welcome to Orion's Halosis!</p>
+    <p class="resource">Moon Stone : </p>
     <canvas></canvas>
     <script src="./script.js" type="module"></script>
 </body>

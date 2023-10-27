@@ -7,7 +7,6 @@ const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
 function init(){
-
 // camera
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 5000);
     camera.position.set(50, 15, 40);
@@ -356,6 +355,23 @@ function init(){
         }
     }
 
+    let mat = null;
+    const resource = document.querySelector(".resource")
+    async function resources(){
+        for (let i = 0; i < halosis.length; i++) {
+            if (currentPlanet.name == "sun"){
+                mat = 0;
+            } else if (halosis[i].capt == true) {
+                 if(halosis[i].name == "venus"){
+                    mat += 0.5;
+                } else {
+                    mat += 0.05;
+                    resource.innerHTML = "Moon Stone : " + round(mat);
+                }
+            }
+        }
+    }
+
 // loop for the render and cam
     function loop(){
         document.addEventListener("keydown", onDocumentKeyDown, false);
@@ -363,6 +379,7 @@ function init(){
         camera.lookAt(rocketCurrent.position.x, rocketCurrent.position.y, rocketCurrent.position.z);
         camera.updateProjectionMatrix();
         renderer.render(scene, camera);
+        resources();
         window.requestAnimationFrame(loop);
     }
     loop();
