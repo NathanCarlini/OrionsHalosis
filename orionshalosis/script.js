@@ -89,8 +89,7 @@ function init(){
     // scene.add( plane );
 
     // init planets
-    let planets = null;
-    planets = new THREE.Group();
+    let planets = new THREE.Group();
     const sunGeometry = new THREE.SphereGeometry( 15, 32, 32 );
     const textureSun = new THREE.TextureLoader().load('resources/sun.jpg' ); 
     const sunMaterial = new THREE.MeshPhongMaterial({map: textureSun});
@@ -223,29 +222,21 @@ function init(){
     function whatPlanet(){
         if (round(rocketCurrent.position.x) == SunMesh.position.x){
             currentPlanet = {number:"0", name:"sun"};
-        }
-        if (round(rocketCurrent.position.x) == MercuryMesh.position.x){
+        } if (round(rocketCurrent.position.x) == MercuryMesh.position.x){
             currentPlanet = {number:"1", name:"mercury"};
-        }
-        if (round(rocketCurrent.position.x) == VenusMesh.position.x){
+        } if (round(rocketCurrent.position.x) == VenusMesh.position.x){
             currentPlanet = {number:"2", name:"venus"};
-        }
-        if (round(rocketCurrent.position.x) == EarthMesh.position.x){
+        } if (round(rocketCurrent.position.x) == EarthMesh.position.x){
             currentPlanet = {number:"3", name:"earth"};
-        }
-        if (round(rocketCurrent.position.x) == MarsMesh.position.x){
+        } if (round(rocketCurrent.position.x) == MarsMesh.position.x){
             currentPlanet = {number:"4", name:"mars"};
-        }
-        if (round(rocketCurrent.position.x) == JupiterMesh.position.x){
+        } if (round(rocketCurrent.position.x) == JupiterMesh.position.x){
             currentPlanet = {number:"5", name:"jupiter"};
-        }
-        if (round(rocketCurrent.position.x) == SaturnMesh.position.x){
+        } if (round(rocketCurrent.position.x) == SaturnMesh.position.x){
             currentPlanet = {number:"6", name:"saturn"};
-        }
-        if (round(rocketCurrent.position.x) == UranusMesh.position.x){
+        } if (round(rocketCurrent.position.x) == UranusMesh.position.x){
             currentPlanet = {number:"7", name:"uranus"};
-        }
-        if (round(rocketCurrent.position.x) == NeptuneMesh.position.x){
+        } if (round(rocketCurrent.position.x) == NeptuneMesh.position.x){
             currentPlanet = {number:"8", name:"neptune"};
         }
     }
@@ -269,9 +260,7 @@ function init(){
                 } else if(halosis[i].planet == currentPlanet.name && anim == false){
                     targetPositionX = planets.children[i-1].position.x;
                     targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
-                    text.innerHTML = "You are on " + halosis[i].left;
-                    halosis[currentPlanet.number-1].capt = true;
-                    flagCurrent.children[currentPlanet.number-2].visible = true;
+                    text.innerHTML = "Flying...";
                     way = -1;
                     window.requestAnimationFrame(animRocket);
                 }
@@ -286,9 +275,7 @@ function init(){
                 } else if(halosis[i].planet == currentPlanet.name && anim == false){
                     targetPositionX = planets.children[i+1].position.x;
                     targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
-                    text.innerHTML = "You are on " + halosis[i].right;
-                    halosis[parseInt(currentPlanet.number)+1].capt = true;
-                    flagCurrent.children[currentPlanet.number].visible = true;
+                    text.innerHTML = "Flying...";
                     way = 1;
                     window.requestAnimationFrame(animRocket);
                 }
@@ -296,6 +283,7 @@ function init(){
         }
     }
 
+    // animation rocket from planets to planets
     function animRocket(){
         anim = true;
         if(way == 1){
@@ -308,7 +296,10 @@ function init(){
                 }
                 window.requestAnimationFrame(animRocket);
             } else {
-                anim = false
+                text.innerHTML = "You are on " + currentPlanet.name;
+                anim = false;
+                halosis[currentPlanet.number].capt = true;
+                flagCurrent.children[parseInt(currentPlanet.number-1)].visible = true;
             }
         } else {
             if (rocketCurrent.position.x >= targetPositionX) {
@@ -320,7 +311,10 @@ function init(){
                 }
                 window.requestAnimationFrame(animRocket);
             } else {
-                anim = false
+                text.innerHTML = "You are on " + currentPlanet.name;
+                anim = false;
+                halosis[currentPlanet.number].capt = true;
+                flagCurrent.children[currentPlanet.number-1].visible = true;
             }
         }
         whatPlanet();
@@ -342,9 +336,7 @@ function init(){
                 if(halosis[i].right == intersects[0].object.name && currentPlanet.number == i && anim == false){
                     targetPositionX = planets.children[i+1].position.x;
                     targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
-                    text.innerHTML = "You are on " + halosis[i].right;
-                    halosis[parseInt(currentPlanet.number)+1].capt = true;
-                    flagCurrent.children[currentPlanet.number].visible = true;
+                    text.innerHTML = "Flying...";
                     way = 1;
                     window.requestAnimationFrame(animRocket);
                 } 
@@ -356,9 +348,7 @@ function init(){
                 } else if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false){
                     targetPositionX = planets.children[i-1].position.x;
                     targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
-                    text.innerHTML = "You are on " + halosis[i].left;
-                    halosis[currentPlanet.number-1].capt = true;
-                    flagCurrent.children[currentPlanet.number-2].visible = true;
+                    text.innerHTML = "Flying...";
                     way = -1;
                     window.requestAnimationFrame(animRocket);
                 }
