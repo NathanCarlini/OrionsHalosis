@@ -2,10 +2,6 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 let camera = null;
-const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight
-}
 const scene = new THREE.Scene();
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
@@ -13,7 +9,7 @@ const pointer = new THREE.Vector2();
 function init(){
 
     // camera
-    camera = new THREE.PerspectiveCamera(40, sizes.width / sizes.height, 1, 5000);
+    camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 5000);
     camera.position.set(50, 15, 40);
 
     const cubeTextureLoader = new THREE.CubeTextureLoader();
@@ -88,7 +84,7 @@ function init(){
     plane.rotateX(Math.PI/2)
     // scene.add( plane );
 
-    // init planets
+    // init planets (to optimize with class)
     let planets = new THREE.Group();
     const sunGeometry = new THREE.SphereGeometry( 15, 32, 32 );
     const textureSun = new THREE.TextureLoader().load('resources/sun.jpg' ); 
@@ -185,7 +181,7 @@ function init(){
     // renderer
     const canvas = document.querySelector("canvas");
     const renderer = new THREE.WebGLRenderer({ canvas });
-    renderer.setSize(sizes.width, sizes.height);
+    renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -194,18 +190,18 @@ function init(){
 
 // if the window is resize the game will too
     window.addEventListener('resize', () => {
-        sizes.width = window.innerWidth;
-        sizes.height = window.innerHeight;
-        camera.aspect = sizes.width / sizes.height;
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        camera.aspect = width / height;
         camera.updateProjectionMatrix();
-        renderer.setSize(sizes.width, sizes.height);
+        renderer.setSize(width, height);
     })
 
     // capture of planets
     let currentPlanet = "";
     let way = 0;
-    let targetPositionX = EarthMesh.position.x;
-    let targetPositionY = EarthMesh.position.y;
+    let targetPositionX = 0;
+    let targetPositionY = 0;
     let halosis = [
         {planet: "sun", capt: false, left:"none", right:"none"},
         {planet: "mercury", capt: false, left:"sun", right:"venus"},
@@ -320,6 +316,7 @@ function init(){
         whatPlanet();
         if(halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true && halosis[8].capt == true){
             text.innerHTML = "You won the game!";
+            anim = true
         }  
     }
 
