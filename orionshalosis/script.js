@@ -297,8 +297,8 @@ function init(){
     }
 
     function animRocket(){
+        anim = true;
         if(way == 1){
-            anim = true;
             if (rocketCurrent.position.x <= targetPositionX) {
                 rocketCurrent.position.x += 0.1;
                 if (rocketCurrent.position.y <= targetPositionY) {
@@ -307,9 +307,10 @@ function init(){
                     rocketCurrent.position.y -= 0.03;
                 }
                 window.requestAnimationFrame(animRocket);
-            }        
+            } else {
+                anim = false
+            }
         } else {
-            anim = true;
             if (rocketCurrent.position.x >= targetPositionX) {
                 rocketCurrent.position.x -= 0.1;
                 if (rocketCurrent.position.y <= targetPositionY) {
@@ -318,10 +319,11 @@ function init(){
                     rocketCurrent.position.y -= 0.03;
                 }
                 window.requestAnimationFrame(animRocket);
+            } else {
+                anim = false
             }
         }
         whatPlanet();
-        anim = false;
         if(halosis[0].capt == true && halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true){
             text.innerHTML = "You won the game!";
         }  
