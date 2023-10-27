@@ -1,5 +1,7 @@
 'use client'
 import Link from "next/link";
+import { useState } from "react";
+
 export default function Page() {
   const [formData, setFormData] = useState({
     username: "",
