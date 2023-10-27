@@ -270,7 +270,7 @@ function init(){
                     targetPositionX = planets.children[i-1].position.x;
                     targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
                     text.innerHTML = "You are on " + halosis[i].left;
-                    halosis[currentPlanet.number-2].capt = true;
+                    halosis[currentPlanet.number-1].capt = true;
                     flagCurrent.children[currentPlanet.number-2].visible = true;
                     way = -1;
                     window.requestAnimationFrame(animRocket);
@@ -287,7 +287,7 @@ function init(){
                     targetPositionX = planets.children[i+1].position.x;
                     targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
                     text.innerHTML = "You are on " + halosis[i].right;
-                    halosis[currentPlanet.number].capt = true;
+                    halosis[parseInt(currentPlanet.number)+1].capt = true;
                     flagCurrent.children[currentPlanet.number].visible = true;
                     way = 1;
                     window.requestAnimationFrame(animRocket);
@@ -324,7 +324,7 @@ function init(){
             }
         }
         whatPlanet();
-        if(halosis[0].capt == true && halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true){
+        if(halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true && halosis[8].capt == true){
             text.innerHTML = "You won the game!";
         }  
     }
