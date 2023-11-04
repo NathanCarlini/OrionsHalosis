@@ -27,5 +27,5 @@ for Base :
 ### Links to project info
 link kanban : https://trello.com/invite/b/IvcNTq1C/ATTI01b6ac81c1cbb4b941cad2771c52ca9b31644B38/la-sae-armaggeddon  
 link canva : https://www.canva.com/design/DAFxBs-r15g/nWMGjKDdo9vVQazWb7T9xA/edit?utm_content=DAFxBs-r15g  
-link figma : https://www.figma.com/files/project/110957876
-
+link figma : https://www.figma.com/files/project/110957876  
+link iteration : https://unilim.sharepoint.com/:w:/r/sites/DpartementMMI/_layouts/15/doc2.aspx?sourcedoc=%7B953CAD50-D48B-478A-AC7B-119989F63329%7D&file=CARLINI-CHEVALLEREAU.docx&action=default&mobileredirect=true 
