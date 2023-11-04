@@ -46,13 +46,17 @@ export default function Page() {
           </form>
         </div>
         <div className="flex h-full flex-col bg-slate-400/40 px-16 py-10 w-full">
+
           <p className="text-3xl font-bold">Inventory</p>
           <div>
             <p className="text-black font-black text-xl">Spacecraft</p>
             <div className="flex flex-row">
-              
+              {}
             </div>
           </div>
+
+
+
         </div>
       </section>
     </div>
