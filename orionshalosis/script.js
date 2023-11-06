@@ -22,10 +22,10 @@ function init(){
         './resources/front.png',
         './resources/back.png',
     ]);
+    let rocketscene, rocketCurrent, flagCurrent, planets, mat = null;
+    let way, targetPositionX, targetPositionY, sec = 0;
 
 // rocket loader
-    let rocketscene = null;
-    let rocketCurrent = null;
     rocketCurrent = new THREE.Group();
     scene.add(rocketCurrent);
     var rocket = new GLTFLoader();
@@ -34,16 +34,15 @@ function init(){
         gltf.animations;
         rocketscene = gltf.scene;
         rocketCurrent.add(rocketscene);
-        rocketscene.position.y =0;
-        rocketscene.scale.set(0.1, 0.1, 0.1); 
+        rocketscene.position.y = 0;
+        rocketscene.scale.set(0.15, 0.15, 0.15); 
         scene.add( rocketCurrent );
     },);
-    rocketCurrent.position.set(35, 2, 0);
+    rocketCurrent.position.set(35, 1.85, 0);
 
 // flags loader
     var flag = new GLTFLoader();
     let flag0, flag1, flag2, flag3, flag4, flag5, flag6, flag7 = null;
-    let flagCurrent = null;
     flagCurrent = new THREE.Group();
     flag.load('./resources/Flag.glb', function ( gltf ) {
         gltf.animations;
@@ -80,7 +79,7 @@ function init(){
     flagCurrent.position.set(14.5, 0.75, 0);
 
 // init planets (to optimize with class)
-    let planets = new THREE.Group();
+    planets = new THREE.Group();
     const Planets = class {
         constructor(size, texture, position, price){
             const Geometry = new THREE.SphereGeometry( size, 32, 32 );
@@ -184,9 +183,6 @@ function init(){
 
 // capture of planets
     let currentPlanet = "";
-    let way = 0;
-    let targetPositionX = 0;
-    let targetPositionY = 0;
     let halosis = [
         {planet: "sun", capt: false, left:"none", right:"none", price:sun.getPos()[2]},
         {planet: "mercury", capt: false, left:"sun", right:"venus", price:mercury.getPos()[2]},
@@ -254,7 +250,7 @@ function init(){
                     way = -1;
                     window.requestAnimationFrame(animRocket);
                 } else if(halosis[i].planet == currentPlanet.name && anim == false && mat <= halosis[i-1].price){
-                    text.innerHTML = "You don't have enought resources...";
+                    text.innerHTML = "You don't have enough resources...";
                 }
             }
         }
@@ -278,7 +274,7 @@ function init(){
                     way = 1;
                     window.requestAnimationFrame(animRocket);
                 } else if(halosis[i].planet == currentPlanet.name && anim == false && mat <= halosis[i-1].price){
-                    text.innerHTML = "You don't have enought resources...";
+                    text.innerHTML = "You don't have enough resources...";
                 }
             }
         }
@@ -307,7 +303,7 @@ function init(){
                     way = 1;
                     window.requestAnimationFrame(animRocket);
                 } else if(halosis[i].right == intersects[0].object.name && currentPlanet.number == i && anim == false && mat <= halosis[i+1].price){
-                    text.innerHTML = "You don't have enought resources...";
+                    text.innerHTML = "You don't have enough resources...";
                 }
                 if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && halosis[i].left == "sun" && anim == false){
                     targetPositionX = sun.getPos()[1];
@@ -328,7 +324,7 @@ function init(){
                     way = -1;
                     window.requestAnimationFrame(animRocket);
                 } else if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false && mat <= halosis[i-1].price){
-                    text.innerHTML = "You don't have enought resources...";
+                    text.innerHTML = "You don't have enough resources...";
                 }
             }
         }
@@ -383,7 +379,6 @@ function init(){
     }
 
     // loop for moon stones update
-    let mat = null;
     const resource = document.querySelector(".resource")
     window.setInterval(resources, 100)
     async function resources(){
@@ -400,7 +395,6 @@ function init(){
             }
         }
     }
-    let sec = 0;
     window.setInterval(timer, 1000)
     const time = document.querySelector(".timer")
     function timer(){
