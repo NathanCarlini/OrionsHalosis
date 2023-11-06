@@ -85,64 +85,41 @@ function init(){
 
 // init planets (to optimize with class)
     let planets = new THREE.Group();
-    const sunGeometry = new THREE.SphereGeometry( 15, 32, 32 );
-    const textureSun = new THREE.TextureLoader().load('resources/sun.jpg' ); 
-    const sunMaterial = new THREE.MeshPhongMaterial({map: textureSun});
-    const SunMesh = new THREE.Mesh(sunGeometry, sunMaterial);
-    SunMesh.position.x = -10;
-    SunMesh.name = "sun";
-    planets.add(SunMesh)
-
-    const MercuryGeometry = new THREE.SphereGeometry( 1, 32, 32 );
-    const textureMercury = new THREE.TextureLoader().load('resources/mercury.png' ); 
-    const MercuryMaterial = new THREE.MeshPhongMaterial({map: textureMercury});
-    const MercuryMesh = new THREE.Mesh(MercuryGeometry, MercuryMaterial);
-    MercuryMesh.position.x = 15;
-    MercuryMesh.name = "mercury";
-    planets.add(MercuryMesh)
-
-    const VenusGeometry = new THREE.SphereGeometry( 1.8, 32, 32 );
-    const textureVenus = new THREE.TextureLoader().load('resources/venus.jpg' ); 
-    const VenusMaterial = new THREE.MeshPhongMaterial({map: textureVenus});
-    const VenusMesh = new THREE.Mesh(VenusGeometry, VenusMaterial);
-    VenusMesh.position.x = 25;
-    VenusMesh.name = "venus";
-    planets.add(VenusMesh)
-
-    const EarthGeometry = new THREE.SphereGeometry( 2, 32, 32 );
-    const textureEarth = new THREE.TextureLoader().load('resources/earthmap.jpg' ); 
-    const textureEarthBump = new THREE.TextureLoader().load('resources/earthbump.jpg' ); 
-    const textureEarthSpec = new THREE.TextureLoader().load('resources/earthspec.jpg' ); 
-    const earthMaterial = new THREE.MeshPhongMaterial({map: textureEarth, bumpMap: textureEarthBump, specular: textureEarthSpec});
-    const EarthMesh = new THREE.Mesh(EarthGeometry, earthMaterial);
-    EarthMesh.position.x = 35;
-    EarthMesh.name = "earth";
-    planets.add(EarthMesh)
-
-    const MarsGeometry = new THREE.SphereGeometry( 1.4, 32, 32 );
-    const textureMars = new THREE.TextureLoader().load('resources/mars.jpg' ); 
-    const MarsMaterial = new THREE.MeshPhongMaterial({map: textureMars});
-    const MarsMesh = new THREE.Mesh(MarsGeometry, MarsMaterial);
-    MarsMesh.position.x = 45;
-    MarsMesh.name = "mars";
-    planets.add(MarsMesh)
-
-    const JupiterGeometry = new THREE.SphereGeometry( 5, 32, 32 );
-    const textureJupiter = new THREE.TextureLoader().load('resources/jupiter.jpg' ); 
-    const JupiterMaterial = new THREE.MeshPhongMaterial({map: textureJupiter});
-    const JupiterMesh = new THREE.Mesh(JupiterGeometry, JupiterMaterial);
-    JupiterMesh.position.x = 60;
-    JupiterMesh.name = "jupiter";
-    planets.add(JupiterMesh)
-
-    const SaturnGeometry = new THREE.SphereGeometry( 4.5, 32, 32 );
-    const textureSaturn = new THREE.TextureLoader().load('resources/saturn.jpg' ); 
-    const SaturnMaterial = new THREE.MeshPhongMaterial({map: textureSaturn});
-    const SaturnMesh = new THREE.Mesh(SaturnGeometry, SaturnMaterial);
-    SaturnMesh.position.x = 75;
-    SaturnMesh.name = "saturn";
-    planets.add(SaturnMesh)
-
+    const Planets = class {
+        constructor(size, texture, position){
+            const Geometry = new THREE.SphereGeometry( size, 32, 32 );
+            const texturePlanet = new THREE.TextureLoader().load('resources/'+texture+'.jpg' ); 
+            if (texture == "earth"){
+                const textureEarthBump = new THREE.TextureLoader().load('resources/earthbump.jpg' ); 
+                const textureEarthSpec = new THREE.TextureLoader().load('resources/earthspec.jpg' );
+                const Material = new THREE.MeshPhongMaterial({map: texturePlanet, bumpMap: textureEarthBump, specular: textureEarthSpec}); 
+                const Mesh = new THREE.Mesh(Geometry, Material);
+                Mesh.position.x = position;
+                Mesh.name = texture;
+                planets.add(Mesh);
+            } else {
+                const Material = new THREE.MeshPhongMaterial({map: texturePlanet}); 
+                const Mesh = new THREE.Mesh(Geometry, Material);
+                Mesh.position.x = position;
+                Mesh.name = texture;
+                planets.add(Mesh);
+            }
+            this.texture = texture;
+            this.position = position;
+        }
+        getPos(){
+            let obj = [this.texture, this.position];
+            return obj;
+        }
+    }
+    const sun = new Planets(15, 'sun', -10);
+    const mercury = new Planets(1, 'mercury', 15);
+    const venus = new Planets(1.8, 'venus', 25);
+    const earth = new Planets(2, 'earth', 35);
+    const mars = new Planets(1.4, 'mars', 45);
+    const jupiter = new Planets(5, 'jupiter', 60);
+    const saturn = new Planets(4.5, 'saturn', 75);
+    // we have to add the ring like that
     const SaturnRingGeometry = new THREE.RingGeometry( 5, 8, 64 ); 
     const SaturnRingMaterial = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, side: THREE.DoubleSide } );
     SaturnRingMaterial.transparent = true;
@@ -151,22 +128,9 @@ function init(){
     SaturnRingMesh.position.x = 75;
     SaturnRingMesh.rotateX(Math.PI/2);
     scene.add( SaturnRingMesh );
-
-    const UranusGeometry = new THREE.SphereGeometry( 3.5, 32, 32 );
-    const textureUranus = new THREE.TextureLoader().load('resources/uranus.jpg' ); 
-    const UranusMaterial = new THREE.MeshPhongMaterial({map: textureUranus});
-    const UranusMesh = new THREE.Mesh(UranusGeometry, UranusMaterial);
-    UranusMesh.position.x = 90;
-    UranusMesh.name = "uranus";
-    planets.add(UranusMesh)
-
-    const NeptuneGeometry = new THREE.SphereGeometry( 3.1, 32, 32 );
-    const textureNeptune = new THREE.TextureLoader().load('resources/neptune.jpg' ); 
-    const NeptuneMaterial = new THREE.MeshPhongMaterial({map: textureNeptune});
-    const NeptuneMesh = new THREE.Mesh(NeptuneGeometry, NeptuneMaterial);
-    NeptuneMesh.position.x = 100;
-    planets.add(NeptuneMesh)
-    NeptuneMesh.name = "neptune";
+    const uranus = new Planets(3.5, 'uranus', 90);
+    const neptune = new Planets(3.1, 'neptune', 100);
+    console.log(planets)
     scene.add(planets);
         
 // light
@@ -215,23 +179,23 @@ function init(){
 
 //find what planet we are currently on
     function whatPlanet(){
-        if (round(rocketCurrent.position.x) == SunMesh.position.x){
+        if (round(rocketCurrent.position.x) == sun.getPos()[1]){
             currentPlanet = {number:"0", name:"sun"};
-        } if (round(rocketCurrent.position.x) == MercuryMesh.position.x){
+        } if (round(rocketCurrent.position.x) == mercury.getPos()[1]){
             currentPlanet = {number:"1", name:"mercury"};
-        } if (round(rocketCurrent.position.x) == VenusMesh.position.x){
+        } if (round(rocketCurrent.position.x) == venus.getPos()[1]){
             currentPlanet = {number:"2", name:"venus"};
-        } if (round(rocketCurrent.position.x) == EarthMesh.position.x){
+        } if (round(rocketCurrent.position.x) == earth.getPos()[1]){
             currentPlanet = {number:"3", name:"earth"};
-        } if (round(rocketCurrent.position.x) == MarsMesh.position.x){
+        } if (round(rocketCurrent.position.x) == mars.getPos()[1]){
             currentPlanet = {number:"4", name:"mars"};
-        } if (round(rocketCurrent.position.x) == JupiterMesh.position.x){
+        } if (round(rocketCurrent.position.x) == jupiter.getPos()[1]){
             currentPlanet = {number:"5", name:"jupiter"};
-        } if (round(rocketCurrent.position.x) == SaturnMesh.position.x){
+        } if (round(rocketCurrent.position.x) == saturn.getPos()[1]){
             currentPlanet = {number:"6", name:"saturn"};
-        } if (round(rocketCurrent.position.x) == UranusMesh.position.x){
+        } if (round(rocketCurrent.position.x) == uranus.getPos()[1]){
             currentPlanet = {number:"7", name:"uranus"};
-        } if (round(rocketCurrent.position.x) == NeptuneMesh.position.x){
+        } if (round(rocketCurrent.position.x) == neptune.getPos()[1]){
             currentPlanet = {number:"8", name:"neptune"};
         }
     }
