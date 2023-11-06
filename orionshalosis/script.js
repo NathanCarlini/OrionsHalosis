@@ -77,12 +77,6 @@ function init(){
     },);
     flagCurrent.position.set(14.5, 0.75, 0);
 
-    const geometry = new THREE.PlaneGeometry( 100, 100 );
-    const material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
-    const plane = new THREE.Mesh( geometry, material );
-    plane.rotateX(Math.PI/2)
-    // scene.add( plane );
-
 // init planets (to optimize with class)
     let planets = new THREE.Group();
     const Planets = class {
@@ -166,15 +160,15 @@ function init(){
     let targetPositionX = 0;
     let targetPositionY = 0;
     let halosis = [
-        {planet: "sun", capt: false, left:"none", right:"none"},
-        {planet: "mercury", capt: false, left:"sun", right:"venus"},
-        {planet: "venus", capt: false, left:"mercury", right:"earth"},
-        {planet: "earth", capt: true, left:"venus", right:"mars"},
-        {planet: "mars", capt: false, left:"earth", right:"jupiter"},
-        {planet: "jupiter", capt: false, left:"mars", right:"saturn"},
-        {planet: "saturn", capt: false, left:"jupiter", right:"uranus"},
-        {planet: "uranus", capt: false, left:"saturn", right:"neptune"},
-        {planet: "neptune", capt: false, left:"uranus", right:"pluto"},
+        {planet: "sun", capt: false, left:"none", right:"none", price:0},
+        {planet: "mercury", capt: false, left:"sun", right:"venus", price:300},
+        {planet: "venus", capt: false, left:"mercury", right:"earth", price:200},
+        {planet: "earth", capt: true, left:"venus", right:"mars", price:0},
+        {planet: "mars", capt: false, left:"earth", right:"jupiter", price:150},
+        {planet: "jupiter", capt: false, left:"mars", right:"saturn", price:100},
+        {planet: "saturn", capt: false, left:"jupiter", right:"uranus", price:250},
+        {planet: "uranus", capt: false, left:"saturn", right:"neptune", price:400},
+        {planet: "neptune", capt: false, left:"uranus", right:"pluto", price:700},
     ];
 
 //find what planet we are currently on
@@ -211,7 +205,9 @@ function init(){
         whatPlanet()
         if (event.key == "ArrowLeft" || event.key == "q") {
             for (let i = 0; i < planets.children.length; i++) {
-                if(halosis[i].planet == currentPlanet.name && currentPlanet.name == "mercury" && anim == false){
+                if(currentPlanet.name == "sun"){
+                    text.innerHTML = "Reload the page... You have lost...";
+                } else if(halosis[i].planet == currentPlanet.name && currentPlanet.name == "mercury" && anim == false){
                     targetPositionX = planets.children[i-1].position.x;
                     text.innerHTML = "In the sun? Really? Well you lost...";
                     way = -1;
@@ -222,8 +218,8 @@ function init(){
                     text.innerHTML = "Flying...";
                     way = -1;
                     window.requestAnimationFrame(animRocket);
-                } else if(mat >= 200 && halosis[i].planet == currentPlanet.name && anim == false){
-                    mat = mat - 200;
+                } else if(halosis[i].planet == currentPlanet.name && anim == false && mat >= halosis[i-1].price){
+                    mat = mat - halosis[i-1].price;
                     targetPositionX = planets.children[i-1].position.x;
                     targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
                     text.innerHTML = "Flying...";
@@ -244,8 +240,8 @@ function init(){
                     text.innerHTML = "Flying...";
                     way = 1;
                     window.requestAnimationFrame(animRocket);
-                } else if(mat >= 200 && halosis[i].planet == currentPlanet.name && anim == false){
-                    mat = mat - 200;
+                } else if(halosis[i].planet == currentPlanet.name && anim == false && mat >= halosis[i+1].price){
+                    mat = mat - halosis[i+1].price;
                     targetPositionX = planets.children[i+1].position.x;
                     targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
                     text.innerHTML = "Flying...";
@@ -316,8 +312,8 @@ function init(){
                     text.innerHTML = "Flying...";
                     way = 1;
                     window.requestAnimationFrame(animRocket);
-                } else if(mat >= 200 && halosis[i].right == intersects[0].object.name && currentPlanet.number == i && anim == false){
-                    mat = mat - 200;
+                } else if(halosis[i].right == intersects[0].object.name && currentPlanet.number == i && anim == false && mat >= halosis[i+1].price){
+                    mat = mat - halosis[i+1].price;
                     targetPositionX = planets.children[i+1].position.x;
                     targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
                     text.innerHTML = "Flying...";
@@ -335,8 +331,8 @@ function init(){
                     text.innerHTML = "Flying...";
                     way = -1;
                     window.requestAnimationFrame(animRocket);
-                } else if(mat >= 200 && halosis[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false){
-                    mat = mat - 200;
+                } else if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false && mat >= halosis[i-1].price){
+                    mat = mat - halosis[i-1].price;
                     targetPositionX = planets.children[i-1].position.x;
                     targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
                     text.innerHTML = "Flying...";
@@ -354,7 +350,7 @@ function init(){
             if (currentPlanet.name == "sun"){
                 mat = 0;
             } else if (halosis[i].capt == true) {
-                 if(halosis[i].name == "venus"){
+                if(halosis[i].name == "venus"){
                     mat += 0.5;
                 } else {
                     mat += 0.1;
