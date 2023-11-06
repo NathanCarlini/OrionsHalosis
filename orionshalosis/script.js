@@ -367,7 +367,9 @@ function init(){
         }
         whatPlanet();
         if(halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true && halosis[8].capt == true){
-            text.innerHTML = "You won the game!";
+            text.innerHTML = "You won the game! <br>You took "+sec+" seconds to complete the geme!";
+            window.clearTimeout(timer);
+            sec = 0;
             anim = true;
         }  
     }
@@ -375,19 +377,27 @@ function init(){
     // loop for moon stones update
     let mat = null;
     const resource = document.querySelector(".resource")
+    window.setInterval(resources, 100)
     async function resources(){
         for (let i = 0; i < halosis.length; i++) {
             if (currentPlanet.name == "sun"){
                 mat = 0;
             } else if (halosis[i].capt == true) {
                 if(halosis[i].name == "venus"){
-                    mat += 0.5;
+                    mat += 4;
                 } else {
-                    mat += 0.1;
+                    mat += 2;
                     resource.innerHTML = "Moon Stone : " + round(mat);
                 }
             }
         }
+    }
+    let sec = 0;
+    window.setInterval(timer, 1000)
+    const time = document.querySelector(".timer")
+    function timer(){
+        sec++;
+        time.innerHTML = "Timer : "+sec;
     }
 
 // loop for the render and cam
@@ -397,7 +407,6 @@ function init(){
         camera.lookAt(rocketCurrent.position.x, rocketCurrent.position.y, rocketCurrent.position.z);
         camera.updateProjectionMatrix();
         renderer.render(scene, camera);
-        resources();
         window.requestAnimationFrame(loop);
     }
     loop();

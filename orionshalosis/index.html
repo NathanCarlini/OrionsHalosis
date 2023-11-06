@@ -41,11 +41,24 @@
             color: white;
             user-select: none
         }
+        .timer{
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            text-align: right;
+            width: 100%;
+            z-index: 100;
+            font-size: 1.25rem;
+            display:block;
+            color: white;
+            user-select: none
+        }
     </style>
 </head>
 <body>
     <p class="halosis">Welcome to Orion's Halosis!</p>
     <p class="resource">Moon Stone : </p>
+    <p class="timer">Timer : 0</p>
     <canvas></canvas>
     <script src="./script.js" type="module"></script>
 </body>
