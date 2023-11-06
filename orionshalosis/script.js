@@ -252,7 +252,14 @@ function init(){
                     text.innerHTML = "In the sun? Really? Well you lost...";
                     way = -1;
                     window.requestAnimationFrame(animRocket);
-                } else if(halosis[i].planet == currentPlanet.name && anim == false){
+                } else if(halosis[i].planet == currentPlanet.name && anim == false && halosis[i-1].capt == true){
+                    targetPositionX = planets.children[i-1].position.x;
+                    targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
+                    text.innerHTML = "Flying...";
+                    way = -1;
+                    window.requestAnimationFrame(animRocket);
+                } else if(mat >= 200 && halosis[i].planet == currentPlanet.name && anim == false){
+                    mat = mat - 200;
                     targetPositionX = planets.children[i-1].position.x;
                     targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
                     text.innerHTML = "Flying...";
@@ -267,7 +274,14 @@ function init(){
                     text.innerHTML = "Where are you going? Pluto is not a planet...";
                 } else if (halosis[i].planet == currentPlanet.name && anim == false && halosis[i].right == "none"){
                     text.innerHTML = "Reload the page... You have lost...";
-                } else if(halosis[i].planet == currentPlanet.name && anim == false){
+                } else if(halosis[i].planet == currentPlanet.name && anim == false && halosis[i+1].capt == true){
+                    targetPositionX = planets.children[i+1].position.x;
+                    targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
+                    text.innerHTML = "Flying...";
+                    way = 1;
+                    window.requestAnimationFrame(animRocket);
+                } else if(mat >= 200 && halosis[i].planet == currentPlanet.name && anim == false){
+                    mat = mat - 200;
                     targetPositionX = planets.children[i+1].position.x;
                     targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
                     text.innerHTML = "Flying...";
@@ -332,7 +346,14 @@ function init(){
         if(intersects[0]){
             for (let i = 0; i < planets.children.length; i++) {
                 whatPlanet();
-                if(halosis[i].right == intersects[0].object.name && currentPlanet.number == i && anim == false){
+                if(halosis[i].right == intersects[0].object.name && currentPlanet.number == i && anim == false && halosis[i+1].capt == true){
+                    targetPositionX = planets.children[i+1].position.x;
+                    targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
+                    text.innerHTML = "Flying...";
+                    way = 1;
+                    window.requestAnimationFrame(animRocket);
+                } else if(mat >= 200 && halosis[i].right == intersects[0].object.name && currentPlanet.number == i && anim == false){
+                    mat = mat - 200;
                     targetPositionX = planets.children[i+1].position.x;
                     targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
                     text.innerHTML = "Flying...";
@@ -344,7 +365,14 @@ function init(){
                     text.innerHTML = "In the sun? Really? Well you lost...";
                     way = -1;
                     window.requestAnimationFrame(animRocket);
-                } else if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false){
+                } if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false && halosis[i-1].capt == true){
+                    targetPositionX = planets.children[i-1].position.x;
+                    targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
+                    text.innerHTML = "Flying...";
+                    way = -1;
+                    window.requestAnimationFrame(animRocket);
+                } else if(mat >= 200 && halosis[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false){
+                    mat = mat - 200;
                     targetPositionX = planets.children[i-1].position.x;
                     targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
                     text.innerHTML = "Flying...";
@@ -365,7 +393,7 @@ function init(){
                  if(halosis[i].name == "venus"){
                     mat += 0.5;
                 } else {
-                    mat += 0.05;
+                    mat += 0.1;
                     resource.innerHTML = "Moon Stone : " + round(mat);
                 }
             }
