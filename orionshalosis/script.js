@@ -253,6 +253,8 @@ function init(){
                     text.innerHTML = "Flying...";
                     way = -1;
                     window.requestAnimationFrame(animRocket);
+                } else if(halosis[i].planet == currentPlanet.name && anim == false && mat <= halosis[i-1].price){
+                    text.innerHTML = "You don't have enought resources...";
                 }
             }
         }
@@ -275,6 +277,8 @@ function init(){
                     text.innerHTML = "Flying...";
                     way = 1;
                     window.requestAnimationFrame(animRocket);
+                } else if(halosis[i].planet == currentPlanet.name && anim == false && mat <= halosis[i-1].price){
+                    text.innerHTML = "You don't have enought resources...";
                 }
             }
         }
@@ -302,7 +306,9 @@ function init(){
                     text.innerHTML = "Flying...";
                     way = 1;
                     window.requestAnimationFrame(animRocket);
-                } 
+                } else if(halosis[i].right == intersects[0].object.name && currentPlanet.number == i && anim == false && mat <= halosis[i+1].price){
+                    text.innerHTML = "You don't have enought resources...";
+                }
                 if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && halosis[i].left == "sun" && anim == false){
                     targetPositionX = sun.getPos()[1];
                     text.innerHTML = "In the sun? Really? Well you lost...";
@@ -321,6 +327,8 @@ function init(){
                     text.innerHTML = "Flying...";
                     way = -1;
                     window.requestAnimationFrame(animRocket);
+                } else if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false && mat <= halosis[i-1].price){
+                    text.innerHTML = "You don't have enought resources...";
                 }
             }
         }
