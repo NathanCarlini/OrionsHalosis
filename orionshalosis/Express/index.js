@@ -1,23 +1,36 @@
-const tokenGen = require("./services/tokenGen");
-const tokenRead = require("./services/tokenRead");
+const userCreation = require("./services/userCreation");
+const userGetData = require("./services/userGetData");
 const express = require("express");
 const app = express();
-const port = 3001;
-const prog = require("./services/prog");
+const port = 8080;
 const bodyParser = require("body-parser");
 var cors = require("cors");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-app.post("/", (req, res, next) => {
-  // let p = tokenRead.tokenRead();
-  // console.log(tokenGen.tokenGen());
-  let p = tokenGen.tokenGen();
-  // next();
-  prog.create(req.body);
+
+app.get("/userGetData", (req, res, next) => {
+  let data = userGetData.getAllData(req.body);
+  next(
+    console.log(data),
+    res.json({
+      data
+    }),
+  );
+});
+
+app.post("/userCreation", (req, res, next) => {
+  userCreation.create(req.body);
   res.json({
-    token : p
+    token: "p",
+  });
+});
+
+app.put("/userLogin", (req, res, next) => {
+  userCreation.check(req.body);
+  res.json({
+    token: "p",
   });
 });
 
