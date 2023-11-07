@@ -371,7 +371,7 @@ function init(){
         }
         whatPlanet();
         if(halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true && halosis[8].capt == true){
-            text.innerHTML = "You won the game! <br>You took "+sec+" seconds to complete the geme!";
+            text.innerHTML = "You won the game! <br>You took "+sec+" seconds to complete the game!";
             window.clearTimeout(timer);
             sec = 0;
             anim = true;
