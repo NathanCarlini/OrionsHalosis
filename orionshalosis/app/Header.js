@@ -29,12 +29,12 @@ export default function Header({ vis }) {
         </div>
         {vis == 1 ? (
           <div className="flex flex-row gap-3">
-            <Link href="/api/auth/signup">
+            <Link href="/signup">
               <div className=" rounded-full bg-black px-2 py-1 md:px-8 md:py-2 text-white duration-500 hover:bg-slate-500">
                 Sign up
               </div>
             </Link>
-            <Link href="/api/auth/login">
+            <Link href="/login">
               <div className=" rounded-full bg-white px-2 py-1 md:px-8 md:py-2 text-black duration-500 hover:text-white hover:bg-slate-500">
                 Log In
               </div>
