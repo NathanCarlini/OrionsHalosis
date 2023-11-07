@@ -97,6 +97,7 @@ function init(){
         flagCurrent2.add(flag0);
         flag0.scale.set(0.5, 0.4, 0.5);
         flag0.rotateZ(Math.PI/8); 
+        flag0.position.x = -200;
         flag0.visible = false;
         flag1 = flag0.clone(true);
         flag1.position.x = 10-200
@@ -494,7 +495,7 @@ function init(){
             }
         }
     }
-    
+
     // control rocket with mouse
     function onMouseDown(e) {
         pointer.x = ( e.clientX / window.innerWidth ) * 2 - 1;
@@ -699,6 +700,7 @@ function init(){
     sec = 60;
     window.setInterval(timer, 1000)
     const time = document.querySelector(".timer")
+    // add timer limit to player (to do)
     function timer(){
         sec--;
         time.innerHTML = "Timer : "+sec;
@@ -710,15 +712,10 @@ function init(){
     function game(){
         if(player1 == true){
             resources()
-            whatPlanet();
-            console.log("player1 turn", mat, currentPlanet);
             document.addEventListener("keydown", onDocumentKeyDown, false);
             // document.addEventListener('mousedown', onMouseDown, false);
         } else if (player2 == true){
             resources()
-            whatPlanet2();
-            console.log("player2 turn", mat2);
-            console.log(currentPlanet, rocketCurrent2.position.x, venus2.getPos()[1])
             document.addEventListener("keydown", onDocumentKeyDown, false);
             // document.addEventListener('mousedown', onMouseDown, false);
         }
