@@ -22,12 +22,10 @@ function init(){
         './resources/front.png',
         './resources/back.png',
     ]);
-    let rocketscene, rocketCurrent, flagCurrent, planets, mat = null;
-    let way, targetPositionX, targetPositionY, sec = 0;
+    let rocketscene, rocketCurrent, rocketscene2, rocketCurrent2, flagCurrent, planets, mat, way, targetPositionX, targetPositionY, sec;
 
 // rocket loader
     rocketCurrent = new THREE.Group();
-    scene.add(rocketCurrent);
     var rocket = new GLTFLoader();
     rocket.load('./resources/rocketfuture.glb', function ( gltf ) {
     // rocket.load('./resources/Rocketship.glb', function ( gltf ) {
@@ -39,6 +37,19 @@ function init(){
         scene.add( rocketCurrent );
     },);
     rocketCurrent.position.set(35, 1.85, 0);
+
+    rocketCurrent2 = new THREE.Group();
+    var rocket2 = new GLTFLoader();
+    rocket2.load('./resources/rocketfuture.glb', function ( gltf ) {
+    // rocket.load('./resources/Rocketship.glb', function ( gltf ) {
+        gltf.animations;
+        rocketscene2 = gltf.scene;
+        rocketCurrent2.add(rocketscene2);
+        rocketscene2.position.y = 0;
+        rocketscene2.scale.set(0.15, 0.15, 0.15); 
+        scene.add( rocketCurrent2 );
+    },);
+    rocketCurrent2.position.set(35-200, 1.85, 0);
 
 // flags loader
     var flag = new GLTFLoader();
@@ -153,7 +164,82 @@ function init(){
     SaturnRingMesh.position.x = 75;
     SaturnRingMesh.rotateX(Math.PI/2);
     scene.add( SaturnRingMesh );
-        
+    
+
+    let planets2 = new THREE.Group();
+    const Planets2 = class {
+        constructor(size, texture, position, price){
+            const Geometry = new THREE.SphereGeometry( size, 32, 32 );
+            const texturePlanet = new THREE.TextureLoader().load('resources/'+texture+'.jpg' ); 
+            if (texture == "earth"){
+                const textureEarthBump = new THREE.TextureLoader().load('resources/earthbump.jpg' ); 
+                const textureEarthSpec = new THREE.TextureLoader().load('resources/earthspec.jpg' );
+                const Material = new THREE.MeshPhongMaterial({map: texturePlanet, bumpMap: textureEarthBump, specular: textureEarthSpec}); 
+                const Mesh = new THREE.Mesh(Geometry, Material);
+                Mesh.position.x = position;
+                Mesh.name = texture;
+                planets2.add(Mesh);
+            } else {
+                const Material = new THREE.MeshPhongMaterial({map: texturePlanet}); 
+                const Mesh = new THREE.Mesh(Geometry, Material);
+                Mesh.position.x = position;
+                Mesh.name = texture;
+                planets2.add(Mesh);
+            
+                const material = new THREE.LineBasicMaterial( { color: 0xffffff } );
+                const points = [];
+                points.push( new THREE.Vector3( position, 0, 0 ) );
+                points.push( new THREE.Vector3( position+1.5, size+1, 0 ) );
+                points.push( new THREE.Vector3( position+6, size+1, 0 ) );
+                const geometry = new THREE.BufferGeometry().setFromPoints( points );
+                const line = new THREE.Line( geometry, material );
+                scene.add( line );
+            
+                const loader = new FontLoader();
+                loader.load( 'font/space-font.json', function ( font ) {
+                    const geometry = new TextGeometry( 'Price : '+price, {
+                        font: font,
+                        size: 0.4,
+                        height: 0.1,
+                    } );
+                    const material = new THREE.MeshStandardMaterial({
+                        color: 'white',
+                    });
+                    const textMesh = new THREE.Mesh(geometry, material);
+                    textMesh.position.set(position+1.75, size+1.5, 0);
+                    scene.add(textMesh);
+                } );
+            }
+            this.texture = texture;
+            this.position = position;
+            this.price = price;
+        }
+        getPos(){
+            let obj = [this.texture, this.position,this.price];
+            return obj;
+        }
+    }
+    const sun2 = new Planets2(15, 'sun', -10-200, 0);
+    const mercury2 = new Planets2(1, 'mercury', 15-200, 300);
+    const venus2 = new Planets2(1.8, 'venus', 25-200, 200);
+    const earth2 = new Planets2(2, 'earth', 35-200, 0);
+    const mars2 = new Planets2(1.4, 'mars', 45-200, 150);
+    const jupiter2 = new Planets2(5, 'jupiter', 60-200, 100);
+    const saturn2 = new Planets2(4.5, 'saturn', 75-200, 250);
+    const uranus2 = new Planets2(3.5, 'uranus', 90-200, 400);
+    const neptune2 = new Planets2(3.1, 'neptune', 100-200, 700);
+    scene.add(planets2);
+    // add ring to saturn
+    const SaturnRingGeometry2 = new THREE.RingGeometry( 5, 8, 64 ); 
+    const SaturnRingMaterial2 = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, side: THREE.DoubleSide } );
+    SaturnRingMaterial.transparent = true;
+    SaturnRingMaterial.opacity = 0.2;
+    const SaturnRingMesh2 = new THREE.Mesh( SaturnRingGeometry2, SaturnRingMaterial2 ); 
+    SaturnRingMesh2.position.x = 75;
+    SaturnRingMesh2.rotateX(Math.PI/2);
+    scene.add( SaturnRingMesh2 );
+
+
 // light
     let light = new THREE.DirectionalLight(0xFFFFFF, 1.0);
     let light2 = new THREE.AmbientLight(0xFFFFFF, 1);
@@ -194,6 +280,17 @@ function init(){
         {planet: "uranus", capt: false, left:"saturn", right:"neptune", price:uranus.getPos()[2]},
         {planet: "neptune", capt: false, left:"uranus", right:"pluto", price:neptune.getPos()[2]},
     ];
+    let halosis2 = [
+        {planet: "sun", capt: false, left:"none", right:"none", price:sun2.getPos()[2]},
+        {planet: "mercury", capt: false, left:"sun", right:"venus", price:mercury2.getPos()[2]},
+        {planet: "venus", capt: false, left:"mercury", right:"earth", price:venus2.getPos()[2]},
+        {planet: "earth", capt: true, left:"venus", right:"mars", price:earth2.getPos()[2]},
+        {planet: "mars", capt: false, left:"earth", right:"jupiter", price:mars2.getPos()[2]},
+        {planet: "jupiter", capt: false, left:"mars", right:"saturn", price:jupiter2.getPos()[2]},
+        {planet: "saturn", capt: false, left:"jupiter", right:"uranus", price:saturn2.getPos()[2]},
+        {planet: "uranus", capt: false, left:"saturn", right:"neptune", price:uranus2.getPos()[2]},
+        {planet: "neptune", capt: false, left:"uranus", right:"pluto", price:neptune2.getPos()[2]},
+    ];
 
 //find what planet we are currently on
     function whatPlanet(){
@@ -217,6 +314,27 @@ function init(){
             currentPlanet = {number:"8", name:"neptune"};
         }
     }
+    function whatPlanet2(){
+        if (round(rocketCurrent2.position.x) == sun2.getPos()[1]){
+            currentPlanet = {number:"0", name:"sun"};
+        } if (round(rocketCurrent2.position.x) == mercury2.getPos()[1]){
+            currentPlanet = {number:"1", name:"mercury"};
+        } if (round(rocketCurrent2.position.x) == venus2.getPos()[1]){
+            currentPlanet = {number:"2", name:"venus"};
+        } if (round(rocketCurrent2.position.x) == earth2.getPos()[1]){
+            currentPlanet = {number:"3", name:"earth"};
+        } if (round(rocketCurrent2.position.x) == mars2.getPos()[1]){
+            currentPlanet = {number:"4", name:"mars"};
+        } if (round(rocketCurrent2.position.x) == jupiter2.getPos()[1]){
+            currentPlanet = {number:"5", name:"jupiter"};
+        } if (round(rocketCurrent2.position.x) == saturn2.getPos()[1]){
+            currentPlanet = {number:"6", name:"saturn"};
+        } if (round(rocketCurrent2.position.x) == uranus2.getPos()[1]){
+            currentPlanet = {number:"7", name:"uranus"};
+        } if (round(rocketCurrent2.position.x) == neptune2.getPos()[1]){
+            currentPlanet = {number:"8", name:"neptune"};
+        }
+    }
 
 // round a number
     function round(num){
@@ -226,55 +344,113 @@ function init(){
 // if action the keyboard action in the game
     let anim = false;
     function onDocumentKeyDown(event) {
-        whatPlanet()
         if (event.key == "ArrowLeft" || event.key == "q") {
-            for (let i = 0; i < planets.children.length; i++) {
-                if(currentPlanet.name == "sun"){
-                    text.innerHTML = "Reload the page... You have lost...";
-                } else if(halosis[i].planet == currentPlanet.name && currentPlanet.name == "mercury" && anim == false){
-                    targetPositionX = planets.children[i-1].position.x;
-                    text.innerHTML = "In the sun? Really? Well you lost...";
-                    way = -1;
-                    window.requestAnimationFrame(animRocket);
-                } else if(halosis[i].planet == currentPlanet.name && anim == false && halosis[i-1].capt == true){
-                    targetPositionX = planets.children[i-1].position.x;
-                    targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
-                    text.innerHTML = "Flying...";
-                    way = -1;
-                    window.requestAnimationFrame(animRocket);
-                } else if(halosis[i].planet == currentPlanet.name && anim == false && mat >= halosis[i-1].price){
-                    mat = mat - halosis[i-1].price;
-                    targetPositionX = planets.children[i-1].position.x;
-                    targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
-                    text.innerHTML = "Flying...";
-                    way = -1;
-                    window.requestAnimationFrame(animRocket);
-                } else if(halosis[i].planet == currentPlanet.name && anim == false && mat <= halosis[i-1].price){
-                    text.innerHTML = "You don't have enough resources...";
+            if (player1 == true){
+                for (let i = 0; i < planets.children.length; i++) {
+                    whatPlanet()
+                    if(currentPlanet.name == "sun"){
+                        text.innerHTML = "Reload the page... You have lost...";
+                    } else if(halosis[i].planet == currentPlanet.name && currentPlanet.name == "mercury" && anim == false){
+                        targetPositionX = planets.children[i-1].position.x;
+                        text.innerHTML = "In the sun? Really? Well you lost...";
+                        way = -1;
+                        window.requestAnimationFrame(animRocket);
+                    } else if(halosis[i].planet == currentPlanet.name && anim == false && halosis[i-1].capt == true){
+                        targetPositionX = planets.children[i-1].position.x;
+                        targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
+                        text.innerHTML = "Flying...";
+                        way = -1;
+                        window.requestAnimationFrame(animRocket);
+                    } else if(halosis[i].planet == currentPlanet.name && anim == false && mat >= halosis[i-1].price){
+                        mat = mat - halosis[i-1].price;
+                        resource.innerHTML = "Moon Stone : " + round(mat);
+                        targetPositionX = planets.children[i-1].position.x;
+                        targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
+                        text.innerHTML = "Flying...";
+                        way = -1;
+                        window.requestAnimationFrame(animRocket);
+                    } else if(halosis[i].planet == currentPlanet.name && anim == false && mat <= halosis[i-1].price){
+                        text.innerHTML = "You don't have enough resources...";
+                    }
+                }
+            } else if(player2 == true){
+                for (let i = 0; i < planets2.children.length; i++) {
+                    whatPlanet2()
+                    if(currentPlanet.name == "sun"){
+                        text.innerHTML = "Reload the page... You have lost...";
+                    } else if(halosis2[i].planet == currentPlanet.name && currentPlanet.name == "mercury" && anim == false){
+                        targetPositionX = planets2.children[i-1].position.x;
+                        text.innerHTML = "In the sun? Really? Well you lost...";
+                        way = -1;
+                        window.requestAnimationFrame(animRocket);
+                    } else if(halosis2[i].planet == currentPlanet.name && anim == false && halosis2[i-1].capt == true){
+                        targetPositionX = planets2.children[i-1].position.x;
+                        targetPositionY = round(planets2.children[i-1].geometry.parameters.radius);
+                        text.innerHTML = "Flying...";
+                        way = -1;
+                        window.requestAnimationFrame(animRocket);
+                    } else if(halosis2[i].planet == currentPlanet.name && anim == false && mat2 >= halosis2[i-1].price){
+                        mat2 = mat2 - halosis2[i-1].price;
+                        resource2.innerHTML = "Moon Stone : " + round(mat2);
+                        targetPositionX = planets2.children[i-1].position.x;
+                        targetPositionY = round(planets2.children[i-1].geometry.parameters.radius);
+                        text.innerHTML = "Flying...";
+                        way = -1;
+                        window.requestAnimationFrame(animRocket);
+                    } else if(halosis2[i].planet == currentPlanet.name && anim == false && mat2 <= halosis2[i-1].price){
+                        text.innerHTML = "You don't have enough resources...";
+                    }
                 }
             }
         }
         if (event.key == "ArrowRight" || event.key == "d") {
             for (let i = 0; i < planets.children.length; i++) {
-                if(halosis[i].planet == currentPlanet.name && halosis[i].right == "pluto" && anim == false){
-                    text.innerHTML = "Where are you going? Pluto is not a planet...";
-                } else if (halosis[i].planet == currentPlanet.name && anim == false && halosis[i].right == "none"){
-                    text.innerHTML = "Reload the page... You have lost...";
-                } else if(halosis[i].planet == currentPlanet.name && anim == false && halosis[i+1].capt == true){
-                    targetPositionX = planets.children[i+1].position.x;
-                    targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
-                    text.innerHTML = "Flying...";
-                    way = 1;
-                    window.requestAnimationFrame(animRocket);
-                } else if(halosis[i].planet == currentPlanet.name && anim == false && mat >= halosis[i+1].price){
-                    mat = mat - halosis[i+1].price;
-                    targetPositionX = planets.children[i+1].position.x;
-                    targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
-                    text.innerHTML = "Flying...";
-                    way = 1;
-                    window.requestAnimationFrame(animRocket);
-                } else if(halosis[i].planet == currentPlanet.name && anim == false && mat <= halosis[i-1].price){
-                    text.innerHTML = "You don't have enough resources...";
+                if (player1 == true){
+                    whatPlanet()
+                    if(halosis[i].planet == currentPlanet.name && halosis[i].right == "pluto" && anim == false){
+                        text.innerHTML = "Where are you going? Pluto is not a planet...";
+                    } else if (halosis[i].planet == currentPlanet.name && anim == false && halosis[i].right == "none"){
+                        text.innerHTML = "Reload the page... You have lost...";
+                    } else if(halosis[i].planet == currentPlanet.name && anim == false && halosis[i+1].capt == true){
+                        targetPositionX = planets.children[i+1].position.x;
+                        targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
+                        text.innerHTML = "Flying...";
+                        way = 1;
+                        window.requestAnimationFrame(animRocket);
+                    } else if(halosis[i].planet == currentPlanet.name && anim == false && mat >= halosis[i+1].price){
+                        mat = mat - halosis[i+1].price;
+                        resource.innerHTML = "Moon Stone : " + round(mat);
+                        targetPositionX = planets.children[i+1].position.x;
+                        targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
+                        text.innerHTML = "Flying...";
+                        way = 1;
+                        window.requestAnimationFrame(animRocket);
+                    } else if(halosis[i].planet == currentPlanet.name && anim == false && mat <= halosis[i-1].price){
+                        text.innerHTML = "You don't have enough resources...";
+                    }
+                } else if (player2 == true){
+                    whatPlanet2()
+                    if(halosis2[i].planet == currentPlanet.name && halosis2[i].right == "pluto" && anim == false){
+                        text.innerHTML = "Where are you going? Pluto is not a planet...";
+                    } else if (halosis2[i].planet == currentPlanet.name && anim == false && halosis2[i].right == "none"){
+                        text.innerHTML = "Reload the page... You have lost...";
+                    } else if(halosis2[i].planet == currentPlanet.name && anim == false && halosis2[i+1].capt == true){
+                        targetPositionX = planets2.children[i+1].position.x;
+                        targetPositionY = round(planets2.children[i+1].geometry.parameters.radius);
+                        text.innerHTML = "Flying...";
+                        way = 1;
+                        window.requestAnimationFrame(animRocket);
+                    } else if(halosis2[i].planet == currentPlanet.name && anim == false && mat2 >= halosis2[i+1].price){
+                        mat2 = mat2 - halosis2[i+1].price;
+                        resource2.innerHTML = "Moon Stone : " + round(mat2);
+                        targetPositionX = planets2.children[i+1].position.x;
+                        targetPositionY = round(planets2.children[i+1].geometry.parameters.radius);
+                        text.innerHTML = "Flying...";
+                        way = 1;
+                        window.requestAnimationFrame(animRocket);
+                    } else if(halosis2[i].planet == currentPlanet.name && anim == false && mat2 <= halosis2[i-1].price){
+                        text.innerHTML = "You don't have enough resources...";
+                    }
                 }
             }
         }
@@ -304,8 +480,7 @@ function init(){
                     window.requestAnimationFrame(animRocket);
                 } else if(halosis[i].right == intersects[0].object.name && currentPlanet.number == i && anim == false && mat <= halosis[i+1].price){
                     text.innerHTML = "You don't have enough resources...";
-                }
-                if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && halosis[i].left == "sun" && anim == false){
+                } if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && halosis[i].left == "sun" && anim == false){
                     targetPositionX = sun.getPos()[1];
                     text.innerHTML = "In the sun? Really? Well you lost...";
                     way = -1;
@@ -332,85 +507,199 @@ function init(){
 
     // animation rocket from planets to planets
     function animRocket(){
-        anim = true;
-        if(way == 1){
-            if (rocketCurrent.position.x <= targetPositionX) {
-                rocketCurrent.position.x += 0.1;
-                if (rocketCurrent.position.y <= targetPositionY) {
-                    rocketCurrent.position.y += 0.03;
-                } else if (rocketCurrent.position.y >= targetPositionY) {
-                    rocketCurrent.position.y -= 0.03;
+        if(player1 == true){
+            whatPlanet();
+            anim = true;
+            if(way == 1){
+                if (rocketCurrent.position.x <= targetPositionX) {
+                    rocketCurrent.position.x += 0.1;
+                    if (rocketCurrent.position.y <= targetPositionY) {
+                        rocketCurrent.position.y += 0.03;
+                    } else if (rocketCurrent.position.y >= targetPositionY) {
+                        rocketCurrent.position.y -= 0.03;
+                    }
+                    camera.position.x = rocketCurrent.position.x;
+                    window.requestAnimationFrame(animRocket);
+                } else {
+                    text.innerHTML = "You are on " + currentPlanet.name;
+                    halosis[currentPlanet.number].capt = true;
+                    flagCurrent.children[parseInt(currentPlanet.number-1)].visible = true;
+                    setTimeout(function(){
+                        player2 = true;
+                        player1 = false;
+                        sec = 60;
+                        camera.position.x = rocketCurrent2.position.x;
+                        anim = false;
+                        game();
+                    },3000)
                 }
-                camera.position.x = rocketCurrent.position.x;
-                window.requestAnimationFrame(animRocket);
             } else {
-                text.innerHTML = "You are on " + currentPlanet.name;
-                anim = false;
-                halosis[currentPlanet.number].capt = true;
-                flagCurrent.children[parseInt(currentPlanet.number-1)].visible = true;
-            }
-        } else {
-            if (rocketCurrent.position.x >= targetPositionX) {
-                rocketCurrent.position.x -= 0.1;
-                if (rocketCurrent.position.y <= targetPositionY) {
-                    rocketCurrent.position.y += 0.03;
-                } else if (rocketCurrent.position.y >= targetPositionY) {
-                    rocketCurrent.position.y -= 0.03;
+                if (rocketCurrent.position.x >= targetPositionX) {
+                    rocketCurrent.position.x -= 0.1;
+                    if (rocketCurrent.position.y <= targetPositionY) {
+                        rocketCurrent.position.y += 0.03;
+                    } else if (rocketCurrent.position.y >= targetPositionY) {
+                        rocketCurrent.position.y -= 0.03;
+                    }
+                    camera.position.x = rocketCurrent.position.x;
+                    window.requestAnimationFrame(animRocket);
+                } else if(currentPlanet.name == "sun"){
+                    anim = false;
+                } else {
+                    text.innerHTML = "You are on " + currentPlanet.name;
+                    halosis[currentPlanet.number].capt = true;
+                    flagCurrent.children[currentPlanet.number-1].visible = true;
+                    setTimeout(function(){
+                        player2 = true;
+                        player1 = false;
+                        sec = 60;
+                        camera.position.x = rocketCurrent2.position.x;
+                        anim = false;
+                        game();
+                    },3000)
                 }
-                camera.position.x = rocketCurrent.position.x;
-                window.requestAnimationFrame(animRocket);
-            } else if(currentPlanet.name == "sun"){
-                anim = false;
             }
-            else {
-                text.innerHTML = "You are on " + currentPlanet.name;
-                anim = false;
-                halosis[currentPlanet.number].capt = true;
-                flagCurrent.children[currentPlanet.number-1].visible = true;
+            whatPlanet();
+            if(halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true && halosis[8].capt == true){
+                text.innerHTML = "You won the game! <br>You took "+sec+" seconds to complete the game!";
+                window.clearTimeout(timer);
+                sec = 0;
+                anim = true;
+            }  
+        } else {
+            whatPlanet2();
+            anim = true;
+            if(way == 1){
+                if (rocketCurrent2.position.x <= targetPositionX) {
+                    rocketCurrent2.position.x += 0.1;
+                    if (rocketCurrent2.position.y <= targetPositionY) {
+                        rocketCurrent2.position.y += 0.03;
+                    } else if (rocketCurrent2.position.y >= targetPositionY) {
+                        rocketCurrent2.position.y -= 0.03;
+                    }
+                    camera.position.x = rocketCurrent2.position.x;
+                    window.requestAnimationFrame(animRocket);
+                } else {
+                    text.innerHTML = "You are on " + currentPlanet.name;
+                    halosis2[currentPlanet.number].capt = true;
+                    flagCurrent.children[parseInt(currentPlanet.number-1)].visible = true;
+                    setTimeout(function(){
+                        player2 = false;
+                        player1 = true;
+                        sec = 60;
+                        camera.position.x = rocketCurrent.position.x;
+                        anim = false;
+                        game();
+                    },3000)
+                }
+            } else {
+                if (rocketCurrent2.position.x >= targetPositionX) {
+                    rocketCurrent2.position.x -= 0.1;
+                    if (rocketCurrent2.position.y <= targetPositionY) {
+                        rocketCurrent2.position.y += 0.03;
+                    } else if (rocketCurrent2.position.y >= targetPositionY) {
+                        rocketCurrent2.position.y -= 0.03;
+                    }
+                    camera.position.x = rocketCurrent2.position.x;
+                    window.requestAnimationFrame(animRocket);
+                } else if(currentPlanet.name == "sun"){
+                    anim = false;
+                } else {
+                    text.innerHTML = "You are on " + currentPlanet.name;
+                    halosis2[currentPlanet.number].capt = true;
+                    flagCurrent.children[currentPlanet.number-1].visible = true;
+                    setTimeout(function(){
+                        player2 = false;
+                        player1 = true;
+                        sec = 60;
+                        camera.position.x = rocketCurrent.position.x;
+                        anim = false;
+                        game();
+                    },3000)
+                }
+            }
+            whatPlanet2();
+            if(halosis2[1].capt == true && halosis2[2].capt == true && halosis2[3].capt == true && halosis2[4].capt == true && halosis2[5].capt == true && halosis2[6].capt == true && halosis2[7].capt == true && halosis2[8].capt == true){
+                text.innerHTML = "You won the game! <br>You took "+sec+" seconds to complete the game!";
+                window.clearTimeout(timer);
+                sec = 0;
+                anim = true;
             }
         }
-        whatPlanet();
-        if(halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true && halosis[8].capt == true){
-            text.innerHTML = "You won the game! <br>You took "+sec+" seconds to complete the game!";
-            window.clearTimeout(timer);
-            sec = 0;
-            anim = true;
-        }  
+          
     }
 
     // loop for moon stones update
     const resource = document.querySelector(".resource")
-    window.setInterval(resources, 100)
-    async function resources(){
-        for (let i = 0; i < halosis.length; i++) {
+    const resource2 = document.querySelector(".resource2")
+    mat = 0;
+    let mat2 = 0;
+    function resources(){
+        if(player1 == true){
             if (currentPlanet.name == "sun"){
                 mat = 0;
-            } else if (halosis[i].capt == true) {
-                if(halosis[i].name == "venus"){
-                    mat += 4;
-                } else {
-                    mat += 2;
-                    resource.innerHTML = "Moon Stone : " + round(mat);
-                }
+            } else if (halosis[2].capt == true) {
+                mat += 400;
+                resource.innerHTML = "Moon Stone : " + round(mat);
+            } else {
+                mat += 200;
+                resource.innerHTML = "Moon Stone : " + round(mat);
+            }
+        } else if(player2 == true){
+            if (currentPlanet.name == "sun"){
+                mat2 = 0;
+            } else if (halosis2[2].capt == true) {
+                mat2 += 400;
+                resource2.innerHTML = "Moon Stone j2 : " + round(mat2);
+            } else {
+                mat2 += 200;
+                resource2.innerHTML = "Moon Stone j2 : " + round(mat2);
             }
         }
+        
     }
+    sec = 60;
     window.setInterval(timer, 1000)
     const time = document.querySelector(".timer")
     function timer(){
-        sec++;
+        sec--;
         time.innerHTML = "Timer : "+sec;
+    }
+
+// turn-based 
+    let player1 = true;
+    let player2 = false;
+    function game(){
+        if(player1 == true){
+            resources()
+            whatPlanet();
+            console.log("player1 turn", mat);
+            console.log(currentPlanet)
+            document.addEventListener("keydown", onDocumentKeyDown, false);
+            // document.addEventListener('mousedown', onMouseDown, false);
+        } else if (player2 == true){
+            resources()
+            whatPlanet2();
+            console.log("player2 turn", mat2);
+            console.log(currentPlanet, rocketCurrent2.position.x, venus2.getPos()[1])
+            document.addEventListener("keydown", onDocumentKeyDown, false);
+            // document.addEventListener('mousedown', onMouseDown, false);
+        }
     }
 
 // loop for the render and cam
     function loop(){
-        document.addEventListener("keydown", onDocumentKeyDown, false);
-        document.addEventListener('mousedown', onMouseDown, false);
-        camera.lookAt(rocketCurrent.position.x, rocketCurrent.position.y, rocketCurrent.position.z);
+        if(player1 == true){
+            camera.lookAt(rocketCurrent.position.x, rocketCurrent.position.y, rocketCurrent.position.z);
+        } else {
+            camera.lookAt(rocketCurrent2.position.x, rocketCurrent2.position.y, rocketCurrent2.position.z);
+        }
+        
         camera.updateProjectionMatrix();
         renderer.render(scene, camera);
         window.requestAnimationFrame(loop);
     }
     loop();
+    game();
 }
 init();
