@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
+
 export default function Page() {
   var data = {};
   const date = new Date()
@@ -31,7 +32,7 @@ export default function Page() {
     });
     console.log(data);
     try {
-      await fetch("http://localhost:3001/", {
+      await fetch("http://localhost:8080/userCreation", {
         method: "POST",
 
         headers: {
