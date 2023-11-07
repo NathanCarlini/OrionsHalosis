@@ -89,6 +89,42 @@ function init(){
     },);
     flagCurrent.position.set(14.5, 0.75, 0);
 
+    // put another flag for clearance
+    let flagCurrent2 = new THREE.Group();
+    flag.load('./resources/Flag.glb', function ( gltf ) {
+        gltf.animations;
+        flag0 = gltf.scene;
+        flagCurrent2.add(flag0);
+        flag0.scale.set(0.5, 0.4, 0.5);
+        flag0.rotateZ(Math.PI/8); 
+        flag0.visible = false;
+        flag1 = flag0.clone(true);
+        flag1.position.x = 10-200
+        flag1.position.y = 1
+        flag2 = flag0.clone(true);
+        flag2.position.x = 20-200
+        flag2.position.y = 1.25
+        flag3 = flag0.clone(true);
+        flag3.position.x = 30-200
+        flag3.position.y = 0.5
+        flag4 = flag0.clone(true);
+        flag4.position.x = 45-200
+        flag4.position.y = 4
+        flag5 = flag0.clone(true);
+        flag5.position.x = 60-200
+        flag5.position.y = 3.75
+        flag6 = flag0.clone(true);
+        flag6.position.x = 75-200
+        flag6.position.y = 2.5
+        flag7 = flag0.clone(true);
+        flag7.position.x = 85-200
+        flag7.position.y = 2
+        flag2.visible = true;
+        flagCurrent2.add(flag1, flag2, flag3, flag4, flag5, flag6, flag7);
+        scene.add( flagCurrent2 );
+    },);
+    flagCurrent2.position.set(14.5, 0.75, 0);
+
 // init planets (to optimize with class)
     planets = new THREE.Group();
     const Planets = class {
@@ -294,44 +330,44 @@ function init(){
 
 //find what planet we are currently on
     function whatPlanet(){
-        if (round(rocketCurrent.position.x) == sun.getPos()[1]){
+        if (roundUnit(rocketCurrent.position.x) == sun.getPos()[1]){
             currentPlanet = {number:"0", name:"sun"};
-        } if (round(rocketCurrent.position.x) == mercury.getPos()[1]){
+        } if (roundUnit(rocketCurrent.position.x) == mercury.getPos()[1]){
             currentPlanet = {number:"1", name:"mercury"};
-        } if (round(rocketCurrent.position.x) == venus.getPos()[1]){
+        } if (roundUnit(rocketCurrent.position.x) == venus.getPos()[1]){
             currentPlanet = {number:"2", name:"venus"};
-        } if (round(rocketCurrent.position.x) == earth.getPos()[1]){
+        } if (roundUnit(rocketCurrent.position.x) == earth.getPos()[1]){
             currentPlanet = {number:"3", name:"earth"};
-        } if (round(rocketCurrent.position.x) == mars.getPos()[1]){
+        } if (roundUnit(rocketCurrent.position.x) == mars.getPos()[1]){
             currentPlanet = {number:"4", name:"mars"};
-        } if (round(rocketCurrent.position.x) == jupiter.getPos()[1]){
+        } if (roundUnit(rocketCurrent.position.x) == jupiter.getPos()[1]){
             currentPlanet = {number:"5", name:"jupiter"};
-        } if (round(rocketCurrent.position.x) == saturn.getPos()[1]){
+        } if (roundUnit(rocketCurrent.position.x) == saturn.getPos()[1]){
             currentPlanet = {number:"6", name:"saturn"};
-        } if (round(rocketCurrent.position.x) == uranus.getPos()[1]){
+        } if (roundUnit(rocketCurrent.position.x) == uranus.getPos()[1]){
             currentPlanet = {number:"7", name:"uranus"};
-        } if (round(rocketCurrent.position.x) == neptune.getPos()[1]){
+        } if (roundUnit(rocketCurrent.position.x) == neptune.getPos()[1]){
             currentPlanet = {number:"8", name:"neptune"};
         }
     }
     function whatPlanet2(){
-        if (round(rocketCurrent2.position.x) == sun2.getPos()[1]){
+        if (roundUnit(rocketCurrent2.position.x) == sun2.getPos()[1]){
             currentPlanet = {number:"0", name:"sun"};
-        } if (round(rocketCurrent2.position.x) == mercury2.getPos()[1]){
+        } if (roundUnit(rocketCurrent2.position.x) == mercury2.getPos()[1]){
             currentPlanet = {number:"1", name:"mercury"};
-        } if (round(rocketCurrent2.position.x) == venus2.getPos()[1]){
+        } if (roundUnit(rocketCurrent2.position.x) == venus2.getPos()[1]){
             currentPlanet = {number:"2", name:"venus"};
-        } if (round(rocketCurrent2.position.x) == earth2.getPos()[1]){
+        } if (roundUnit(rocketCurrent2.position.x) == earth2.getPos()[1]){
             currentPlanet = {number:"3", name:"earth"};
-        } if (round(rocketCurrent2.position.x) == mars2.getPos()[1]){
+        } if (roundUnit(rocketCurrent2.position.x) == mars2.getPos()[1]){
             currentPlanet = {number:"4", name:"mars"};
-        } if (round(rocketCurrent2.position.x) == jupiter2.getPos()[1]){
+        } if (roundUnit(rocketCurrent2.position.x) == jupiter2.getPos()[1]){
             currentPlanet = {number:"5", name:"jupiter"};
-        } if (round(rocketCurrent2.position.x) == saturn2.getPos()[1]){
+        } if (roundUnit(rocketCurrent2.position.x) == saturn2.getPos()[1]){
             currentPlanet = {number:"6", name:"saturn"};
-        } if (round(rocketCurrent2.position.x) == uranus2.getPos()[1]){
+        } if (roundUnit(rocketCurrent2.position.x) == uranus2.getPos()[1]){
             currentPlanet = {number:"7", name:"uranus"};
-        } if (round(rocketCurrent2.position.x) == neptune2.getPos()[1]){
+        } if (roundUnit(rocketCurrent2.position.x) == neptune2.getPos()[1]){
             currentPlanet = {number:"8", name:"neptune"};
         }
     }
@@ -340,8 +376,11 @@ function init(){
     function round(num){
         return Math.round(1000*num)/1000;
     }
+    function roundUnit(num){
+        return Math.round(num);
+    }
 
-// if action the keyboard action in the game
+// if button press the keyboard action in the game
     let anim = false;
     function onDocumentKeyDown(event) {
         if (event.key == "ArrowLeft" || event.key == "q") {
@@ -455,6 +494,7 @@ function init(){
             }
         }
     }
+    
     // control rocket with mouse
     function onMouseDown(e) {
         pointer.x = ( e.clientX / window.innerWidth ) * 2 - 1;
@@ -549,6 +589,7 @@ function init(){
                     text.innerHTML = "You are on " + currentPlanet.name;
                     halosis[currentPlanet.number].capt = true;
                     flagCurrent.children[currentPlanet.number-1].visible = true;
+                    
                     setTimeout(function(){
                         player2 = true;
                         player1 = false;
@@ -559,9 +600,8 @@ function init(){
                     },3000)
                 }
             }
-            whatPlanet();
             if(halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true && halosis[8].capt == true){
-                text.innerHTML = "You won the game! <br>You took "+sec+" seconds to complete the game!";
+                text.innerHTML = "Player 1 won the game!";
                 window.clearTimeout(timer);
                 sec = 0;
                 anim = true;
@@ -582,7 +622,7 @@ function init(){
                 } else {
                     text.innerHTML = "You are on " + currentPlanet.name;
                     halosis2[currentPlanet.number].capt = true;
-                    flagCurrent.children[parseInt(currentPlanet.number-1)].visible = true;
+                    flagCurrent2.children[parseInt(currentPlanet.number-1)].visible = true;
                     setTimeout(function(){
                         player2 = false;
                         player1 = true;
@@ -607,7 +647,7 @@ function init(){
                 } else {
                     text.innerHTML = "You are on " + currentPlanet.name;
                     halosis2[currentPlanet.number].capt = true;
-                    flagCurrent.children[currentPlanet.number-1].visible = true;
+                    flagCurrent2.children[currentPlanet.number-1].visible = true;
                     setTimeout(function(){
                         player2 = false;
                         player1 = true;
@@ -618,15 +658,13 @@ function init(){
                     },3000)
                 }
             }
-            whatPlanet2();
             if(halosis2[1].capt == true && halosis2[2].capt == true && halosis2[3].capt == true && halosis2[4].capt == true && halosis2[5].capt == true && halosis2[6].capt == true && halosis2[7].capt == true && halosis2[8].capt == true){
-                text.innerHTML = "You won the game! <br>You took "+sec+" seconds to complete the game!";
+                text.innerHTML = "Player 2 won the game!";
                 window.clearTimeout(timer);
                 sec = 0;
                 anim = true;
             }
         }
-          
     }
 
     // loop for moon stones update
@@ -673,8 +711,7 @@ function init(){
         if(player1 == true){
             resources()
             whatPlanet();
-            console.log("player1 turn", mat);
-            console.log(currentPlanet)
+            console.log("player1 turn", mat, currentPlanet);
             document.addEventListener("keydown", onDocumentKeyDown, false);
             // document.addEventListener('mousedown', onMouseDown, false);
         } else if (player2 == true){
