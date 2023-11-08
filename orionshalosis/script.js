@@ -361,53 +361,50 @@ function init(){
 
 //find what planet we are currently on
     function whatPlanet(){
-        if (roundUnit(rocketCurrent.position.x) == sun.getPos()[1]){
+        if (round(rocketCurrent.position.x) == sun.getPos()[1]){
             currentPlanet = {number:"0", name:"sun"};
-        } if (roundUnit(rocketCurrent.position.x) == mercury.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == mercury.getPos()[1]){
             currentPlanet = {number:"1", name:"mercury"};
-        } if (roundUnit(rocketCurrent.position.x) == venus.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == venus.getPos()[1]){
             currentPlanet = {number:"2", name:"venus"};
-        } if (roundUnit(rocketCurrent.position.x) == earth.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == earth.getPos()[1]){
             currentPlanet = {number:"3", name:"earth"};
-        } if (roundUnit(rocketCurrent.position.x) == mars.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == mars.getPos()[1]){
             currentPlanet = {number:"4", name:"mars"};
-        } if (roundUnit(rocketCurrent.position.x) == jupiter.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == jupiter.getPos()[1]){
             currentPlanet = {number:"5", name:"jupiter"};
-        } if (roundUnit(rocketCurrent.position.x) == saturn.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == saturn.getPos()[1]){
             currentPlanet = {number:"6", name:"saturn"};
-        } if (roundUnit(rocketCurrent.position.x) == uranus.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == uranus.getPos()[1]){
             currentPlanet = {number:"7", name:"uranus"};
-        } if (roundUnit(rocketCurrent.position.x) == neptune.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == neptune.getPos()[1]){
             currentPlanet = {number:"8", name:"neptune"};
         }
     }
     function whatPlanet2(){
-        if (roundUnit(rocketCurrent2.position.x) == sun2.getPos()[1]){
+        if (round(rocketCurrent2.position.x) == sun2.getPos()[1]){
             currentPlanet = {number:"0", name:"sun"};
-        } if (roundUnit(rocketCurrent2.position.x) == mercury2.getPos()[1]){
+        } if (round(rocketCurrent2.position.x) == mercury2.getPos()[1]){
             currentPlanet = {number:"1", name:"mercury"};
-        } if (roundUnit(rocketCurrent2.position.x) == venus2.getPos()[1]){
+        } if (round(rocketCurrent2.position.x) == venus2.getPos()[1]){
             currentPlanet = {number:"2", name:"venus"};
-        } if (roundUnit(rocketCurrent2.position.x) == earth2.getPos()[1]){
+        } if (round(rocketCurrent2.position.x) == earth2.getPos()[1]){
             currentPlanet = {number:"3", name:"earth"};
-        } if (roundUnit(rocketCurrent2.position.x) == mars2.getPos()[1]){
+        } if (round(rocketCurrent2.position.x) == mars2.getPos()[1]){
             currentPlanet = {number:"4", name:"mars"};
-        } if (roundUnit(rocketCurrent2.position.x) == jupiter2.getPos()[1]){
+        } if (round(rocketCurrent2.position.x) == jupiter2.getPos()[1]){
             currentPlanet = {number:"5", name:"jupiter"};
-        } if (roundUnit(rocketCurrent2.position.x) == saturn2.getPos()[1]){
+        } if (round(rocketCurrent2.position.x) == saturn2.getPos()[1]){
             currentPlanet = {number:"6", name:"saturn"};
-        } if (roundUnit(rocketCurrent2.position.x) == uranus2.getPos()[1]){
+        } if (round(rocketCurrent2.position.x) == uranus2.getPos()[1]){
             currentPlanet = {number:"7", name:"uranus"};
-        } if (roundUnit(rocketCurrent2.position.x) == neptune2.getPos()[1]){
+        } if (round(rocketCurrent2.position.x) == neptune2.getPos()[1]){
             currentPlanet = {number:"8", name:"neptune"};
         }
     }
 
 // round a number
     function round(num){
-        return Math.round(1000*num)/1000;
-    }
-    function roundUnit(num){
         return Math.round(num);
     }
 
@@ -421,24 +418,24 @@ function init(){
                     if(currentPlanet.name == "sun"){
                         text.innerHTML = "Reload the page... You have lost...";
                     } else if(halosis[i].planet == currentPlanet.name && currentPlanet.name == "mercury" && anim == false){
-                        targetPositionX = round(planets.children[i-1].position.x);
+                        targetPositionX = planets.children[i-1].position.x;
                         text.innerHTML = "In the sun? Really? Well you lost...";
                         sec = "lose";
                         way = -1;
                         window.requestAnimationFrame(animRocket);
                     } else if(halosis[i].planet == currentPlanet.name && anim == false && halosis[i-1].capt == true){
                         sec = "moving";
-                        targetPositionX = round(planets.children[i-1].position.x);
-                        targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
+                        targetPositionX = planets.children[i-1].position.x;
+                        targetPositionY = planets.children[i-1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = -1;
                         window.requestAnimationFrame(animRocket);
                     } else if(halosis[i].planet == currentPlanet.name && anim == false && mat >= halosis[i-1].price){
                         sec = "moving";
                         mat = mat - halosis[i-1].price;
-                        resource.innerHTML = "Moon Stone : " + round(mat);
-                        targetPositionX = round(planets.children[i-1].position.x);
-                        targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
+                        resource.innerHTML = "Moon Stone : " + mat;
+                        targetPositionX = planets.children[i-1].position.x;
+                        targetPositionY = planets.children[i-1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = -1;
                         window.requestAnimationFrame(animRocket);
@@ -460,16 +457,16 @@ function init(){
                     } else if(halosis2[i].planet == currentPlanet.name && anim == false && halosis2[i-1].capt == true){
                         sec = "moving";
                         targetPositionX = planets2.children[i-1].position.x;
-                        targetPositionY = round(planets2.children[i-1].geometry.parameters.radius);
+                        targetPositionY = planets2.children[i-1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = -1;
                         window.requestAnimationFrame(animRocket);
                     } else if(halosis2[i].planet == currentPlanet.name && anim == false && mat2 >= halosis2[i-1].price){
                         sec = "moving";
                         mat2 = mat2 - halosis2[i-1].price;
-                        resource2.innerHTML = "Moon Stone j2 : " + round(mat2);
+                        resource2.innerHTML = "Moon Stone j2 : " + mat2;
                         targetPositionX = planets2.children[i-1].position.x;
-                        targetPositionY = round(planets2.children[i-1].geometry.parameters.radius);
+                        targetPositionY = planets2.children[i-1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = -1;
                         window.requestAnimationFrame(animRocket);
@@ -489,17 +486,17 @@ function init(){
                         text.innerHTML = "Reload the page... You have lost...";
                     } else if(halosis[i].planet == currentPlanet.name && anim == false && halosis[i+1].capt == true){
                         sec = "moving";
-                        targetPositionX = round(planets.children[i+1].position.x);
-                        targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
+                        targetPositionX = planets.children[i+1].position.x;
+                        targetPositionY = planets.children[i+1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = 1;
                         window.requestAnimationFrame(animRocket);
                     } else if(halosis[i].planet == currentPlanet.name && anim == false && mat >= halosis[i+1].price){
                         sec = "moving";
                         mat = mat - halosis[i+1].price;
-                        resource.innerHTML = "Moon Stone : " + round(mat);
-                        targetPositionX = round(planets.children[i+1].position.x);
-                        targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
+                        resource.innerHTML = "Moon Stone : " + mat;
+                        targetPositionX = planets.children[i+1].position.x;
+                        targetPositionY = planets.children[i+1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = 1;
                         window.requestAnimationFrame(animRocket);
@@ -514,17 +511,17 @@ function init(){
                         text.innerHTML = "Reload the page... You have lost...";
                     } else if(halosis2[i].planet == currentPlanet.name && anim == false && halosis2[i+1].capt == true){
                         sec = "moving";
-                        targetPositionX = round(planets2.children[i+1].position.x);
-                        targetPositionY = round(planets2.children[i+1].geometry.parameters.radius);
+                        targetPositionX = planets2.children[i+1].position.x;
+                        targetPositionY = planets2.children[i+1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = 1;
                         window.requestAnimationFrame(animRocket);
                     } else if(halosis2[i].planet == currentPlanet.name && anim == false && mat2 >= halosis2[i+1].price){
                         sec = "moving";
                         mat2 = mat2 - halosis2[i+1].price;
-                        resource2.innerHTML = "Moon Stone j2 : " + round(mat2);
-                        targetPositionX = round(planets2.children[i+1].position.x);
-                        targetPositionY = round(planets2.children[i+1].geometry.parameters.radius);
+                        resource2.innerHTML = "Moon Stone j2 : " + mat2;
+                        targetPositionX = planets2.children[i+1].position.x;
+                        targetPositionY = planets2.children[i+1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = 1;
                         window.requestAnimationFrame(animRocket);
@@ -549,15 +546,15 @@ function init(){
     //         for (let i = 0; i < planets.children.length; i++) {
     //             whatPlanet();
     //             if(halosis[i].right == intersects[0].object.name && currentPlanet.number == i && anim == false && halosis[i+1].capt == true){
-    //                 targetPositionX = roundUnit(planets.children[i+1].position.x);
-    //                 targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
+    //                 targetPositionX = round(planets.children[i+1].position.x);
+    //                 targetPositionY = planets.children[i+1].geometry.parameters.radius;
     //                 text.innerHTML = "Flying...";
     //                 way = 1;
     //                 window.requestAnimationFrame(animRocket);
     //             } else if(halosis[i].right == intersects[0].object.name && currentPlanet.number == i && anim == false && mat >= halosis[i+1].price){
     //                 mat = mat - halosis[i+1].price;
-    //                 targetPositionX = roundUnit(planets.children[i+1].position.x);
-    //                 targetPositionY = round(planets.children[i+1].geometry.parameters.radius);
+    //                 targetPositionX = round(planets.children[i+1].position.x);
+    //                 targetPositionY = planets.children[i+1].geometry.parameters.radius;
     //                 text.innerHTML = "Flying...";
     //                 way = 1;
     //                 window.requestAnimationFrame(animRocket);
@@ -569,15 +566,15 @@ function init(){
     //                 way = -1;
     //                 window.requestAnimationFrame(animRocket);
     //             } if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false && halosis[i-1].capt == true){
-    //                 targetPositionX = roundUnit(planets.children[i-1].position.x);
-    //                 targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
+    //                 targetPositionX = round(planets.children[i-1].position.x);
+    //                 targetPositionY = planets.children[i-1].geometry.parameters.radius;
     //                 text.innerHTML = "Flying...";
     //                 way = -1;
     //                 window.requestAnimationFrame(animRocket);
     //             } else if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false && mat >= halosis[i-1].price){
     //                 mat = mat - halosis[i-1].price;
-    //                 targetPositionX = roundUnit(planets.children[i-1].position.x);
-    //                 targetPositionY = round(planets.children[i-1].geometry.parameters.radius);
+    //                 targetPositionX = round(planets.children[i-1].position.x);
+    //                 targetPositionY = planets.children[i-1].geometry.parameters.radius;
     //                 text.innerHTML = "Flying...";
     //                 way = -1;
     //                 window.requestAnimationFrame(animRocket);
@@ -604,6 +601,7 @@ function init(){
                     camera.position.x = rocketCurrent.position.x;
                     window.requestAnimationFrame(animRocket);
                 } else {
+                    rocketCurrent.position.x = round(rocketCurrent.position.x)
                     text.innerHTML = "You are on " + currentPlanet.name;
                     halosis[currentPlanet.number].capt = true;
                     flagCurrent.children[parseInt(currentPlanet.number-1)].visible = true;
@@ -635,6 +633,7 @@ function init(){
                 } else if(currentPlanet.name == "sun"){
                     anim = false;
                 } else {
+                    rocketCurrent.position.x = round(rocketCurrent.position.x)
                     text.innerHTML = "You are on " + currentPlanet.name;
                     halosis[currentPlanet.number].capt = true;
                     flagCurrent.children[currentPlanet.number-1].visible = true;
@@ -668,6 +667,7 @@ function init(){
                     camera.position.x = rocketCurrent2.position.x;
                     window.requestAnimationFrame(animRocket);
                 } else {
+                    rocketCurrent2.position.x = round(rocketCurrent2.position.x)
                     text.innerHTML = "You are on " + currentPlanet.name;
                     halosis2[currentPlanet.number].capt = true;
                     flagCurrent2.children[parseInt(currentPlanet.number-1)].visible = true;
@@ -699,6 +699,7 @@ function init(){
                 } else if(currentPlanet.name == "sun"){
                     anim = false;
                 } else {
+                    rocketCurrent2.position.x = round(rocketCurrent2.position.x)
                     text.innerHTML = "You are on " + currentPlanet.name;
                     halosis2[currentPlanet.number].capt = true;
                     flagCurrent2.children[currentPlanet.number-1].visible = true;
@@ -732,32 +733,32 @@ function init(){
                 mat = 0;
             } else if (halosis[2].capt == true && halosis[4].capt == true) {
                 mat += 375;
-                resource.innerHTML = "Moon Stone : " + round(mat);
+                resource.innerHTML = "Moon Stone : " + mat;
             } else if (halosis[2].capt == true) {
                 mat += 300;
-                resource.innerHTML = "Moon Stone : " + round(mat);
+                resource.innerHTML = "Moon Stone : " + mat;
             } else if (halosis[4].capt == true) {
                 mat += 225;
-                resource.innerHTML = "Moon Stone : " + round(mat);
+                resource.innerHTML = "Moon Stone : " + mat;
             } else {
                 mat += 150;
-                resource.innerHTML = "Moon Stone : " + round(mat);
+                resource.innerHTML = "Moon Stone : " + mat;
             }
         } else if(player2 == true){
             if (currentPlanet.name == "sun"){
                 mat2 = 0;
             } else if (halosis2[2].capt == true && halosis2[4].capt == true) {
                 mat2 += 375;
-                resource2.innerHTML = "Moon Stone p2 : " + round(mat2);
+                resource2.innerHTML = "Moon Stone p2 : " + mat2;
             } else if (halosis2[2].capt == true ) {
                 mat2 += 300;
-                resource2.innerHTML = "Moon Stone p2 : " + round(mat2);
+                resource2.innerHTML = "Moon Stone p2 : " + mat2;
             } else if (halosis2[4].capt == true) {
                 mat2 += 225;
-                resource2.innerHTML = "Moon Stone p2 : " + round(mat2);
+                resource2.innerHTML = "Moon Stone p2 : " + mat2;
             } else {
                 mat2 += 150;
-                resource2.innerHTML = "Moon Stone p2 : " + round(mat2);
+                resource2.innerHTML = "Moon Stone p2 : " + mat2;
             }
         }
         
