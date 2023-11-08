@@ -5,6 +5,8 @@ const app = express();
 const port = 8080;
 const bodyParser = require("body-parser");
 var cors = require("cors");
+const mysql = require("mysql");
+var config = require("./config");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -13,9 +15,8 @@ app.use(cors());
 app.get("/userGetData", (req, res, next) => {
   let data = userGetData.getAllData(req.body);
   next(
-    console.log(data),
     res.json({
-      data
+      data,
     }),
   );
 });
@@ -23,7 +24,7 @@ app.get("/userGetData", (req, res, next) => {
 app.post("/userCreation", (req, res, next) => {
   userCreation.create(req.body);
   res.json({
-    token: "p",
+    token: "psdfdsfsdf",
   });
 });
 
@@ -32,6 +33,7 @@ app.put("/userLogin", (req, res, next) => {
   res.json({
     token: "p",
   });
+  res.end();
 });
 
 /* Error handler middleware */

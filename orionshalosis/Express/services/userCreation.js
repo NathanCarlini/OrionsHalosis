@@ -1,34 +1,21 @@
-const mysql = require("mysql");
 const bcrypt = require("bcrypt");
 const userGetData = require("./userGetData");
+const mysql = require("mysql");
+var config = require("../config");
 
-async function create(user) {
-  const connection = mysql.createConnection({
-    host: "chevallereau-swan.com",
-    user: "fbpf9239_Admin",
-    password: "nNWe}p9&Ocy6nfkdbrkhVDGILgkio",
-    database: "fbpf9239_OrionsHalosis",
-  });
+const pool = mysql.createPool(config.db);
 
-  connection.connect();
-  console.log("connected");
+function create(user) {
   const query = "INSERT INTO user SET ?";
 
   bcrypt.hash(user.password, 10, function (err, hash) {
-    // if (err) return callback(err);
-    console.log("hashed");
+    const insert = { password: hash, email: user.email };
 
-    const insert = {
-      password: hash,
-      email: user.email,
-    };
-    console.log("readytoquery");
-
-    connection.query(query, insert, function (err, results) {
-      // callback(null);
-      if (err) return console.log(err);
-      return results;
-    });
+    try {
+      pool.query(query, insert);
+    } catch (err) {
+      console.error(err);
+    }
   });
 }
 
@@ -49,3 +36,29 @@ module.exports = {
   create,
   check,
 };
+
+// async function create(user, pool) {
+//   const conn = await pool.getConnection();
+//   const query = "INSERT INTO user SET ?";
+//   bcrypt.hash(user.password, 10, function (err, hash) {
+//     // if (err) return callback(err);
+//     console.log("hashed");
+
+//     const insert = {
+//       password: hash,
+//       email: user.email,
+//     };
+//     console.log("readytoquery");
+
+//     conn.query(query, insert).then((result) => {
+//       conn.release();
+//       return result;
+//     });
+//     if (err) {
+//       console.log(err);
+//       callback(true);
+//       return;
+//     }
+//     conn.release();
+//   });
+// }
