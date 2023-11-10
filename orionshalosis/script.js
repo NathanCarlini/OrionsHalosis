@@ -227,6 +227,11 @@ function init(){
         return Math.round(num);
     }
 
+    // Uppercase first letter
+    function uppercaseFirstLetter(input){
+        return input.charAt(0).toUpperCase() + input.slice(1)
+    }
+
 // if button press the keyboard action in the game
     let anim = false;
     function onDocumentKeyDown(event) {
@@ -463,7 +468,7 @@ function init(){
                     window.requestAnimationFrame(animRocket);
                 } else {
                     rocketCurrent.position.x = round(rocketCurrent.position.x)
-                    text.innerHTML = "You are on " + currentPlanet.name;
+                    text.innerHTML = "You are on " + uppercaseFirstLetter(currentPlanet.name);
                     halosis[currentPlanet.number].capt = true;
                     flagCurrent.children[parseInt(currentPlanet.number-1)].visible = true;
                     if(halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true && halosis[8].capt == true){
@@ -495,7 +500,7 @@ function init(){
                     anim = false;
                 } else {
                     rocketCurrent.position.x = round(rocketCurrent.position.x)
-                    text.innerHTML = "You are on " + currentPlanet.name;
+                    text.innerHTML = "You are on " + uppercaseFirstLetter(currentPlanet.name);
                     halosis[currentPlanet.number].capt = true;
                     flagCurrent.children[currentPlanet.number-1].visible = true;
                     if(halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true && halosis[8].capt == true){
@@ -529,7 +534,7 @@ function init(){
                     window.requestAnimationFrame(animRocket);
                 } else {
                     rocketCurrent2.position.x = round(rocketCurrent2.position.x)
-                    text.innerHTML = "You are on " + currentPlanet.name;
+                    text.innerHTML = "You are on " + uppercaseFirstLetter(currentPlanet.name);
                     halosis2[currentPlanet.number].capt = true;
                     flagCurrent2.children[parseInt(currentPlanet.number-1)].visible = true;
                     if(halosis2[1].capt == true && halosis2[2].capt == true && halosis2[3].capt == true && halosis2[4].capt == true && halosis2[5].capt == true && halosis2[6].capt == true && halosis2[7].capt == true && halosis2[8].capt == true){
@@ -561,7 +566,7 @@ function init(){
                     anim = false;
                 } else {
                     rocketCurrent2.position.x = round(rocketCurrent2.position.x)
-                    text.innerHTML = "You are on " + currentPlanet.name;
+                    text.innerHTML = "You are on " + uppercaseFirstLetter(currentPlanet.name);
                     halosis2[currentPlanet.number].capt = true;
                     flagCurrent2.children[currentPlanet.number-1].visible = true;
                     if(halosis2[1].capt == true && halosis2[2].capt == true && halosis2[3].capt == true && halosis2[4].capt == true && halosis2[5].capt == true && halosis2[6].capt == true && halosis2[7].capt == true && halosis2[8].capt == true){
@@ -640,13 +645,13 @@ function init(){
         if(player1 == true){
             resources()
             sec = 10;
-            text.innerHTML = "You are on " + currentPlanet.name;
+            text.innerHTML = "Your turn player 1!<br>You are currently on " + uppercaseFirstLetter(currentPlanet.name);
             document.addEventListener("keydown", onDocumentKeyDown, false);
             document.addEventListener('mousedown', onMouseDown, false);
         } else if (player2 == true){
             resources()
             sec = 10;
-            text.innerHTML = "You are on " + currentPlanet.name;
+            text.innerHTML = "Your turn player 2!<br>You are currently on " + uppercaseFirstLetter(currentPlanet.name);
             document.addEventListener("keydown", onDocumentKeyDown, false);
             document.addEventListener('mousedown', onMouseDown, false);
         }
