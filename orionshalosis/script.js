@@ -2,9 +2,11 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import Planets from './Planets.js';
 
 let camera = null;
 const scene = new THREE.Scene();
+export default scene;
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
@@ -89,7 +91,6 @@ function init(){
     },);
     flagCurrent.position.set(14.5, 0.75, 0);
 
-    // put another flag for clearance
     let flagCurrent2 = new THREE.Group();
     flag.load('./resources/Flag blue.glb', function ( gltf ) {
         gltf.animations;
@@ -126,76 +127,7 @@ function init(){
     },);
     flagCurrent2.position.set(14.5, 0.75, 0);
 
-// init planets (to optimize by using them in a different script)
-    planets = new THREE.Group();
-    const Planets = class {
-        constructor(size, texture, position, price, moonStone){
-            const Geometry = new THREE.SphereGeometry( size, 32, 32 );
-            const texturePlanet = new THREE.TextureLoader().load('resources/'+texture+'.jpg' ); 
-            if (texture == "earth"){
-                const textureEarthBump = new THREE.TextureLoader().load('resources/earthbump.jpg' ); 
-                const textureEarthSpec = new THREE.TextureLoader().load('resources/earthspec.jpg' );
-                const Material = new THREE.MeshPhongMaterial({map: texturePlanet, bumpMap: textureEarthBump, specular: textureEarthSpec}); 
-                const Mesh = new THREE.Mesh(Geometry, Material);
-                Mesh.position.x = position;
-                Mesh.name = texture;
-                planets.add(Mesh);
-            } else {
-                const Material = new THREE.MeshPhongMaterial({map: texturePlanet}); 
-                const Mesh = new THREE.Mesh(Geometry, Material);
-                Mesh.position.x = position;
-                Mesh.name = texture;
-                planets.add(Mesh);
-            
-                const material = new THREE.LineBasicMaterial( { color: 0xffffff } );
-                const points = [];
-                points.push( new THREE.Vector3( position, 0, 0 ) );
-                points.push( new THREE.Vector3( position+1.25, size+1, 0 ) );
-                points.push( new THREE.Vector3( position+6, size+1, 0 ) );
-                const geometry = new THREE.BufferGeometry().setFromPoints( points );
-                const line = new THREE.Line( geometry, material );
-                scene.add( line );
-            
-                const loader = new FontLoader();
-                loader.load( 'font/space-font.json', function ( font ) {
-                    const geometry = new TextGeometry( 'Price : '+price, {
-                        font: font,
-                        size: 0.4,
-                        height: 0.1,
-                    } );
-                    const material = new THREE.MeshStandardMaterial({
-                        color: 'white',
-                    });
-                    const textMesh = new THREE.Mesh(geometry, material);
-                    textMesh.position.set(position+1.65, size+1.5, 0);
-                    scene.add(textMesh);
-                } );
-                if (typeof moonStone !== 'undefined'){
-                    loader.load( 'font/space-font.json', function ( font ) {
-                        const geometry = new TextGeometry( 'Resource x'+moonStone, {
-                            font: font,
-                            size: 0.4,
-                            height: 0.1,
-                        } );
-                        const material = new THREE.MeshStandardMaterial({
-                            color: 'white',
-                        });
-                        const textMesh = new THREE.Mesh(geometry, material);
-                        textMesh.position.set(position+1.65, size+2.25, 0);
-                        scene.add(textMesh);
-                    } );
-                }
-            }
-            this.texture = texture;
-            this.position = position;
-            this.price = price;
-        }
-        getPos(){
-            let obj = [this.texture, this.position,this.price];
-            return obj;
-        }
-    }
-
+    // init planets p1
     const sun = new Planets(15, 'sun', -10, 0);
     const mercury = new Planets(1, 'mercury', 15, 300);
     const venus = new Planets(1.8, 'venus', 25, 200, 2);
@@ -205,106 +137,20 @@ function init(){
     const saturn = new Planets(4.5, 'saturn', 75, 250);
     const uranus = new Planets(3.5, 'uranus', 90, 400);
     const neptune = new Planets(3.1, 'neptune', 100, 700);
-    camera.position.x = rocketCurrent.position.x;
-    scene.add(planets);
-    // add ring to saturn
-    const SaturnRingGeometry = new THREE.RingGeometry( 5, 8, 64 ); 
-    const SaturnRingMaterial = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, side: THREE.DoubleSide } );
-    SaturnRingMaterial.transparent = true;
-    SaturnRingMaterial.opacity = 0.2;
-    const SaturnRingMesh = new THREE.Mesh( SaturnRingGeometry, SaturnRingMaterial ); 
-    SaturnRingMesh.position.x = 75;
-    SaturnRingMesh.rotateX(Math.PI/2);
-    scene.add( SaturnRingMesh );
-    
-    let planets2 = new THREE.Group();
-    const Planets2 = class {
-        constructor(size, texture, position, price, moonStone){
-            const Geometry = new THREE.SphereGeometry( size, 32, 32 );
-            const texturePlanet = new THREE.TextureLoader().load('resources/'+texture+'.jpg' ); 
-            if (texture == "earth"){
-                const textureEarthBump = new THREE.TextureLoader().load('resources/earthbump.jpg' ); 
-                const textureEarthSpec = new THREE.TextureLoader().load('resources/earthspec.jpg' );
-                const Material = new THREE.MeshPhongMaterial({map: texturePlanet, bumpMap: textureEarthBump, specular: textureEarthSpec}); 
-                const Mesh = new THREE.Mesh(Geometry, Material);
-                Mesh.position.x = position;
-                Mesh.name = texture;
-                planets2.add(Mesh);
-            } else {
-                const Material = new THREE.MeshPhongMaterial({map: texturePlanet}); 
-                const Mesh = new THREE.Mesh(Geometry, Material);
-                Mesh.position.x = position;
-                Mesh.name = texture;
-                planets2.add(Mesh);
-            
-                const material = new THREE.LineBasicMaterial( { color: 0xffffff } );
-                const points = [];
-                points.push( new THREE.Vector3( position, 0, 0 ) );
-                points.push( new THREE.Vector3( position+1.25, size+1, 0 ) );
-                points.push( new THREE.Vector3( position+6.5, size+1, 0 ) );
-                const geometry = new THREE.BufferGeometry().setFromPoints( points );
-                const line = new THREE.Line( geometry, material );
-                scene.add( line );
-            
-                const loader = new FontLoader();
-                loader.load( 'font/space-font.json', function ( font ) {
-                    const geometry = new TextGeometry( 'Price : '+price, {
-                        font: font,
-                        size: 0.4,
-                        height: 0.1,
-                    } );
-                    const material = new THREE.MeshStandardMaterial({
-                        color: 'white',
-                    });
-                    const textMesh = new THREE.Mesh(geometry, material);
-                    textMesh.position.set(position+1.65, size+1.5, 0);
-                    scene.add(textMesh);
-                } );
-                if (typeof moonStone !== 'undefined'){
-                    loader.load( 'font/space-font.json', function ( font ) {
-                        const geometry = new TextGeometry( 'Resource x'+moonStone, {
-                            font: font,
-                            size: 0.4,
-                            height: 0.1,
-                        } );
-                        const material = new THREE.MeshStandardMaterial({
-                            color: 'white',
-                        });
-                        const textMesh = new THREE.Mesh(geometry, material);
-                        textMesh.position.set(position+1.65, size+2.25, 0);
-                        scene.add(textMesh);
-                    } );
-                }
-            }
-            this.texture = texture;
-            this.position = position;
-            this.price = price;
-        }
-        getPos(){
-            let obj = [this.texture, this.position,this.price];
-            return obj;
-        }
-    }
-    const sun2 = new Planets2(15, 'sun', -10-200, 0);
-    const mercury2 = new Planets2(1, 'mercury', 15-200, 300);
-    const venus2 = new Planets2(1.8, 'venus', 25-200, 200, 2);
-    const earth2 = new Planets2(2, 'earth', 35-200, 0);
-    const mars2 = new Planets2(1.4, 'mars', 45-200, 150, 1.5);
-    const jupiter2 = new Planets2(5, 'jupiter', 60-200, 100);
-    const saturn2 = new Planets2(4.5, 'saturn', 75-200, 250);
-    const uranus2 = new Planets2(3.5, 'uranus', 90-200, 400);
-    const neptune2 = new Planets2(3.1, 'neptune', 100-200, 700);
-    scene.add(planets2);
-    // add ring to saturn
-    const SaturnRingGeometry2 = new THREE.RingGeometry( 5, 8, 64 ); 
-    const SaturnRingMaterial2 = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, side: THREE.DoubleSide } );
-    SaturnRingMaterial.transparent = true;
-    SaturnRingMaterial.opacity = 0.2;
-    const SaturnRingMesh2 = new THREE.Mesh( SaturnRingGeometry2, SaturnRingMaterial2 ); 
-    SaturnRingMesh2.position.x = 75;
-    SaturnRingMesh2.rotateX(Math.PI/2);
-    scene.add( SaturnRingMesh2 );
+    planets = sun.getPos()[3]; 
 
+    // init planet p2
+    let planets2 = new THREE.Group();
+    const sun2 = new Planets(15, 'sun', -10-200, 0);
+    const mercury2 = new Planets(1, 'mercury', 15-200, 300);
+    const venus2 = new Planets(1.8, 'venus', 25-200, 200, 2);
+    const earth2 = new Planets(2, 'earth', 35-200, 0);
+    const mars2 = new Planets(1.4, 'mars', 45-200, 150, 1.5);
+    const jupiter2 = new Planets(5, 'jupiter', 60-200, 100);
+    const saturn2 = new Planets(4.5, 'saturn', 75-200, 250);
+    const uranus2 = new Planets(3.5, 'uranus', 90-200, 400);
+    const neptune2 = new Planets(3.1, 'neptune', 100-200, 700);
+    planets2 = sun2.getPos()[4];
 
 // light
     let light = new THREE.DirectionalLight(0xFFFFFF, 1.0);
@@ -320,9 +166,6 @@ function init(){
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-// select of the text area
-    const text = document.querySelector(".halosis");
 
 // if the window is resize the game will too
     window.addEventListener('resize', () => {
@@ -700,7 +543,8 @@ function init(){
         }
     }
 
-    // loop for moon stones update
+    // loop for moon stones update and select of the text area
+    const text = document.querySelector(".halosis");
     const resource = document.querySelector(".resource")
     const resource2 = document.querySelector(".resource2")
     mat = 0;
@@ -740,7 +584,6 @@ function init(){
             }
         }
     }
-    sec = 10;
     window.setInterval(timer, 1000)
     const time = document.querySelector(".timer")
     // add timer limit to player (to do)
@@ -753,14 +596,17 @@ function init(){
     let player1 = true;
     let player2 = false;
     function game(){
+        whatPlanet()
         if(player1 == true){
             resources()
             sec = 10;
+            text.innerHTML = "You are on " + currentPlanet.name;
             document.addEventListener("keydown", onDocumentKeyDown, false);
             // document.addEventListener('mousedown', onMouseDown, false);
         } else if (player2 == true){
             resources()
             sec = 10;
+            text.innerHTML = "You are on " + currentPlanet.name;
             document.addEventListener("keydown", onDocumentKeyDown, false);
             // document.addEventListener('mousedown', onMouseDown, false);
         }
@@ -785,7 +631,6 @@ function init(){
                 game();
             }
         }
-        
         camera.updateProjectionMatrix();
         renderer.render(scene, camera);
         window.requestAnimationFrame(loop);
