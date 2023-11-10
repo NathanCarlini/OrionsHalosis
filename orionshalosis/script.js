@@ -39,8 +39,7 @@ function init(){
     rocketCurrent.position.set(35, 1.85, 0);
 
     rocketCurrent2 = new THREE.Group();
-    var rocket2 = new GLTFLoader();
-    // rocket2.load('./resources/rocketfuture.glb', function ( gltf ) {
+    // rocket.load('./resources/rocketfuture.glb', function ( gltf ) {
     rocket.load('./resources/Rocketship.glb', function ( gltf ) {
         gltf.animations;
         rocketscene2 = gltf.scene;
@@ -50,6 +49,7 @@ function init(){
         scene.add( rocketCurrent2 );
     },);
     rocketCurrent2.position.set(35-200, 1.85, 0);
+    camera.position.x = rocketCurrent.position.x;
 
 // flags loader
     var flag = new GLTFLoader();
@@ -358,7 +358,6 @@ function init(){
     function onMouseDown(e) {
         pointer.x = ( e.clientX / window.innerWidth ) * 2 - 1;
         pointer.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
-
         raycaster.setFromCamera( pointer, camera );
         const intersects = raycaster.intersectObjects( scene.children );
         if(intersects[0]){
@@ -451,7 +450,6 @@ function init(){
     function animRocket(){
         if(player1 == true){
             whatPlanet();
-            console.log(currentPlanet)
             anim = true;
             if(way == 1){
                 if (rocketCurrent.position.x <= targetPositionX) {
@@ -494,7 +492,6 @@ function init(){
                     camera.position.x = rocketCurrent.position.x;
                     window.requestAnimationFrame(animRocket);
                 } else if(currentPlanet.name == "sun"){
-                    console.log("exec");
                     anim = false;
                 } else {
                     rocketCurrent.position.x = round(rocketCurrent.position.x)
