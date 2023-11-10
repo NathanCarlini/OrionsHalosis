@@ -1,7 +1,5 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import Planets from './Planets.js';
 
 let camera = null;
@@ -42,8 +40,8 @@ function init(){
 
     rocketCurrent2 = new THREE.Group();
     var rocket2 = new GLTFLoader();
-    rocket2.load('./resources/rocketfuture.glb', function ( gltf ) {
-    // rocket.load('./resources/Rocketship.glb', function ( gltf ) {
+    // rocket2.load('./resources/rocketfuture.glb', function ( gltf ) {
+    rocket.load('./resources/Rocketship.glb', function ( gltf ) {
         gltf.animations;
         rocketscene2 = gltf.scene;
         rocketCurrent2.add(rocketscene2);
