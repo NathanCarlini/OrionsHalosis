@@ -217,7 +217,6 @@ function init(){
     SaturnRingMesh.rotateX(Math.PI/2);
     scene.add( SaturnRingMesh );
     
-
     let planets2 = new THREE.Group();
     const Planets2 = class {
         constructor(size, texture, position, price, moonStone){
@@ -334,7 +333,7 @@ function init(){
         renderer.setSize(width, height);
     })
 
-// capture of planets
+// capture of planets p1 and p2
     let currentPlanet = "";
     let halosis = [
         {planet: "sun", capt: false, left:"none", right:"none", price:sun.getPos()[2]},
@@ -361,44 +360,23 @@ function init(){
 
 //find what planet we are currently on
     function whatPlanet(){
-        if (round(rocketCurrent.position.x) == sun.getPos()[1]){
+        if (round(rocketCurrent.position.x) == sun.getPos()[1] && player1 == true || round(rocketCurrent2.position.x) == sun2.getPos()[1] && player2 == true){
             currentPlanet = {number:"0", name:"sun"};
-        } if (round(rocketCurrent.position.x) == mercury.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == mercury.getPos()[1] && player1 == true || round(rocketCurrent2.position.x) == mercury2.getPos()[1] && player2 == true){
             currentPlanet = {number:"1", name:"mercury"};
-        } if (round(rocketCurrent.position.x) == venus.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == venus.getPos()[1] && player1 == true || round(rocketCurrent2.position.x) == venus2.getPos()[1] && player2 == true){
             currentPlanet = {number:"2", name:"venus"};
-        } if (round(rocketCurrent.position.x) == earth.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == earth.getPos()[1] && player1 == true || round(rocketCurrent2.position.x) == earth2.getPos()[1] && player2 == true){
             currentPlanet = {number:"3", name:"earth"};
-        } if (round(rocketCurrent.position.x) == mars.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == mars.getPos()[1] && player1 == true || round(rocketCurrent2.position.x) == mars2.getPos()[1] && player2 == true){
             currentPlanet = {number:"4", name:"mars"};
-        } if (round(rocketCurrent.position.x) == jupiter.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == jupiter.getPos()[1] && player1 == true || round(rocketCurrent2.position.x) == jupiter2.getPos()[1] && player2 == true){
             currentPlanet = {number:"5", name:"jupiter"};
-        } if (round(rocketCurrent.position.x) == saturn.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == saturn.getPos()[1] && player1 == true || round(rocketCurrent2.position.x) == saturn2.getPos()[1] && player2 == true){
             currentPlanet = {number:"6", name:"saturn"};
-        } if (round(rocketCurrent.position.x) == uranus.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == uranus.getPos()[1] && player1 == true || round(rocketCurrent2.position.x) == uranus2.getPos()[1] && player2 == true){
             currentPlanet = {number:"7", name:"uranus"};
-        } if (round(rocketCurrent.position.x) == neptune.getPos()[1]){
-            currentPlanet = {number:"8", name:"neptune"};
-        }
-    }
-    function whatPlanet2(){
-        if (round(rocketCurrent2.position.x) == sun2.getPos()[1]){
-            currentPlanet = {number:"0", name:"sun"};
-        } if (round(rocketCurrent2.position.x) == mercury2.getPos()[1]){
-            currentPlanet = {number:"1", name:"mercury"};
-        } if (round(rocketCurrent2.position.x) == venus2.getPos()[1]){
-            currentPlanet = {number:"2", name:"venus"};
-        } if (round(rocketCurrent2.position.x) == earth2.getPos()[1]){
-            currentPlanet = {number:"3", name:"earth"};
-        } if (round(rocketCurrent2.position.x) == mars2.getPos()[1]){
-            currentPlanet = {number:"4", name:"mars"};
-        } if (round(rocketCurrent2.position.x) == jupiter2.getPos()[1]){
-            currentPlanet = {number:"5", name:"jupiter"};
-        } if (round(rocketCurrent2.position.x) == saturn2.getPos()[1]){
-            currentPlanet = {number:"6", name:"saturn"};
-        } if (round(rocketCurrent2.position.x) == uranus2.getPos()[1]){
-            currentPlanet = {number:"7", name:"uranus"};
-        } if (round(rocketCurrent2.position.x) == neptune2.getPos()[1]){
+        } if (round(rocketCurrent.position.x) == neptune.getPos()[1] && player1 == true || round(rocketCurrent2.position.x) == neptune2.getPos()[1] && player2 == true){
             currentPlanet = {number:"8", name:"neptune"};
         }
     }
@@ -445,7 +423,7 @@ function init(){
                 }
             } else if(player2 == true){
                 for (let i = 0; i < planets2.children.length; i++) {
-                    whatPlanet2()
+                    whatPlanet()
                     if(currentPlanet.name == "sun"){
                         text.innerHTML = "Reload the page... You have lost...";
                     } else if(halosis2[i].planet == currentPlanet.name && currentPlanet.name == "mercury" && anim == false){
@@ -504,7 +482,7 @@ function init(){
                         text.innerHTML = "You don't have enough resources...";
                     }
                 } else if (player2 == true){
-                    whatPlanet2()
+                    whatPlanet()
                     if(halosis2[i].planet == currentPlanet.name && halosis2[i].right == "pluto" && anim == false){
                         text.innerHTML = "Where are you going? Pluto is not a planet...";
                     } else if (halosis2[i].planet == currentPlanet.name && anim == false && halosis2[i].right == "none"){
@@ -653,8 +631,8 @@ function init(){
                     }
                 }
             }  
-        } else {
-            whatPlanet2();
+        } else if(player2 == true) {
+            whatPlanet();
             anim = true;
             if(way == 1){
                 if (rocketCurrent2.position.x <= targetPositionX) {
@@ -761,7 +739,6 @@ function init(){
                 resource2.innerHTML = "Moon Stone p2 : " + mat2;
             }
         }
-        
     }
     sec = 10;
     window.setInterval(timer, 1000)
