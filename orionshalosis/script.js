@@ -152,7 +152,7 @@ function init(){
 
 // light
     let light = new THREE.DirectionalLight(0xFFFFFF, 1.0);
-    let light2 = new THREE.AmbientLight(0xFFFFFF, 1);
+    let light2 = new THREE.AmbientLight(0xFFFFFF, 0.5);
     light.position.set(20, 60, 10);
     light.target.position.set(0, 0, 0);
     light.castShadow = true;
@@ -476,6 +476,7 @@ function init(){
                         sec = 1000;
                         camera.position.x = rocketCurrent.position.x;
                         anim = true;
+                        endData();
                     } else {
                         setTimeout(function(){
                             player2 = true;
@@ -508,6 +509,7 @@ function init(){
                         sec = 1000;
                         camera.position.x = rocketCurrent.position.x;
                         anim = true;
+                        endData();
                     } else {
                         setTimeout(function(){
                             player2 = true;
@@ -542,6 +544,7 @@ function init(){
                         sec = 1000;
                         camera.position.x = rocketCurrent2.position.x;
                         anim = true;
+                        endData();
                     } else {
                         setTimeout(function(){
                             player2 = false;
@@ -574,6 +577,7 @@ function init(){
                         sec = 1000;
                         camera.position.x = rocketCurrent2.position.x;
                         anim = true;
+                        endData();
                     } else {
                         setTimeout(function(){
                             player2 = false;
@@ -640,21 +644,53 @@ function init(){
 // turn-based 
     let player1 = true;
     let player2 = false;
+    let turnP1 = 0;
+    let turnP2 = 0;
     function game(){
+        liveData();
         whatPlanet()
         if(player1 == true){
+            turnP1++;
             resources()
-            sec = 10;
+            sec = 20;
             text.innerHTML = "Your turn player 1!<br>You are currently on " + uppercaseFirstLetter(currentPlanet.name);
             document.addEventListener("keydown", onDocumentKeyDown, false);
             document.addEventListener('mousedown', onMouseDown, false);
         } else if (player2 == true){
+            liveData();
+            turnP2++;
             resources()
-            sec = 10;
+            sec = 20;
             text.innerHTML = "Your turn player 2!<br>You are currently on " + uppercaseFirstLetter(currentPlanet.name);
             document.addEventListener("keydown", onDocumentKeyDown, false);
             document.addEventListener('mousedown', onMouseDown, false);
         }
+    }
+
+    let dataP1 = [];
+    let dataP2 = [];
+    let countP1 = 0;
+    let countP2 = 0;
+    for (let i = 1; i < planets.children.length; i++) {
+        
+    }
+    console.log(countP2)
+    function liveData(){
+        dataP1["resources"] = mat;
+        dataP2["resources"] = mat;
+        dataP1["turn"] = turnP1;
+        dataP2["turn"] = turnP2;
+        dataP1["capt"] = countP1;
+        dataP2["capt"] = countP2;
+        console.log(dataP1, dataP2);
+    }
+
+    function endData(){
+        dataP1["resources"] = mat;
+        dataP2["resources"] = mat2;
+        dataP1["turn"] = turnP1;
+        dataP2["turn"] = turnP2;
+        return;
     }
 
 // loop for the render and cam
