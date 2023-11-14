@@ -1,7 +1,5 @@
 "use client";
-import Link from "next/link";
 import { useState } from "react";
-import { redirect } from "next/navigation";
 
 export default function Page() {
   var data = {};
@@ -14,19 +12,28 @@ export default function Page() {
     avatar: "defaultuser.png",
     creationDate: date,
   });
+
   const handleInput = (e) => {
-    const fieldName = e.target.id;
-    const fieldValue = e.target.value;
-    setFormData((prevState) => ({
-      ...prevState,
-      [fieldName]: fieldValue,
-    }));
-    Object.entries(formData).forEach(([key, value]) => {
-      data[key] = value;
-    });
+    if (e.target.id != "rePassword") {
+      const fieldName = e.target.id;
+      const fieldValue = e.target.value;
+      setFormData((prevState) => ({
+        ...prevState,
+        [fieldName]: fieldValue,
+      }));
+      Object.entries(formData).forEach(([key, value]) => {
+        data[key] = value;
+      });
+    }
   };
-  function redir() {
-    redirect("/account");
+
+  function checkPwd() {
+    const rePwd = document.getElementById("rePassword");
+    console.log(rePwd.value);
+    console.log(formData.password);
+    if (rePwd.value != formData.password) {
+      document.getElementById("sendBtn").disabled = true;
+    }
   }
 
   async function submitForm() {
@@ -37,12 +44,12 @@ export default function Page() {
     // try {
     const response = await fetch("http://localhost:8080/userCreation", {
       method: "POST",
-
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
+    window.location.replace("http://localhost:3000/account");
   }
 
   return (
@@ -96,6 +103,7 @@ export default function Page() {
             className="h-12 w-full border-0 bg-random-grey text-black focus:outline-black"
           ></input>
         </div>
+
         <div>
           <label
             htmlFor="rePassword"
@@ -105,14 +113,17 @@ export default function Page() {
           </label>
           <input
             onChange={handleInput}
+            onBlur={checkPwd}
             type="password"
-            name="password"
-            id="password"
+            name="rePassword"
+            id="rePassword"
             className="h-12 w-full border-0 bg-random-grey text-black focus:outline-black"
           />
         </div>
+
         <div className="mt-2 flex grow flex-col justify-evenly">
           <p
+            id="sendBtn"
             onClick={submitForm}
             className="w-full max-w-[200px] self-center rounded-full bg-black px-12 py-5 text-center text-xl font-black capitalize text-white duration-300 hover:bg-slate-500"
           >
