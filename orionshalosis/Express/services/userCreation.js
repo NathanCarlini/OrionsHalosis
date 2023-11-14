@@ -9,7 +9,7 @@ function create(user) {
   const query = "INSERT INTO user SET ?";
 
   bcrypt.hash(user.password, 10, function (err, hash) {
-    const insert = { password: hash, email: user.email };
+    const insert = {username:user.username, password: hash, email: user.email };
 
     try {
       pool.query(query, insert);

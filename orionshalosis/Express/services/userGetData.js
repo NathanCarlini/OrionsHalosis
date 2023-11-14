@@ -9,7 +9,7 @@ async function getAllData(user) {
     "SELECT iduser, username, email, password FROM user WHERE email = ?";
 
   const insert = {
-    email: user.email,
+    email: user
   };
   try {
     pool.query(query, insert);
