@@ -671,11 +671,20 @@ function init(){
     let dataP2 = [];
     let countP1 = 0;
     let countP2 = 0;
-    for (let i = 1; i < planets.children.length; i++) {
-        
-    }
     console.log(countP2)
     function liveData(){
+        countP1 = 0;
+        countP2 = 0;
+        for (let i = 1; i < planets.children.length; i++) {
+            if (halosis[i].capt == true){
+                countP1++;
+            }
+        }
+        for (let i = 1; i < planets.children.length; i++) {
+            if (halosis2[i].capt == true){
+                countP2++;
+            }
+        }
         dataP1["resources"] = mat;
         dataP2["resources"] = mat;
         dataP1["turn"] = turnP1;
@@ -690,6 +699,20 @@ function init(){
         dataP2["resources"] = mat2;
         dataP1["turn"] = turnP1;
         dataP2["turn"] = turnP2;
+        countP1 = 0;
+        countP2 = 0;
+        for (let i = 1; i < planets.children.length; i++) {
+            if (halosis[i].capt == true){
+                countP1++;
+            }
+        }
+        for (let i = 1; i < planets.children.length; i++) {
+            if (halosis2[i].capt == true){
+                countP2++;
+            }
+        }
+        dataP1["capt"] = countP1;
+        dataP2["capt"] = countP2;
         return;
     }
 
