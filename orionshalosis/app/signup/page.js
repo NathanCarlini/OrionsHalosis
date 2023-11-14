@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { revalidateTag } from "next/cache";
 
 export default function Page() {
   var data = {};
@@ -42,13 +43,14 @@ export default function Page() {
     });
     console.log(data);
     // try {
-    const response = await fetch("http://localhost:8080/userCreation", {
+    await fetch("http://localhost:8080/userCreation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
+    revalidateTag("a");
     window.location.replace("http://localhost:3000/account");
   }
 
