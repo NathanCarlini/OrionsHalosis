@@ -9,6 +9,7 @@ export default function Home() {
           autoPlay
           muted
           loop
+          disablePictureInPicture
           className="absolute top z-[1] h-full w-full object-cover"
         >
           <source src="/mars101.mp4" type="video/mp4" />
@@ -24,7 +25,7 @@ export default function Home() {
           How does the game work ?
         </p>
         <div className="flex max-h-[400px] w-full flex-row justify-evenly gap-3">
-          <div className="aspect-square max-h-[400px] bg-[url('/mars.png')] bg-cover bg-no-repeat p-2 text-base md:text-xl lg:text-2xl font-medium text-white">
+          <div className="aspect-square max-h-[400px] bg-[url('/backgrounds/mars.png')] bg-cover bg-no-repeat p-2 text-base md:text-xl lg:text-2xl font-medium text-white">
             Capture planets to get resources
           </div>
           <div className="aspect-square max-h-[400px] bg-black bg-cover bg-no-repeat p-2 text-base md:text-xl lg:text-2xl font-medium text-white">

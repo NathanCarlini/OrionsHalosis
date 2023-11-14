@@ -8,7 +8,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="flex min-h-screen flex-col">
-        <Header vis="1"/>
+        <Header vis="1" className="sticky top-0"/>
         <main className="h-full w-full grow relative">{children}</main>
         <Footer vis="1" />
       </body>
