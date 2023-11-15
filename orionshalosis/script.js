@@ -354,7 +354,7 @@ function init(){
                     }
                 }
             }
-        } if (event.key == " " || event.code == "Space"){
+        } if (event.key == " " && anim == false || event.code == "Space" && anim == false){
             sec = 0;
         }
     }
@@ -691,7 +691,6 @@ function init(){
         dataP2["turn"] = turnP2;
         dataP1["capt"] = countP1;
         dataP2["capt"] = countP2;
-        console.log(dataP1, dataP2);
     }
 
     function endData(){
