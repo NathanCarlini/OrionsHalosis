@@ -60,10 +60,10 @@ app.get("/checkIfSession&Data", (req, res, next) => {
     next(
       res.json({
         data,
-      }),
+      })
     );
   } else {
-    res.json(false);
+    res.end()
   }
 });
 

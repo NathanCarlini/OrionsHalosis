@@ -2,29 +2,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import ItemRenderLoop from "../ItemRenderLoop";
-
+import { useRouter } from 'next/navigation';
 function LogOut(){
   fetch("http://localhost:8080/logOut", { method:"PUT"})
 }
 
 export default function Page() {
-  let test = [
-    {
-      image:
-        "https://static1.millenium.org/entity_articles/5/12/95/@/238471-classique-gratuit-article_m-2.png",
-      name: "test",
-    },
-    {
-      image:
-        "https://static1.millenium.org/entity_articles/5/12/95/@/238471-classique-gratuit-article_m-2.png",
-      name: "test",
-    },
-    {
-      image:
-        "https://static1.millenium.org/entity_articles/5/12/95/@/238471-classique-gratuit-article_m-2.png",
-      name: "test",
-    },
-  ];
+  const router = useRouter();
+
+  const refreshData = () => {
+    router.replace(router.asPath);
+  }
 
   return (
     <div className="absolute flex h-full w-full flex-col bg-[url('/backgrounds/bg.png')] p-11">
@@ -110,7 +98,7 @@ export default function Page() {
           <div>
             <p className="text-xl font-black text-black">Spacecraft</p>
             <div className="flex flex-row">
-              <ItemRenderLoop array={test} />
+              {/* <ItemRenderLoop array={test} /> */}
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { revalidateTag } from "next/cache";
+// import { revalidateTag } from "next/cache";
 
 export default function Page() {
   var data = {};
@@ -50,7 +50,6 @@ export default function Page() {
       },
       body: JSON.stringify(data),
     });
-    revalidateTag("a");
     window.location.replace("http://localhost:3000/account");
   }
 

@@ -2,11 +2,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
-import Buttons from "./Buttons"
-let vis = 1;
-
-export default function Header({ avatar }) {
-  console.log(vis);
+import React, { useState, useEffect } from "react";
+export default function Header() {
+  let [avatar, setAvatar] = useState("");
+  useEffect(() => {
+    fetch("http://localhost:8080/checkIfSession&Data").then((response) =>
+      setAvatar(response.data),
+    );
+  }, []);
+  console.log(avatar);
   return (
     <>
       <header className="z-[2] flex w-full flex-row items-center justify-between bg-marine-blue px-1 py-[0.5rem] text-sm font-bold md:px-2 md:text-lg lg:px-4 lg:text-xl">
@@ -34,7 +38,26 @@ export default function Header({ avatar }) {
             The Game
           </Link>
         </div>
-        <Buttons />
+        <div className="flex flx-row">
+          {/* {avatar == '' ? ( */}
+          <div className="flex flex-row gap-3">
+            <Link href="/signup">
+              <div className=" rounded-full bg-black px-2 py-1 text-white duration-500 hover:bg-slate-500 md:px-8 md:py-2">
+                Sign up
+              </div>
+            </Link>
+            <Link href="/login">
+              <div className=" rounded-full bg-white px-2 py-1 text-black duration-500 hover:bg-slate-500 hover:text-white md:px-8 md:py-2">
+                Log In
+              </div>
+            </Link>
+          </div>
+          {/* ) : ( */}
+          <Link href="/account">
+            <Image src="/defaultuser1.png" alt="test" width={40} height={40} />
+          </Link>
+          {/* )} */}
+        </div>
       </header>
     </>
   );
