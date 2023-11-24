@@ -27,7 +27,7 @@ function init(){
 // rocket loader
     rocketCurrent = new THREE.Group();
     var rocket = new GLTFLoader();
-    rocket.load('./resources/rocketfuture.glb', function ( gltf ) {
+    rocket.load('./resources/glbs/rocketfuture.glb', function ( gltf ) {
     // rocket.load('./resources/Rocketship.glb', function ( gltf ) {
         gltf.animations;
         rocketscene = gltf.scene;
@@ -39,8 +39,8 @@ function init(){
     rocketCurrent.position.set(35, 1.85, 0);
 
     rocketCurrent2 = new THREE.Group();
-    // rocket.load('./resources/rocketfuture.glb', function ( gltf ) {
-    rocket.load('./resources/Rocketship.glb', function ( gltf ) {
+    // rocket.load('./resources/glbs/rocketfuture.glb', function ( gltf ) {
+    rocket.load('./resources/glbs/Rocketship.glb', function ( gltf ) {
         gltf.animations;
         rocketscene2 = gltf.scene;
         rocketCurrent2.add(rocketscene2);
@@ -55,7 +55,7 @@ function init(){
     var flag = new GLTFLoader();
     let flag0, flag1, flag2, flag3, flag4, flag5, flag6, flag7 = null;
     flagCurrent = new THREE.Group();
-    flag.load('./resources/Flag red.glb', function ( gltf ) {
+    flag.load('./resources/glbs/Flag red.glb', function ( gltf ) {
         gltf.animations;
         flag0 = gltf.scene;
         flagCurrent.add(flag0);
@@ -90,7 +90,7 @@ function init(){
     flagCurrent.position.set(14.5, 0.75, 0);
 
     let flagCurrent2 = new THREE.Group();
-    flag.load('./resources/Flag blue.glb', function ( gltf ) {
+    flag.load('./resources/glbs/Flag blue.glb', function ( gltf ) {
         gltf.animations;
         flag0 = gltf.scene;
         flagCurrent2.add(flag0);
