@@ -7,6 +7,10 @@ function LogOut(){
   fetch("http://localhost:8080/logOut", { method:"PUT"})
 }
 
+function SaveInventory(){
+  
+}
+
 export default function Page() {
   const router = useRouter();
 
@@ -93,11 +97,23 @@ export default function Page() {
         <div className="flex h-full w-full flex-col bg-slate-400/40 px-6 py-4 md:px-16 md:py-10">
           <p className="text-xl md:text-3xl font-bold text-center">Inventory</p>
           <div>
-            <p className="text-base md:text-xl font-black text-black">Spacecraft</p>
+            <p className="text-base md:text-xl font-black text-black">Choose a Spacecraft</p>
             <div className="flex flex-row">
               {/* <ItemRenderLoop array={test} /> */}
             </div>
           </div>
+          <div>
+            <p className="text-base md:text-xl font-black text-black">Choose a Title</p>
+            <div className="flex flex-row">
+              {/* <ItemRenderLoop array={test} /> */}
+            </div>
+          </div>
+          <Link
+            className="h-fit rounded-full bg-tropical-green px-4 py-2 text-center md:text-lg font-bold text-white"
+            href="/" onClick={SaveInventory}
+          >
+            Save
+          </Link>
         </div>
       </section>
     </div>
