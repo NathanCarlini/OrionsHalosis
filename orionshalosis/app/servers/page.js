@@ -51,9 +51,9 @@ export default function Page() {
                         alt="image map server">
                     </Image>
                     <a className="bg-gray-600 font-bold py-2 px-3 h-fit">Name of the server</a>
-                    <a className="bg-gray-600 font-bold py-2 px-3 h-fit text-light-green">Difficulty 1</a>
+                    <a className="bg-gray-600 font-bold py-2 px-3 h-fit">Difficulty 1</a>
                     <a className="bg-main-blue font-bold py-2 px-3 h-fit cursor-pointer">Join as spectator</a>
-                    <a className="bg-light-green font-bold py-2 px-3 h-fit">1/2</a>
+                    <a className="bg-tropical-green font-bold py-2 px-3 h-fit">1/2</a>
                 </div>
                 <hr className="border my-4 w-3/4 ml-auto mr-auto"></hr>
                 <div className="flex flex-row justify-between items-center">
@@ -64,7 +64,7 @@ export default function Page() {
                         alt="image map server">
                     </Image>
                     <a className="bg-gray-600 font-bold py-2 px-3 h-fit">Name of the server</a>
-                    <a className="bg-gray-600 font-bold py-2 px-3 h-fit text-[#DDEC30]">Difficulty 2</a>
+                    <a className="bg-gray-600 font-bold py-2 px-3 h-fit">Difficulty 2</a>
                     <a className="bg-main-blue font-bold py-2 px-3 h-fit cursor-pointer">Join as spectator</a>
                     <a className="bg-main-red font-bold py-2 px-3 h-fit">2/2</a>
                 </div>
@@ -77,7 +77,7 @@ export default function Page() {
                         alt="image map server">
                     </Image>
                     <a className="bg-gray-600 font-bold py-2 px-3 h-fit">Name of the server</a>
-                    <a className="bg-gray-600 font-bold py-2 px-3 h-fit text-[#FFB932]">Difficulty 3</a>
+                    <a className="bg-gray-600 font-bold py-2 px-3 h-fit">Difficulty 3</a>
                     <a className="bg-main-blue font-bold py-2 px-3 h-fit cursor-pointer">Join as spectator</a>
                     <a className="bg-main-red font-bold py-2 px-3 h-fit">2/2</a>
                 </div>
@@ -90,9 +90,9 @@ export default function Page() {
                         alt="image map server">
                     </Image>
                     <a className="bg-gray-600 font-bold py-2 px-3 h-fit">Name of the server</a>
-                    <a className="bg-gray-600 font-bold py-2 px-3 h-fit text-[#FF3A3A]">Difficulty 4</a>
+                    <a className="bg-gray-600 font-bold py-2 px-3 h-fit">Difficulty 4</a>
                     <a className="bg-main-blue font-bold py-2 px-3 h-fit cursor-pointer">Join as spectator</a>
-                    <a className="bg-light-green font-bold py-2 px-3 h-fit">1/2</a>
+                    <a className="bg-tropical-green font-bold py-2 px-3 h-fit">1/2</a>
                 </div>
                 <hr className="border my-4 w-3/4 ml-auto mr-auto"></hr>
                 <div className="flex flex-row justify-between items-center">
@@ -103,9 +103,9 @@ export default function Page() {
                         alt="image map server">
                     </Image>
                     <a className="bg-gray-600 font-bold py-2 px-3 h-fit">Name of the server</a>
-                    <a className="bg-gray-600 font-bold py-2 px-3 h-fit text-black-red">Difficulty 5</a>
+                    <a className="bg-gray-600 font-bold py-2 px-3 h-fit">Difficulty 5</a>
                     <a className="bg-main-blue font-bold py-2 px-3 h-fit cursor-pointer">Join as spectator</a>
-                    <a className="bg-light-green font-bold py-2 px-3 h-fit">1/2</a>
+                    <a className="bg-tropical-green font-bold py-2 px-3 h-fit">1/2</a>
                 </div>
             </section>
         </div>

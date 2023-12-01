@@ -14,15 +14,12 @@ module.exports = {
       },
       colors: {
         'tropical-green' : '#00DBAF',
-        'light-green' : '#84F042',
         'marine-blue' : '#1A5382',
         'main-blue' : '#523FFC',
         'main-purple' : '#BB2EE6',
         'main-red' : '#FF0D41',
-        'black-red' : '#770000',
         'darkdark-blue' : '#051d40',
         'random-grey' : '#D9D9D9'
-
       },
       padding: {
         '84' : '84px',

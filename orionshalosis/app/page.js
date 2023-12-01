@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <section className="flex h-[60vh] md:h-[80vh] lg:h-[100vh] w-full flex-row items-end justify-center">
+      <section className="flex h-4/6 md:h-5/6 lg:h-screen w-full flex-row items-end justify-center">
         <video
           autoPlay
           muted
