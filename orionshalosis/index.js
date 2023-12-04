@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+app.use("/static", express.static('./static/'));
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
@@ -14,12 +15,12 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
-});
-
-io.on('connection', (socket) => {
-    socket.on('chat message', (msg) => {
-      io.emit('chat message', msg);
-    });
+    socket.on('move', (targetX, targetY) => {
+      io.emit('move', targetX, targetY);
+    })
+    socket.on('resources', (m1,m2) => {
+      io.emit('resources',m1,m2);
+    })
 });
 
 server.listen(3000, () => {
