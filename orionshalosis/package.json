@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.2.0",
+    "@prisma/client": "^5.6.0",
     "axios": "^1.5.1",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
@@ -39,6 +40,7 @@
     "postcss": "^8",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.6",
+    "prisma": "^5.6.0",
     "tailwindcss": "^3"
   }
 }
