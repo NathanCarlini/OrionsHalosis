@@ -1,20 +1,26 @@
 "use client";
 import { useState } from "react";
-// import { revalidateTag } from "next/cache";
+
 
 export default function Page() {
   var data = {};
   const date = new Date();
+  let verif;
 
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
     avatar: "defaultuser.png",
-    creationDate: date,
+    creationdate: date,
+    experience: 0,
   });
 
   const handleInput = (e) => {
+    if ((e.target.id == "rePassword") != formData.password) {
+      verif = "invalidpassword";
+      console.log(verif);
+    }
     if (e.target.id != "rePassword") {
       const fieldName = e.target.id;
       const fieldValue = e.target.value;
@@ -41,16 +47,11 @@ export default function Page() {
     Object.entries(formData).forEach(([key, value]) => {
       data[key] = value;
     });
-    console.log(data);
-    // try {
-    await fetch("http://localhost:8080/userCreation", {
+    const res = await fetch("http://localhost:3000/api/createUsr", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      body: JSON.stringify(formData),
     });
-    window.location.replace("http://localhost:3000/account");
+    console.log(res);
   }
 
   return (
@@ -123,6 +124,7 @@ export default function Page() {
         </div>
 
         <div className="mt-2 flex grow flex-col justify-evenly">
+          {verif ? <p>{verif}</p> : ""}
           <p
             id="sendBtn"
             onClick={submitForm}
