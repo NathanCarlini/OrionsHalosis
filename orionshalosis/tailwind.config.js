@@ -20,7 +20,6 @@ module.exports = {
         'main-red' : '#FF0D41',
         'darkdark-blue' : '#051d40',
         'random-grey' : '#D9D9D9'
-
       },
       padding: {
         '84' : '84px',
