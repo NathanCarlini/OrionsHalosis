@@ -4,13 +4,12 @@ import Link from "next/link";
 import "./globals.css";
 import React, { useState, useEffect } from "react";
 export default function Header() {
-  let [avatar, setAvatar] = useState("");
-  useEffect(() => {
-    fetch("http://localhost:8080/checkIfSession&Data").then((response) =>
-      setAvatar(response.data),
-    );
-  }, []);
-  console.log(avatar);
+  // let [avatar, setAvatar] = useState("");
+  // useEffect(() => {
+  //   fetch("http://localhost:8080/checkIfSession&Data").then((response) =>
+  //     setAvatar(response.data),
+  //   );
+  // }, []);
   return (
     <>
       <header className="z-[2] flex w-full flex-row items-center justify-between bg-marine-blue px-1 py-[0.5rem] text-sm font-bold md:px-2 md:text-lg lg:px-4 lg:text-xl">
