@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model account {
+  iduser                                     Int            @id @default(autoincrement())
+  username                                   String         @db.VarChar
+  password                                   String
+  email                                      String         @db.VarChar
+  avatar                                     String
+  experience                                 Int?
+  rockets                                    String[]       @db.VarChar
+  creationdate                               DateTime?      @db.Timestamp(6)
+  deletiondate                               DateTime?      @db.Timestamp(6)
+  deleted                                    Boolean        @default(false)
+  inventory_inventory_accountToaccount       inventory[]    @relation("inventory_accountToaccount") @ignore
+  rolesaccount_rolesaccount_accountToaccount rolesaccount[] @relation("rolesaccount_accountToaccount") @ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model inventory {
+  account                            Int?
+  item                               Int?
+  account_inventory_accountToaccount account? @relation("inventory_accountToaccount", fields: [account], references: [iduser], onDelete: NoAction, onUpdate: NoAction)
+  item_inventory_itemToitem          item?    @relation("inventory_itemToitem", fields: [item], references: [iditem], onDelete: NoAction, onUpdate: NoAction)
+
+  @@ignore
+}
+
+model item {
+  iditem                         Int         @id @default(autoincrement())
+  name                           String      @db.VarChar
+  type                           Int
+  turnskip                       Boolean?
+  image                          String?
+  inventory_inventory_itemToitem inventory[] @relation("inventory_itemToitem") @ignore
+  type_item_typeTotype           type        @relation("item_typeTotype", fields: [type], references: [idtype], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model role {
+  idrole                               Int            @id @default(autoincrement())
+  name                                 String         @db.VarChar
+  permissions                          Boolean        @default(false)
+  rolesaccount_rolesaccount_roleTorole rolesaccount[] @relation("rolesaccount_roleTorole") @ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model rolesaccount {
+  account                               Int?
+  role                                  Int?
+  account_rolesaccount_accountToaccount account? @relation("rolesaccount_accountToaccount", fields: [account], references: [iduser], onDelete: NoAction, onUpdate: NoAction)
+  role_rolesaccount_roleTorole          role?    @relation("rolesaccount_roleTorole", fields: [role], references: [idrole], onDelete: NoAction, onUpdate: NoAction)
+
+  @@ignore
+}
+
+model type {
+  idtype               Int    @id @default(autoincrement())
+  name                 String @db.VarChar
+  item_item_typeTotype item[] @relation("item_typeTotype")
+}
