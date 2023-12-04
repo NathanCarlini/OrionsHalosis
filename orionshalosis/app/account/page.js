@@ -1,18 +1,18 @@
 "use client"
 import Image from "next/image";
 import Link from "next/link";
-import ItemRenderLoop from "../ItemRenderLoop";
-import { useRouter } from 'next/navigation';
 function LogOut(){
   fetch("http://localhost:8080/logOut", { method:"PUT"})
 }
 
-export default function Page() {
-  const router = useRouter();
+export default async function Page() {
+  // const res = await fetch("http://localhost:8080/checkIfSession&Data", {
+  //   method: "GET",
+  //   next: { tags: ["collection"] },
+  // });
+  // const json = await res.json();
+  // return { avatar: json.avatar };
 
-  const refreshData = () => {
-    router.replace(router.asPath);
-  }
 
   return (
     <div className="absolute flex h-full w-full flex-col bg-[url('/backgrounds/bg.png')] p-11">
