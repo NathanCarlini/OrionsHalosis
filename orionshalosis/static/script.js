@@ -3,7 +3,11 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import Planets from '/static/Planets.js';
 
 var socket = io();
-
+let price = 0;
+let player1 = true;
+let player2 = false;
+let turnP1 = 0;
+let turnP2 = 0;
 let camera = null;
 const scene = new THREE.Scene();
 export default scene;
@@ -24,7 +28,7 @@ function init(){
         '/static/resources/front.png',
         '/static/resources/back.png',
     ]);
-    let rocketscene, rocketCurrent, rocketscene2, rocketCurrent2, flagCurrent, planets, mat, way, targetPositionX, targetPositionY, sec;
+    let rocketscene, rocketCurrent, rocketscene2, rocketCurrent2, flagCurrent, planets, mat, mat2, way, targetPositionX, targetPositionY, sec;
 
 // rocket loader
     rocketCurrent = new THREE.Group();
@@ -130,9 +134,11 @@ function init(){
     // init planets p1
     const sun = new Planets(15, 'sun', -10, 0);
     const mercury = new Planets(1, 'mercury', 15, 300);
-    const venus = new Planets(1.8, 'venus', 25, 200, 2);
+    // const venus = new Planets(1.8, 'venus', 25, 200, 2);
+    const venus = new Planets(1.8, 'venus', 25, 200);
     const earth = new Planets(2, 'earth', 35, 0);
-    const mars = new Planets(1.4, 'mars', 45, 150, 1.5);
+    // const mars = new Planets(1.4, 'mars', 45, 150, 1.5);
+    const mars = new Planets(1.4, 'mars', 45, 150);
     const jupiter = new Planets(5, 'jupiter', 60, 100);
     const saturn = new Planets(4.5, 'saturn', 75, 250);
     const uranus = new Planets(3.5, 'uranus', 90, 400);
@@ -143,9 +149,11 @@ function init(){
     let planets2 = new THREE.Group();
     const sun2 = new Planets(15, 'sun', -10-200, 0);
     const mercury2 = new Planets(1, 'mercury', 15-200, 300);
-    const venus2 = new Planets(1.8, 'venus', 25-200, 200, 2);
+    // const venus2 = new Planets(1.8, 'venus', 25-200, 200, 2);
+    const venus2 = new Planets(1.8, 'venus', 25-200, 200,);
     const earth2 = new Planets(2, 'earth', 35-200, 0);
-    const mars2 = new Planets(1.4, 'mars', 45-200, 150, 1.5);
+    const mars2 = new Planets(1.4, 'mars', 45-200, 150);
+    // const mars2 = new Planets(1.4, 'mars', 45-200, 150, 1.5);
     const jupiter2 = new Planets(5, 'jupiter', 60-200, 100);
     const saturn2 = new Planets(4.5, 'saturn', 75-200, 250);
     const uranus2 = new Planets(3.5, 'uranus', 90-200, 400);
@@ -258,12 +266,13 @@ function init(){
                         socket.emit('move', targetPositionX, targetPositionY);
                     } else if(halosis[i].planet == currentPlanet.name && anim == false && mat >= halosis[i-1].price){
                         sec = 10;
-                        mat = mat - halosis[i-1].price;
+                        price = halosis[i-1].price;
                         resource.innerHTML = "Moon Stone : " + mat;
                         targetPositionX = planets.children[i-1].position.x;
                         targetPositionY = planets.children[i-1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = -1;
+                        socket.emit('resources', mat, mat2, player1, player2, price);
                         socket.emit('move', targetPositionX, targetPositionY);
                     } else if(halosis[i].planet == currentPlanet.name && anim == false && mat <= halosis[i-1].price){
                         text.innerHTML = "You don't have enough resources...";
@@ -289,12 +298,13 @@ function init(){
                         socket.emit('move', targetPositionX, targetPositionY);
                     } else if(halosis2[i].planet == currentPlanet.name && anim == false && mat2 >= halosis2[i-1].price){
                         sec = 10;
-                        mat2 = mat2 - halosis2[i-1].price;
+                        price = halosis2[i-1].price;
                         resource2.innerHTML = "Moon Stone j2 : " + mat2;
                         targetPositionX = planets2.children[i-1].position.x;
                         targetPositionY = planets2.children[i-1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = -1;
+                        socket.emit('resources', mat, mat2, player1, player2, price);
                         socket.emit('move', targetPositionX, targetPositionY);
                     } else if(halosis2[i].planet == currentPlanet.name && anim == false && mat2 <= halosis2[i-1].price){
                         text.innerHTML = "You don't have enough resources...";
@@ -319,12 +329,13 @@ function init(){
                         socket.emit('move', targetPositionX, targetPositionY);
                     } else if(halosis[i].planet == currentPlanet.name && anim == false && mat >= halosis[i+1].price){
                         sec = 10;
-                        mat = mat - halosis[i+1].price;
+                        price = halosis[i+1].price;
                         resource.innerHTML = "Moon Stone : " + mat;
                         targetPositionX = planets.children[i+1].position.x;
                         targetPositionY = planets.children[i+1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = 1;
+                        socket.emit('resources', mat, mat2, player1, player2, price);
                         socket.emit('move', targetPositionX, targetPositionY);
                     } else if(halosis[i].planet == currentPlanet.name && anim == false && mat <= halosis[i+1].price){
                         text.innerHTML = "You don't have enough resources...";
@@ -344,11 +355,12 @@ function init(){
                         socket.emit('move', targetPositionX, targetPositionY);
                     } else if(halosis2[i].planet == currentPlanet.name && anim == false && mat2 >= halosis2[i+1].price){
                         sec = 10;
-                        mat2 = mat2 - halosis2[i+1].price;
+                        price = halosis2[i+1].price;
                         resource2.innerHTML = "Moon Stone j2 : " + mat2;
                         targetPositionX = planets2.children[i+1].position.x;
                         targetPositionY = planets2.children[i+1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
+                        socket.emit('resources', mat, mat2, player1, player2, price);
                         socket.emit('move', targetPositionX, targetPositionY);
                     } else if(halosis2[i].planet == currentPlanet.name && anim == false && mat2 <= halosis2[i+1].price){
                         text.innerHTML = "You don't have enough resources...";
@@ -484,7 +496,7 @@ function init(){
                             camera.position.x = rocketCurrent2.position.x;
                             anim = false;
                             socket.emit('resetTime');
-                            game();
+                            socket.emit('turnPlayer', mat, mat2, player1, player2);
                         },3500)
                     }
                 }
@@ -507,7 +519,7 @@ function init(){
                     flagCurrent.children[currentPlanet.number-1].visible = true;
                     if(halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true && halosis[8].capt == true){
                         text.innerHTML = "Player 1 won the game!";
-                        socket.emit('resetTime', 10);
+                        socket.emit('resetTime', 1000);
                         camera.position.x = rocketCurrent.position.x;
                         endData();
                     } else {
@@ -517,7 +529,7 @@ function init(){
                             camera.position.x = rocketCurrent2.position.x;
                             anim = false;
                             socket.emit('resetTime');
-                            game();
+                            socket.emit('turnPlayer', mat, mat2, player1, player2);
                         },3500)
                     }
                 }
@@ -541,7 +553,7 @@ function init(){
                     flagCurrent2.children[parseInt(currentPlanet.number-1)].visible = true;
                     if(halosis2[1].capt == true && halosis2[2].capt == true && halosis2[3].capt == true && halosis2[4].capt == true && halosis2[5].capt == true && halosis2[6].capt == true && halosis2[7].capt == true && halosis2[8].capt == true){
                         text.innerHTML = "Player 2 won the game!";
-                        socket.emit('resetTime', 10);
+                        socket.emit('resetTime', 1000);
                         camera.position.x = rocketCurrent2.position.x;
                         endData();
                     } else {
@@ -551,7 +563,7 @@ function init(){
                             camera.position.x = rocketCurrent.position.x;
                             anim = false;
                             socket.emit('resetTime');
-                            game();
+                            socket.emit('turnPlayer', mat, mat2, player1, player2);
                         },3000)
                     }
                 }
@@ -584,54 +596,10 @@ function init(){
                             camera.position.x = rocketCurrent.position.x;
                             anim = false;
                             socket.emit('resetTime');
-                            game();
+                            socket.emit('turnPlayer', mat, mat2, player1, player2);
                         },3000)
                     }
                 }
-            }
-        }
-    }
-
-    // loop for moon stones update and select of the text area
-    const text = document.querySelector(".halosis");
-    const resource = document.querySelector(".resource")
-    const resource2 = document.querySelector(".resource2")
-    mat = 0;
-    let mat2 = 0;
-    function resources(){
-        if(player1 == true){
-            if (currentPlanet.name == "sun"){
-                mat = 0;
-                socket.emit('resources', mat, mat2);
-            } else if (halosis[2].capt == true && halosis[4].capt == true) {
-                mat += 375;
-                socket.emit('resources', mat, mat2);
-            } else if (halosis[2].capt == true) {
-                mat += 300;
-                socket.emit('resources', mat, mat2);
-            } else if (halosis[4].capt == true) {
-                mat += 225;
-                socket.emit('resources', mat, mat2);
-            } else {
-                mat += 150;
-                socket.emit('resources', mat, mat2);
-            }
-        } else if(player2 == true){
-            if (currentPlanet.name == "sun"){
-                mat2 = 0;
-                socket.emit('resources', mat, mat2);
-            } else if (halosis2[2].capt == true && halosis2[4].capt == true) {
-                mat2 += 375;
-                socket.emit('resources', mat, mat2);
-            } else if (halosis2[2].capt == true ) {
-                mat2 += 300;
-                socket.emit('resources', mat, mat2);
-            } else if (halosis2[4].capt == true) {
-                mat2 += 225;
-                socket.emit('resources', mat, mat2);
-            } else {
-                mat2 += 150;
-                socket.emit('resources', mat, mat2);
             }
         }
     }
@@ -644,6 +612,9 @@ function init(){
         requestAnimationFrame(animRocket);
     });
 
+    const text = document.querySelector(".halosis");
+    const resource = document.querySelector(".resource")
+    const resource2 = document.querySelector(".resource2")
     socket.on('resources', (m1, m2) => {
         console.log("mat1 : "+m1+" mat2 : "+m2);
         mat = m1;
@@ -661,32 +632,24 @@ function init(){
         sec = timer;
         time.innerHTML = "Timer : "+sec;  
     })
-
-
-// turn-based 
-    let player1 = true;
-    let player2 = false;
-    let turnP1 = 0;
-    let turnP2 = 0;
-    function game(){
-        // liveData();
+    socket.on('turnPlayer', () => {
         whatPlanet()
         if(player1 == true){
-            console.log("p1exec")
             turnP1++;
-            resources();
             text.innerHTML = "Your turn player 1!<br>You are currently on " + uppercaseFirstLetter(currentPlanet.name);
             document.addEventListener("keydown", onDocumentKeyDown, false);
             // document.addEventListener('mousedown', onMouseDown, false);
         } else if (player2 == true){
-            console.log("p2exec")
             turnP2++;
-            resources();
             text.innerHTML = "Your turn player 2!<br>You are currently on " + uppercaseFirstLetter(currentPlanet.name);
             document.addEventListener("keydown", onDocumentKeyDown, false);
             // document.addEventListener('mousedown', onMouseDown, false);
         }
-    }
+    })
+    mat = 0;
+    mat2 = 0;
+    socket.emit('turnPlayer', mat, mat2, player1, player2);
+    console.log(mat, mat2, player1, player2)
 
 // loop for the render and cam
 let recent = 0;
@@ -700,7 +663,7 @@ let recent = 0;
                 player1 = false;
                 player2 = true;
                 camera.position.x = rocketCurrent2.position.x;
-                game();
+                socket.emit('turnPlayer', mat, mat2, player1, player2);
             }
         } else if (player2 == true){
             camera.lookAt(rocketCurrent2.position.x, rocketCurrent2.position.y, rocketCurrent2.position.z);
@@ -710,7 +673,7 @@ let recent = 0;
                 player1 = true;
                 player2 = false;
                 camera.position.x = rocketCurrent.position.x;
-                game()
+                socket.emit('turnPlayer', mat, mat2, player1, player2);
             }
         }
         if(sec == 10){ recent = 0; }
@@ -719,22 +682,13 @@ let recent = 0;
         window.requestAnimationFrame(loop);
     }
     loop();
-    game();
-
-
-
-
-
-
-
-
 
     // get data for stats
     let dataP1 = [];
     let dataP2 = [];
     let countP1 = 0;
     let countP2 = 0;
-    console.log(countP2)
+    // console.log(countP2)
     function liveData(){
         countP1 = 0;
         countP2 = 0;

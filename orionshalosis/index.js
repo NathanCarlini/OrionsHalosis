@@ -16,17 +16,42 @@ function timer(){
   sec--;
 }
 
+let mat = 0;
+let mat2 = 0;
+function resources(m1, m2, player1, player2){
+  if(player1 == true){
+    mat = m1 + 150;
+  } else if(player2 == true){
+    mat2 = m2 + 150;
+  }
+}
+
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
+
     socket.on('move', (targetX, targetY) => {
       io.emit('move', targetX, targetY);
     })
-    socket.on('resources', (m1,m2) => {
+
+    socket.on('resources', (m1, m2, player1, player2, price) => {
+      if (typeof price === 'undefined'){
+        resources(m1, m2, player1, player2);
+      } else {
+        if(player1 == true){
+          mat = m1 - price;
+        } else if(player2 == true){
+          mat2 = m2 - price;
+        }
+        // console.log(mat, mat2);
+      }
+      m1 = mat;
+      m2 = mat2;
       io.emit('resources',m1,m2);
     })
+
     socket.on('resetTime', (timer) => {
       if (typeof timer !== 'undefined'){
         sec = timer;
@@ -35,9 +60,20 @@ io.on('connection', (socket) => {
       }
       io.emit('resetTime');
     })
+
     socket.on('time', () => {
       io.emit('time',sec);
-    })
+    });
+
+    socket.on('turnPlayer', (m1, m2, player1, player2) => {
+      console.log(m1, m2);
+      resources(m1, m2, player1, player2);
+      m1=mat;
+      m2=mat2;
+      console.log(m1, m2);
+      io.emit('resources',m1,m2);
+      io.emit('turnPlayer');
+    });
 });
 
 server.listen(3000, () => {
