@@ -24,6 +24,8 @@
     "express-session": "^1.17.3",
     "flag-icons": "^6.11.1",
     "fs": "^0.0.1-security",
+    "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
     "keygrip": "^1.1.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.6.3",
@@ -31,7 +33,9 @@
     "qs": "^6.11.2",
     "react": "^18",
     "react-dom": "^18",
-    "session": "^0.1.0"
+    "session": "^0.1.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "autoprefixer": "^10",
