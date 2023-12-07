@@ -32,8 +32,8 @@ io.on('connection', (socket) => {
         console.log('user disconnected');
     });
 
-    socket.on('move', (targetX, targetY) => {
-      io.emit('move', targetX, targetY);
+    socket.on('move', (targetX, targetY, dir) => {
+      io.emit('move', targetX, targetY, dir);
     })
 
     socket.on('resources', (m1, m2, player1, player2, price) => {
@@ -66,13 +66,15 @@ io.on('connection', (socket) => {
     });
 
     socket.on('turnPlayer', (m1, m2, player1, player2) => {
-      console.log(m1, m2);
       resources(m1, m2, player1, player2);
       m1=mat;
       m2=mat2;
-      console.log(m1, m2);
       io.emit('resources',m1,m2);
-      io.emit('turnPlayer');
+      io.emit('turnPlayer', player1, player2);
+    });
+
+    socket.on('skip', (player1, player2) => {
+      io.emit('skip', player1, player2);
     });
 });
 
