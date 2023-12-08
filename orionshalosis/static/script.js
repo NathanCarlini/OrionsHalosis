@@ -232,17 +232,16 @@ function init(){
         }
     }
 
-// round a number
+    // round a number
     function round(num){
         return Math.round(num);
     }
-
     // Uppercase first letter
     function uppercaseFirstLetter(input){
         return input.charAt(0).toUpperCase() + input.slice(1)
     }
 
-// if button press the keyboard action in the game
+    // if button press the keyboard action in the game
     let anim = false;
     function onDocumentKeyDown(event) {
         if (event.key == "ArrowLeft" || event.key == "q") {
@@ -472,7 +471,6 @@ function init(){
                     } else if (rocketCurrent.position.y >= targetPositionY) {
                         rocketCurrent.position.y -= 0.03;
                     }
-                    camera.position.x = rocketCurrent.position.x;
                     window.requestAnimationFrame(animRocket);
                 } else {
                     rocketCurrent.position.x = round(rocketCurrent.position.x)
@@ -501,7 +499,6 @@ function init(){
                     } else if (rocketCurrent.position.y >= targetPositionY) {
                         rocketCurrent.position.y -= 0.03;
                     }
-                    camera.position.x = rocketCurrent.position.x;
                     window.requestAnimationFrame(animRocket);
                 } else if(currentPlanet.name == "sun"){
                     anim = false;
@@ -535,7 +532,6 @@ function init(){
                     } else if (rocketCurrent2.position.y >= targetPositionY) {
                         rocketCurrent2.position.y -= 0.03;
                     }
-                    camera.position.x = rocketCurrent2.position.x;
                     window.requestAnimationFrame(animRocket);
                 } else {
                     rocketCurrent2.position.x = round(rocketCurrent2.position.x)
@@ -564,7 +560,6 @@ function init(){
                     } else if (rocketCurrent2.position.y >= targetPositionY) {
                         rocketCurrent2.position.y -= 0.03;
                     }
-                    camera.position.x = rocketCurrent2.position.x;
                     window.requestAnimationFrame(animRocket);
                 } else if(currentPlanet.name == "sun"){
                     anim = false;
@@ -598,7 +593,6 @@ function init(){
         way = dir;
         requestAnimationFrame(animRocket);
     });
-
     const text = document.querySelector(".halosis");
     const resource = document.querySelector(".resource")
     const resource2 = document.querySelector(".resource2")
@@ -608,7 +602,6 @@ function init(){
         resource.innerHTML = "Moon Stone : " + mat;
         resource2.innerHTML = "Moon Stone p2 : " + mat2;
     });
-
     const time = document.querySelector(".timer")
     socket.on('time', (timer) => {
         sec = timer;
@@ -710,7 +703,6 @@ let recent = 0;
         dataP1["capt"] = countP1;
         dataP2["capt"] = countP2;
     }
-
     function endData(){
         dataP1["resources"] = mat;
         dataP2["resources"] = mat2;
