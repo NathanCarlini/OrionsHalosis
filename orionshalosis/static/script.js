@@ -12,6 +12,7 @@ let capt2x15 = false;
 let capt1x15 = false;
 let turnP1 = 0;
 let turnP2 = 0;
+let state;
 let camera = null;
 const scene = new THREE.Scene();
 export default scene;
@@ -268,7 +269,7 @@ function init(){
                         targetPositionY = planets.children[i-1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = -1;
-                        socket.emit('price', mat, mat2, player1, player2, price);
+                        socket.emit('price', player1, player2, price);
                         socket.emit('move', targetPositionX, targetPositionY, way);
                     } else if(halosis[i].planet == currentPlanet.name && anim == false && mat <= halosis[i-1].price){
                         text.innerHTML = "You don't have enough resources...";
@@ -297,7 +298,7 @@ function init(){
                         targetPositionY = planets2.children[i-1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = -1;
-                        socket.emit('price', mat, mat2, player1, player2, price);
+                        socket.emit('price', player1, player2, price);
                         socket.emit('move', targetPositionX, targetPositionY, way);
                     } else if(halosis2[i].planet == currentPlanet.name && anim == false && mat2 <= halosis2[i-1].price){
                         text.innerHTML = "You don't have enough resources...";
@@ -325,7 +326,7 @@ function init(){
                         targetPositionY = planets.children[i+1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = 1;
-                        socket.emit('price', mat, mat2, player1, player2, price);
+                        socket.emit('price', player1, player2, price);
                         socket.emit('move', targetPositionX, targetPositionY, way);
                     } else if(halosis[i].planet == currentPlanet.name && anim == false && mat <= halosis[i+1].price){
                         text.innerHTML = "You don't have enough resources...";
@@ -348,7 +349,7 @@ function init(){
                         targetPositionY = planets2.children[i+1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = 1;
-                        socket.emit('price', mat, mat2, player1, player2, price);
+                        socket.emit('price', player1, player2, price);
                         socket.emit('move', targetPositionX, targetPositionY, way);
                     } else if(halosis2[i].planet == currentPlanet.name && anim == false && mat2 <= halosis2[i+1].price){
                         text.innerHTML = "You don't have enough resources...";
@@ -384,13 +385,12 @@ function init(){
                         targetPositionY = planets.children[i+1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = 1;
-                        socket.emit('price', mat, mat2, player1, player2, price);
+                        socket.emit('price', player1, player2, price);
                         socket.emit('move', targetPositionX, targetPositionY, way);
                     } else if(halosis[i].right == intersects[0].object.name && currentPlanet.number == i && anim == false && mat <= halosis[i+1].price){
                         text.innerHTML = "You don't have enough resources...";
                     } if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && halosis[i].left == "sun" && anim == false && currentPlanet.name == "mercury"){
                         targetPositionX = sun.getPos()[1];
-                        console.log(sun.getPos()[1])
                         text.innerHTML = "In the sun? Really? Well you lost...";
                         sec = "lose";
                         way = -1;
@@ -407,7 +407,7 @@ function init(){
                         targetPositionY = planets.children[i-1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = -1;
-                        socket.emit('price', mat, mat2, player1, player2, price);
+                        socket.emit('price', player1, player2, price);
                         socket.emit('move', targetPositionX, targetPositionY, way);
                     } else if(halosis[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false && mat <= halosis[i-1].price){
                         text.innerHTML = "You don't have enough resources...";
@@ -426,7 +426,7 @@ function init(){
                         targetPositionY = planets2.children[i+1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = 1;
-                        socket.emit('price', mat, mat2, player1, player2, price);
+                        socket.emit('price', player1, player2, price);
                         socket.emit('move', targetPositionX, targetPositionY, way);
                     } else if(halosis2[i].right == intersects[0].object.name && currentPlanet.number == i && anim == false && mat2 <= halosis2[i+1].price){
                         text.innerHTML = "You don't have enough resources...";
@@ -448,7 +448,7 @@ function init(){
                         targetPositionY = planets2.children[i-1].geometry.parameters.radius;
                         text.innerHTML = "Flying...";
                         way = -1;
-                        socket.emit('price', mat, mat2, player1, player2, price);
+                        socket.emit('price', player1, player2, price);
                         socket.emit('move', targetPositionX, targetPositionY, way);
                     } else if(halosis2[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false && mat2 <= halosis2[i-1].price){
                         text.innerHTML = "You don't have enough resources...";
@@ -479,7 +479,7 @@ function init(){
                     flagCurrent.children[parseInt(currentPlanet.number-1)].visible = true;
                     if(halosis[1].capt == true && halosis[2].capt == true && halosis[3].capt == true && halosis[4].capt == true && halosis[5].capt == true && halosis[6].capt == true && halosis[7].capt == true && halosis[8].capt == true){
                         text.innerHTML = "Player 1 won the game!";
-                        socket.emit('resetTime', 10);
+                        socket.emit('resetTime', 1000);
                         camera.position.x = rocketCurrent.position.x;
                         endData();
                     } else {
@@ -587,7 +587,44 @@ function init(){
     }
 
     // socket handling :
+    socket.on('pause', () => {
+        socket.emit('resetTime', 120);
+        text.innerHTML = "Game paused, a player is disconnected...";
+        state = {
+            p1: player1,
+            p2: player2,
+        }
+        player1 = false;
+        player2 = false;
+        socket.emit('gameState', halosis, halosis2, rocketCurrent.position.x, rocketCurrent2.position.x, rocketCurrent.position.y, rocketCurrent2.position.y, state);
+    });
+
+    socket.on('loadGameState', (h1, h2, rpx1, rpx2, rpy1, rpy2, currentState) => {
+        for (let i = 0; i < h1.length; i++) {
+            if(h1[i].capt == true){
+                flagCurrent.children[i-1].visible = true;
+                halosis[i].capt = true;
+            }
+        }
+        for (let i = 0; i < h2.length; i++) {
+            if(h2[i].capt == true){
+                flagCurrent2.children[i-1].visible = true;
+                halosis2[i].capt = true;
+            }
+        }
+        rocketCurrent.position.x = rpx1;
+        rocketCurrent2.position.x = rpx2;
+        rocketCurrent.position.y = rpy1;
+        rocketCurrent2.position.y = rpy2;
+        state = currentState;
+        player1 = state.p2;
+        player2 = state.p1;
+        socket.emit('resetTime');
+        socket.emit('turnPlayer', mat, mat2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, recent);
+    });
+
     socket.on('move', (targetX, targetY, dir) => {
+        socket.emit('resetTime', 10);
         targetPositionX = targetX;
         targetPositionY = targetY;
         way = dir;
@@ -671,6 +708,9 @@ let recent = 0;
         }
         if (halosis2[4].capt == true){
             capt2x15 = true;
+        }
+        if(sec == 0 && player1 == false && player2 == false){
+            text.innerHTML = "Player won the game by forfeit!";
         }
         camera.updateProjectionMatrix();
         renderer.render(scene, camera);

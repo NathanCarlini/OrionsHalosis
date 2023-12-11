@@ -18,6 +18,14 @@ function timer(){
 
 let mat = 0;
 let mat2 = 0;
+let h1 = 0;
+let h2 = 0;
+let rpx1 = 0;
+let rpx2 = 0;
+let rpy1 = 0;
+let rpy2 = 0;
+let missUser = 0;
+let currentState;
 function resources(m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2){
   if(player1 == false && capt1x2 == true){
     mat = m1 + 300;
@@ -37,20 +45,38 @@ function resources(m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x
 }
 
 io.on('connection', (socket) => {
+  if (missUser == 1){
+    missUser = 0;
+    console.log('second user connected after beingdisconnected');
+    io.emit('loadGameState', h1, h2, rpx1, rpx2, rpy1, rpy2, currentState);
+  }
     console.log('a user connected');
+
     socket.on('disconnect', () => {
         console.log('user disconnected');
+        missUser = 1;
+        io.emit('pause');
+    });
+
+    socket.on('gameState', (halosis, halosis2, rocketPosx, rocketPosx2, rocketPosy, rocketPosy2, state) => {
+      h1 = halosis;
+      h2 = halosis2;
+      rpx1 = rocketPosx;
+      rpx2 = rocketPosx2;
+      rpy1 = rocketPosy;
+      rpy2 = rocketPosy2;
+      currentState = state;
     });
 
     socket.on('move', (targetX, targetY, dir) => {
       io.emit('move', targetX, targetY, dir);
     })
 
-    socket.on('price', (m1, m2, player1, player2, price) => {
+    socket.on('price', (player1, player2, price) => {
       if(player1 == true){
-        mat = m1 - price;
+        mat = mat - price;
       } else if(player2 == true){
-        mat2 = m2 - price;
+        mat2 = mat2 - price;
       }
       m1 = mat;
       m2 = mat2;
