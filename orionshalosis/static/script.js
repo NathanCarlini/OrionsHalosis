@@ -357,7 +357,7 @@ function init(){
                 }
             }
         }
-        if (event.key == " " && anim == false || event.code == "Space" && anim == false){
+        if (event.key == " " && anim == false || event.code == "Space" && anim == false && !(sec == 20)){
             socket.emit('resetTime');
             socket.emit('turnPlayer', mat, mat2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, recent);
         }
@@ -549,7 +549,7 @@ function init(){
                             anim = false;
                             socket.emit('resetTime');
                             socket.emit('turnPlayer', mat, mat2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, recent);
-                        },3000)
+                        },2000)
                     }
                 }
             } else {
@@ -579,7 +579,7 @@ function init(){
                             anim = false;
                             socket.emit('resetTime');
                             socket.emit('turnPlayer', mat, mat2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, recent);
-                        },3000)
+                        },2000)
                     }
                 }
             }
@@ -649,6 +649,7 @@ function init(){
         time.innerHTML = "Timer : "+sec;  
     })
     socket.on('turnPlayer', (m1, m2, p1, p2) => {
+        console.log("turnPlayer", p1, p2);
         recent = 1;
         price = 0;
         whatPlanet()

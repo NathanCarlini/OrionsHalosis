@@ -26,6 +26,7 @@ let rpy1 = 0;
 let rpy2 = 0;
 let missUser = 0;
 let currentState;
+let recent = 0;
 function resources(m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2){
   if(player1 == false && capt1x2 == true){
     mat = m1 + 300;
@@ -93,11 +94,15 @@ io.on('connection', (socket) => {
     })
 
     socket.on('time', () => {
+      if (sec == 19){
+        recent = 0;
+      }
       io.emit('time',sec);
     });
 
-    socket.on('turnPlayer', (m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, recent) => {
-      if (recent == 0){
+    socket.on('turnPlayer', (m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, rec) => {
+      if (recent == 0 && rec == 0){
+        recent = 1;
         resources(m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2);
         m1=mat;
         m2=mat2;
@@ -108,8 +113,8 @@ io.on('connection', (socket) => {
             player2 = false;
             player1 = true;
         }
+        io.emit('turnPlayer', m1, m2, player1, player2);
       }
-      io.emit('turnPlayer', m1, m2, player1, player2);
     });
 });
 
