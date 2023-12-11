@@ -1,11 +1,14 @@
 "use client";
+// import { redirect } from "next/dist/server/api-utils";
 import { useState } from "react";
-
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 export default function Page() {
   var data = {};
   const date = new Date();
   let verif;
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -51,7 +54,10 @@ export default function Page() {
       method: "POST",
       body: JSON.stringify(formData),
     });
-    console.log(res);
+    // console.log(await res.json());
+    let { token } = await res.json();
+    console.log(token);
+    document.cookie = `token=${token}; path=/`;
   }
 
   return (
@@ -127,7 +133,9 @@ export default function Page() {
           {verif ? <p>{verif}</p> : ""}
           <p
             id="sendBtn"
-            onClick={submitForm}
+            onClick={() => {
+              submitForm(); router.push('/account')
+            }}
             className="w-full max-w-[200px] self-center rounded-full bg-black px-12 py-5 text-center text-xl font-black capitalize text-white duration-300 hover:bg-slate-500"
           >
             Sign Up
