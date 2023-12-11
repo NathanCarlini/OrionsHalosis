@@ -3,18 +3,22 @@ import Image from "next/image";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // import useFetch from "./useFetch.js";
 function SaveInventory() {}
+function logOut() {
+  document.cookie = "token= ; path=/"
+}
 export default async function Page() {
-  let doto;
   const router = useRouter();
+  const [isLoading, setLoading] = useState(true)
+  const [data, setData] = useState(null)
   useEffect(() => {
     const token = Cookies.get("token");
     if (!token) {
-      // router.replace("/"); // If no token is found, redirect to login page
+      router.replace("/login"); // If no token is found, redirect to login page
       return;
     }
     const validateToken = async () => {
@@ -23,25 +27,28 @@ export default async function Page() {
           method: "PUT",
           headers: { Authorization: `Bearer ${token}` },
         });
-        doto = res;
-        // console.log(res);
+        let body = await res.json()
+        setData(body)
+        setLoading(false)
         if (!res.ok) throw new Error("Token validation failed");
+        
       } catch (error) {
         console.error(error);
-        router.replace("/"); // Redirect to login if token validation fails
+        router.replace("/login"); // Redirect to login if token validation fails
       }
     };
     validateToken();
   }, [router]);
-
-  //console.log(token);
-  return doto ? (
+  if (isLoading) return <p>Loading...</p>
+  if (!data) return <p>No profile data</p>
+  console.log(data.data);
+  return (
     <div className="absolute flex h-full w-full flex-col bg-[url('/backgrounds/bg.png')] p-6 md:p-11">
       <section className="flex flex-row justify-between">
         <div className="flex flex-row gap-3">
           <div className="relative aspect-square h-28 w-40 bg-slate-400/40 md:h-40">
             <Image
-              src=""
+              src="/Ornn_0.jpg"
               layout="fill"
               objectFit="cover"
               alt="user avatar"
@@ -49,10 +56,10 @@ export default async function Page() {
           </div>
           <div className="flex h-full flex-col gap-4">
             <p className="text- w-fit bg-slate-400/40 px-2 py-1 font-black text-white md:text-xl">
-              ''
+              {data.data.username}
             </p>
             <p className="bg-slate-400/40 px-2 py-1 font-black text-white md:text-xl">
-              Beginner space Explorer lvl.2
+              Beginner space Explorer lvl.5
             </p>
             <div className="h-11 w-full rounded-full bg-[url('/backgrounds/galaxy.png')]"></div>
           </div>
@@ -66,7 +73,7 @@ export default async function Page() {
           </Link>
           <Link
             className="h-fit rounded-full bg-red-500 px-4 py-2 text-center font-bold text-white md:text-lg"
-            href="/" //onClick={LogOut}
+            href="/" onClick={() => { logOut(); router.replace("/")}}
           >
             Log Out
           </Link>
@@ -86,6 +93,7 @@ export default async function Page() {
               id="username"
               name="username"
               type="text"
+              placeholder={data.data.username}
             ></input>
             <label className="mb-3 mt-5" htmlFor="">
               Your e-mail :
@@ -95,6 +103,7 @@ export default async function Page() {
               id="email"
               name="email"
               type="email"
+              placeholder={data.data.email}
             ></input>
             <label className="mb-3 mt-5" htmlFor="">
               Current password :
@@ -143,7 +152,5 @@ export default async function Page() {
         </div>
       </section>
     </div>
-  ) : (
-    <></>
-  );
+    )
 }
