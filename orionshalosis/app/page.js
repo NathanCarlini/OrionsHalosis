@@ -5,7 +5,7 @@ import prisma from '../lib/prisma';
 export default function Home() {
   return (
     <>
-      <section className="flex h-4/6 md:h-5/6 lg:h-screen w-full flex-row items-end justify-center">
+      <section className="flex h-screen w-full flex-row items-end justify-center">
         <video
           autoPlay
           muted
@@ -16,7 +16,7 @@ export default function Home() {
           <source src="/mars101.mp4" type="video/mp4" />
         </video>
         <Link href="/game/inscription">
-          <div className="mb-6 bg-main-blue z-[2] relative p-4 rounded-3xl text-lg md:text-xl lg:text-2xl font-bold text-white duration-500 hover:text-main-blue hover:bg-white">
+          <div className="mb-28 bg-main-blue z-[2] relative p-4 rounded-3xl text-lg md:text-xl lg:text-2xl font-bold text-white duration-500 hover:text-main-blue hover:bg-white">
             Play for free
           </div>
         </Link>
