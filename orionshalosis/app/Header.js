@@ -2,14 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
-import React, { useState, useEffect } from "react";
+import React from "react";
 export default function Header() {
-  // let [avatar, setAvatar] = useState("");
-  // useEffect(() => {
-  //   fetch("http://localhost:8080/checkIfSession&Data").then((response) =>
-  //     setAvatar(response.data),
-  //   );
-  // }, []);
   return (
     <>
       <header className="z-[2] flex w-full flex-row items-center justify-between bg-marine-blue px-1 py-[0.5rem] text-sm font-bold md:px-2 md:text-lg lg:px-4 lg:text-xl">
@@ -32,7 +26,7 @@ export default function Header() {
           </Link>
           <Link
             className="flex items-center hover:underline"
-            href="/game/overview"
+            href="https://www.chevallereau-swan.com/game/iteration5/index.html"
           >
             The Game
           </Link>
