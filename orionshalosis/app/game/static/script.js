@@ -1,6 +1,12 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import Planets from './Planets.js';
+import { useEffect, useRef } from "react";
+import { io } from "socket.io-client";
+
+function MyThree() {
+  const refContainer = useRef(null);
+  useEffect(() => {
 
 var socket = io();
 let price = 0;
@@ -15,7 +21,7 @@ let turnP2 = 0;
 let state;
 let camera = null;
 const scene = new THREE.Scene();
-export default scene;
+// export default scene;
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
@@ -792,3 +798,9 @@ let recent = 0;
     }
 }
 init();
+}, []);
+return (
+  <div ref={refContainer}></div>
+);
+}
+export default MyThree
