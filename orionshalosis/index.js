@@ -11,12 +11,12 @@ app.get('/', (req, res) => {
 });
 
 setInterval(timer, 1000)
-let sec = 20;
+let sec = 10000000;
 function timer(){
   sec--;
 }
 
-let mat = 0;
+let mat = 150;
 let mat2 = 0;
 let h1 = 0;
 let h2 = 0;
@@ -27,6 +27,7 @@ let rpy2 = 0;
 let missUser = 0;
 let currentState;
 let recent = 0;
+let state = false;
 function resources(m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2){
   if(player1 == false && capt1x2 == true){
     mat = m1 + 300;
@@ -46,12 +47,20 @@ function resources(m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x
 }
 
 io.on('connection', (socket) => {
-  if (missUser == 1){
+  if (missUser == 1 && state == true){
     missUser = 0;
     console.log('second user connected after beingdisconnected');
     io.emit('loadGameState', h1, h2, rpx1, rpx2, rpy1, rpy2, currentState);
   }
+  if (state == false){
     console.log('a user connected');
+    players = io.engine.clientsCount;
+    io.emit('countInit', players);
+  }
+    socket.on('startGame', () => {
+      state = true;
+      io.emit('startGame');
+    });
 
     socket.on('disconnect', () => {
         console.log('user disconnected');

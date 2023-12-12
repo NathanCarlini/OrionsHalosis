@@ -66,15 +66,34 @@
             color: white;
             user-select: none
         }
+        .hidden{
+            display: none;
+        }
+        .waiting{
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            text-align: center;
+            z-index: 100;
+            font-size: 1.5rem;
+            display:block;
+            color: white;
+            user-select: none;
+        }
+        .body{
+            background-color: black;
+        }
     </style>
 </head>
-<body>
+<body class="body">
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <p class="halosis">Welcome to Orion's Halosis!</p>
-    <p class="resource">Moon Stone : </p>
-    <p class="resource2">Moon Stone p2 : 0</p>
-    <p class="timer">Timer : 20</p>
-    <canvas></canvas>
+    <p class="waiting">Waiting for another player to join...</p>
+    <p class="resource hidden">Moon Stone : </p>
+    <p class="resource2 hidden">Moon Stone p2 : 0</p>
+    <p class="timer hidden">Timer : 20</p>
+    <canvas class="hidden"></canvas>
     <script src="./static/script.js" type="module"></script>
+    
 </body>
 </html>

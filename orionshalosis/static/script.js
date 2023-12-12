@@ -671,7 +671,32 @@ function init(){
             document.addEventListener('mousedown', onMouseDown, false);
         }
     })
-    mat = 0;
+    socket.on('startGame', () => {
+        whatPlanet()
+        player1 = true;
+        player2 = false;
+        socket.emit('resetTime', 20);
+        text.innerHTML = "Your turn player 1!<br>You are currently on " + uppercaseFirstLetter(currentPlanet.name);
+        document.addEventListener("keydown", onDocumentKeyDown, false);
+        document.addEventListener('mousedown', onMouseDown, false);
+    })
+
+    socket.on('countInit', (players) => {
+        if (players == 1){
+            document.querySelector('.waiting').innerHTML = "Waiting for another player to join...";
+        } else if (players == 2){
+            document.querySelector('.waiting').innerHTML = "Another player has joined! Starting game...";
+            setTimeout(function(){document.querySelector('.waiting').innerHTML = "";
+            document.querySelector('.waiting').style.display = "none";
+            document.querySelector('.resource').classList.remove("hidden");
+            document.querySelector('.resource2').classList.remove("hidden");
+            document.querySelector('canvas').classList.remove("hidden");
+            document.querySelector('body').classList.remove("body");
+            document.querySelector('.timer').classList.remove("hidden");}, 1500);
+            socket.emit('startGame');
+        }
+    });
+    mat = 150;
     mat2 = 0;
     resource.innerHTML = "Moon Stone : " + mat;
     resource2.innerHTML = "Moon Stone p2 : " + mat2;
