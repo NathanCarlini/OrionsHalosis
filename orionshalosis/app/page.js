@@ -5,7 +5,7 @@ import prisma from '../lib/prisma';
 export default function Home() {
   return (
     <>
-      <section className="flex h-screen w-full flex-row items-end justify-center">
+      <section className="flex h-[95vh] w-full flex-row items-end justify-center">
         <video
           autoPlay
           muted
