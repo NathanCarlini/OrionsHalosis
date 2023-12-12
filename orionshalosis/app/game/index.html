@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orion's Halosis</title>
+    <link rel="icon" href="./static/resources/orionsLogo.png"/>
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap"> {
+        "imports": {
+            "three": "https://unpkg.com/three@0.156.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.156.0/examples/jsm/"
+        }
+    }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+        *{
+        margin:0;
+        overflow: hidden;
+        font-family: 'Space Mono', monospace;
+        }
+        .halosis{
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            z-index: 100;
+            font-size: 1.5rem;
+            display:block;
+            color: white;
+            user-select: none;
+        }
+        .resource{
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            width: 100%;
+            z-index: 100;
+            font-size: 1.25rem;
+            display:block;
+            color: white;
+            user-select: none
+        }
+        .resource2{
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            width: 100%;
+            z-index: 100;
+            font-size: 1.25rem;
+            display:block;
+            color: white;
+            user-select: none;
+            text-align: center;
+        }
+        .timer{
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            text-align: right;
+            width: 100%;
+            z-index: 100;
+            font-size: 1.25rem;
+            display:block;
+            color: white;
+            user-select: none
+        }
+        .hidden{
+            display: none;
+        }
+        .waiting{
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            text-align: center;
+            z-index: 100;
+            font-size: 1.5rem;
+            display:block;
+            color: white;
+            user-select: none;
+        }
+        .body{
+            background-color: black;
+        }
+    </style>
+</head>
+<body class="body">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <p class="halosis">Welcome to Orion's Halosis!</p>
+    <p class="waiting">Waiting for another player to join...</p>
+    <p class="resource hidden">Moon Stone : </p>
+    <p class="resource2 hidden">Moon Stone p2 : 0</p>
+    <p class="timer hidden">Timer : 20</p>
+    <canvas class="hidden"></canvas>
+    <script src="./static/script.js" type="module"></script>
+    
+</body>
+</html>
