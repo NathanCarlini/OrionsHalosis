@@ -4,11 +4,11 @@ import Planets from './Planets.js';
 import { useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 
-function MyThree() {
-  const refContainer = useRef(null);
+const MyThree = () =>{
+//   const refContainer = useRef(null);
   useEffect(() => {
 
-var socket = io();
+var socket = io("http://localhost:3001");
 let price = 0;
 let player1 = true;
 let player2 = false;
@@ -18,15 +18,42 @@ let capt2x15 = false;
 let capt1x15 = false;
 let turnP1 = 0;
 let turnP2 = 0;
-let state;
 let camera = null;
-const scene = new THREE.Scene();
-// export default scene;
+// const scene = new THREE.Scene();
+
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
 function init(){
-// camera
+    let state, rocketscene, rocketCurrent, rocketscene2, rocketCurrent2, flagCurrent, planets, mat, mat2, way, targetPositionX, targetPositionY, sec;
+
+    // init planets p1
+    const sun = new Planets(15, 'sun', -10, 0);
+    const scene = sun.getPos()[5];
+    const mercury = new Planets(1, 'mercury', 15, 300);
+    const venus = new Planets(1.8, 'venus', 25, 200, 2);
+    const earth = new Planets(2, 'earth', 35, 0);
+    const mars = new Planets(1.4, 'mars', 45, 150, 1.5);
+    const jupiter = new Planets(5, 'jupiter', 60, 100);
+    const saturn = new Planets(4.5, 'saturn', 75, 250);
+    const uranus = new Planets(3.5, 'uranus', 90, 400);
+    const neptune = new Planets(3.1, 'neptune', 100, 700);
+    planets = sun.getPos()[3]; 
+
+    // init planet p2
+    let planets2 = new THREE.Group();
+    const sun2 = new Planets(15, 'sun', -10-200, 0);
+    const mercury2 = new Planets(1, 'mercury', 15-200, 300);
+    const venus2 = new Planets(1.8, 'venus', 25-200, 200, 2);
+    const earth2 = new Planets(2, 'earth', 35-200, 0);
+    const mars2 = new Planets(1.4, 'mars', 45-200, 150, 1.5);
+    const jupiter2 = new Planets(5, 'jupiter', 60-200, 100);
+    const saturn2 = new Planets(4.5, 'saturn', 75-200, 250);
+    const uranus2 = new Planets(3.5, 'uranus', 90-200, 400);
+    const neptune2 = new Planets(3.1, 'neptune', 100-200, 700);
+    planets2 = sun2.getPos()[4];
+
+    // camera
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 5000);
     camera.position.set(30, 0, 30);
 
@@ -39,7 +66,7 @@ function init(){
         './static/resources/front.png',
         './static/resources/back.png',
     ]);
-    let rocketscene, rocketCurrent, rocketscene2, rocketCurrent2, flagCurrent, planets, mat, mat2, way, targetPositionX, targetPositionY, sec;
+    
 
 // rocket loader
     rocketCurrent = new THREE.Group();
@@ -141,31 +168,6 @@ function init(){
         scene.add( flagCurrent2 );
     },);
     flagCurrent2.position.set(14.5, 0.75, 0);
-
-    // init planets p1
-    const sun = new Planets(15, 'sun', -10, 0);
-    const mercury = new Planets(1, 'mercury', 15, 300);
-    const venus = new Planets(1.8, 'venus', 25, 200, 2);
-    const earth = new Planets(2, 'earth', 35, 0);
-    const mars = new Planets(1.4, 'mars', 45, 150, 1.5);
-    const jupiter = new Planets(5, 'jupiter', 60, 100);
-    const saturn = new Planets(4.5, 'saturn', 75, 250);
-    const uranus = new Planets(3.5, 'uranus', 90, 400);
-    const neptune = new Planets(3.1, 'neptune', 100, 700);
-    planets = sun.getPos()[3]; 
-
-    // init planet p2
-    let planets2 = new THREE.Group();
-    const sun2 = new Planets(15, 'sun', -10-200, 0);
-    const mercury2 = new Planets(1, 'mercury', 15-200, 300);
-    const venus2 = new Planets(1.8, 'venus', 25-200, 200, 2);
-    const earth2 = new Planets(2, 'earth', 35-200, 0);
-    const mars2 = new Planets(1.4, 'mars', 45-200, 150, 1.5);
-    const jupiter2 = new Planets(5, 'jupiter', 60-200, 100);
-    const saturn2 = new Planets(4.5, 'saturn', 75-200, 250);
-    const uranus2 = new Planets(3.5, 'uranus', 90-200, 400);
-    const neptune2 = new Planets(3.1, 'neptune', 100-200, 700);
-    planets2 = sun2.getPos()[4];
 
 // light
     let light = new THREE.DirectionalLight(0xFFFFFF, 1.0);
@@ -800,7 +802,9 @@ let recent = 0;
 init();
 }, []);
 return (
-  <div ref={refContainer}></div>
+    <div className='w-full'>
+
+    </div>
 );
 }
 export default MyThree
