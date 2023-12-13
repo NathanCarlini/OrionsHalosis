@@ -64,7 +64,7 @@ const Planets = class {
             scene.add( line );
         
             const loader = new FontLoader();
-            loader.load( './static/font/space-font.json', function ( font ) {
+            loader.load( './static/resources/font/space-font.json', function ( font ) {
                 const geometry = new TextGeometry( 'Price : '+price, {
                     font: font,
                     size: 0.4,
@@ -78,7 +78,7 @@ const Planets = class {
                 scene.add(textMesh);
             } );
             if (typeof moonStone !== 'undefined'){
-                loader.load( './static/font/space-font.json', function ( font ) {
+                loader.load( './static/resources/font/space-font.json', function ( font ) {
                     const geometry = new TextGeometry( 'Resource x'+moonStone, {
                         font: font,
                         size: 0.4,

@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import Planets from './Planets.js';
 import { useEffect, useRef } from "react";
-import { io } from "socket.io-client";
+import io from "socket.io-client";
 
 const MyThree = () =>{
 //   const refContainer = useRef(null);
@@ -625,6 +625,7 @@ function init(){
         rocketCurrent.position.y = rpy1;
         rocketCurrent2.position.y = rpy2;
         state = currentState;
+        console.log(state);
         player1 = state.p2;
         player2 = state.p1;
         socket.emit('resetTime');
@@ -802,9 +803,7 @@ let recent = 0;
 init();
 }, []);
 return (
-    <div className='w-full'>
-
-    </div>
+    <canvas></canvas>
 );
 }
 export default MyThree
