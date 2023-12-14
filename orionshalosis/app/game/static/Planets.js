@@ -100,7 +100,7 @@ const Planets = class {
         this.planets2 = planets2;
     }
     getPos(){
-        let obj = [this.texture, this.position,this.price, this.planets, this.planets2, scene];
+        let obj = [this.texture, this.position, this.price, this.planets, this.planets2, scene];
         return obj;
     }
 }

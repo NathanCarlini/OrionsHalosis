@@ -25,7 +25,8 @@ const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
 function init(){
-    let state, rocketscene, rocketCurrent, rocketscene2, rocketCurrent2, flagCurrent, planets, mat, mat2, way, targetPositionX, targetPositionY, sec;
+    let state, rocketscene, rocketCurrent, rocketscene2, rocketCurrent2, flagCurrent, mat, mat2, way, targetPositionX, targetPositionY, sec;
+    let planets = [];
 
     // init planets p1
     const sun = new Planets(15, 'sun', -10, 0);
@@ -39,6 +40,8 @@ function init(){
     const uranus = new Planets(3.5, 'uranus', 90, 400);
     const neptune = new Planets(3.1, 'neptune', 100, 700);
     planets = sun.getPos()[3]; 
+    
+    console.log(sun.getPos()[3]);
 
     // init planet p2
     let planets2 = new THREE.Group();
@@ -52,6 +55,7 @@ function init(){
     const uranus2 = new Planets(3.5, 'uranus', 90-200, 400);
     const neptune2 = new Planets(3.1, 'neptune', 100-200, 700);
     planets2 = sun2.getPos()[4];
+    console.log(planets2);
 
     // camera
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 5000);
