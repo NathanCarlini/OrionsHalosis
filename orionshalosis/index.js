@@ -103,7 +103,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('time', () => {
-      if (sec == 19){
+      if (sec == 20){
         recent = 0;
       }
       io.emit('time',sec);

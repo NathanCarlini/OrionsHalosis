@@ -722,7 +722,7 @@ let recent = 0;
                 socket.emit('turnPlayer', mat, mat2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, recent);
             }
         }
-        if(sec == 18){ recent = 0; }
+        if(sec == 19){ recent = 0; }
         if (halosis[2].capt == true){
             capt1x2 = true;
         }
