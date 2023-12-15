@@ -4,13 +4,17 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "test": "concurrently --kill-others \"next dev\" \"node ./app/index.js\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "server": "node server",
+    "lint": "next lint",
+    "node": "node ./app/index.js"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.2.0",
     "@prisma/client": "^5.6.0",
+    "@types/socket.io": "^3.0.2",
     "axios": "^1.5.1",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
@@ -29,22 +33,34 @@
     "keygrip": "^1.1.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.6.3",
+    "mysql2": "^3.6.2",
+    "net": "^1.0.2",
     "next": "13.5.4",
     "qs": "^6.11.2",
     "react": "^18",
     "react-dom": "^18",
     "session": "^0.1.0",
     "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2",
+    "three": "^0.159.0"
   },
   "devDependencies": {
     "autoprefixer": "^10",
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
+    "parallelshell": "^3.0.2",
     "postcss": "^8",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.6",
     "prisma": "^5.6.0",
     "tailwindcss": "^3"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false,
+    "tls": false
   }
 }
