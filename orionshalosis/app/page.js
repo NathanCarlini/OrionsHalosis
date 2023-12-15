@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import prisma from '../lib/prisma';
-
+import Footer from "./Footer";
 export default function Home() {
   return (
     <>
@@ -51,6 +51,7 @@ export default function Home() {
           See more data
         </Link>
       </section>
+      <Footer vis="1" />
     </>
   );
 }

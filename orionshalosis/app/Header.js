@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <>
       <header className="z-[2] flex w-full flex-row items-center justify-between bg-marine-blue px-1 py-[0.5rem] text-sm font-bold md:px-2 md:text-lg lg:px-4 lg:text-xl">
-        <Link className="flex items-center text-center" href="/">
+        <Link className="flex items-center text-center gap-3" href="/">
           <Image
             src="/orionsLogo.png"
             alt="Logo de Orions Halosis"

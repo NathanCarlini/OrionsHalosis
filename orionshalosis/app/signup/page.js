@@ -9,7 +9,8 @@ export default function Page() {
   const date = new Date();
   let verif;
   const router = useRouter();
-
+  
+  const [isLoading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -47,6 +48,7 @@ export default function Page() {
   }
 
   async function submitForm() {
+    setLoading(true);
     Object.entries(formData).forEach(([key, value]) => {
       data[key] = value;
     });
@@ -58,6 +60,7 @@ export default function Page() {
     let { token } = await res.json();
     console.log(token);
     document.cookie = `token=${token}; path=/`;
+    setLoading(false);
   }
 
   return (
@@ -134,7 +137,16 @@ export default function Page() {
           <p
             id="sendBtn"
             onClick={() => {
-              submitForm(); router.push('/account')
+              submitForm();
+              function loaderRouter() {
+                if (isLoading == true) {
+                  window.setTimeout(loaderRouter, 200);
+                  console.log("boucle")
+                } else {
+                  router.push("/");
+                }
+              }
+              loaderRouter();
             }}
             className="w-full max-w-[200px] self-center rounded-full bg-black px-12 py-5 text-center text-xl font-black capitalize text-white duration-300 hover:bg-slate-500"
           >

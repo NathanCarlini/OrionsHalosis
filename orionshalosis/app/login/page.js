@@ -1,15 +1,17 @@
-'use client'
+"use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Page() {
-  var data = {}
+  const [isLoading, setLoading] = useState(false)
+  const router = useRouter();
+  var data = {};
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
     password: "",
   });
-  
+
   const handleInput = (e) => {
     const fieldName = e.target.id;
     const fieldValue = e.target.value;
@@ -22,19 +24,25 @@ export default function Page() {
     });
   };
   async function submitForm() {
+    setLoading(true);
     Object.entries(formData).forEach(([key, value]) => {
       data[key] = value;
     });
     console.log(data);
     try {
-      await fetch("http://localhost:8080/userLogin", {
+      await fetch("http://localhost:3000/api/loginUsr", {
         method: "PUT",
-
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
+
+      let { token } = await res.json();
+      console.log(token);
+      document.cookie = `token=${token}; path=/`;
+      setLoading(false);
+
     } catch (error) {
       console.error("Error:", error);
     }
@@ -59,14 +67,25 @@ export default function Page() {
           <input
             onChange={handleInput}
             type="password"
-            id="Password"
+            id="password"
             className="h-8 w-full border border-black text-black"
           ></input>
           <p className="text-blue-700">You forgot your password ?</p>
         </div>
         <div className="mb-6 mt-2 flex grow flex-col justify-evenly">
-        <p
-            onClick={submitForm}
+          <p
+            onClick={()=>{
+              submitForm()
+              function loaderRouter() {
+                if (isLoading == true) {
+                  window.setTimeout(loaderRouter, 200);
+                  console.log("boucle")
+                } else {
+                  router.push("/");
+                }
+              }
+              loaderRouter();
+              }}
             className="w-full max-w-[200px] self-center rounded-full bg-black px-12 py-2 text-center text-xl font-black capitalize text-white duration-300 hover:bg-slate-500"
           >
             Login

@@ -10,9 +10,9 @@ datasource db {
 
 model account {
   iduser                                     Int            @id @default(autoincrement())
-  username                                   String         @db.VarChar
+  username                                   String         @db.VarChar @unique
   password                                   String
-  email                                      String         @db.VarChar
+  email                                      String?         @db.VarChar @unique
   avatar                                     String
   experience                                 Int?
   rockets                                    String[]       @db.VarChar
