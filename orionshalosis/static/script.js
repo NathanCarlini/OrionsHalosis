@@ -619,6 +619,13 @@ function init(){
         state = currentState;
         player1 = state.p2;
         player2 = state.p1;
+        document.querySelector('.waiting').innerHTML = "";
+        document.querySelector('.waiting').style.display = "none";
+        document.querySelector('.resource').classList.remove("hidden");
+        document.querySelector('.resource2').classList.remove("hidden");
+        document.querySelector('canvas').classList.remove("hidden");
+        document.querySelector('body').classList.remove("body");
+        document.querySelector('.timer').classList.remove("hidden");
         socket.emit('resetTime');
         socket.emit('turnPlayer', mat, mat2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, recent);
     });
