@@ -61,7 +61,9 @@ export default async function Page() {
             <p className="bg-slate-400/40 px-2 py-1 font-black text-white md:text-xl">
               Beginner space Explorer lvl.5
             </p>
-            <div className="h-11 w-full rounded-full bg-[url('/backgrounds/galaxy.png')]"></div>
+            <div className="h-11 w-full rounded-full bg-[url('/backgrounds/galaxy.png')] items-center justify-center flex flex-col">
+            <p  className="text-center font-bold self-center">{data.data.experience} / 100</p>
+            </div>
           </div>
         </div>
         <div className="flex flex-col gap-5 pl-2">

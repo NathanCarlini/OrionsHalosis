@@ -14,14 +14,16 @@ export async function PUT(request) {
     },
   });
   console.log(res);
-  if (res.password == body.password) {
+  if (body.password == res.password) {
+    console.log("tetetetete");
     const token = jwt.sign({ userId: res.email }, process.env.JWT_SECRET, {
       expiresIn: "60m",
     });
-    return NextResponse.json({ token }, res);
+    console.log(token);
+    return NextResponse.json({ token });
   } else {
     return NextResponse.json(
-      { message: "Email not valid" },
+      { message: "Email or password not valid" },
       {
         status: 400,
       },

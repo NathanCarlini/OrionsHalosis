@@ -26,7 +26,7 @@ export default function Header() {
           </Link>
           <Link
             className="flex items-center hover:underline"
-            href="https://www.chevallereau-swan.com/game/iteration5/index.html"
+            href="/game/overview"
           >
             The Game
           </Link>

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Page() {
-  const [isLoading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(false);
   const router = useRouter();
   var data = {};
   const [formData, setFormData] = useState({
@@ -30,7 +30,7 @@ export default function Page() {
     });
     console.log(data);
     try {
-      await fetch("http://localhost:3000/api/loginUsr", {
+      const res = await fetch("http://localhost:3000/api/loginUsr", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +42,6 @@ export default function Page() {
       console.log(token);
       document.cookie = `token=${token}; path=/`;
       setLoading(false);
-
     } catch (error) {
       console.error("Error:", error);
     }
@@ -74,18 +73,18 @@ export default function Page() {
         </div>
         <div className="mb-6 mt-2 flex grow flex-col justify-evenly">
           <p
-            onClick={()=>{
-              submitForm()
+            onClick={() => {
+              submitForm();
               function loaderRouter() {
                 if (isLoading == true) {
-                  window.setTimeout(loaderRouter, 200);
-                  console.log("boucle")
+                  window.setTimeout(loaderRouter, 800);
+                  console.log("boucle");
                 } else {
                   router.push("/");
                 }
               }
               loaderRouter();
-              }}
+            }}
             className="w-full max-w-[200px] self-center rounded-full bg-black px-12 py-2 text-center text-xl font-black capitalize text-white duration-300 hover:bg-slate-500"
           >
             Login
