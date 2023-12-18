@@ -6,6 +6,8 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import Image from "next/image";
 
+
+
 function page() {
   const router = useRouter();
   const [isLoading, setLoading] = useState(true);
