@@ -1,3 +1,4 @@
+'use client'
 require("dotenv").config();
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
