@@ -54,7 +54,7 @@ export default function Page() {
     Object.entries(formData).forEach(([key, value]) => {
       data[key] = value;
     });
-    const res = await fetch(`${currentUrlProt}//${currentUrl}:${currentUrlPort}/api/createUsr`, {
+    const res = await fetch(`${currentUrlProt}//${currentUrl}/api/createUsr`, {
       method: "POST",
       body: JSON.stringify(formData),
     });
