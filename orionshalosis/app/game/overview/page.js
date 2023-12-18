@@ -8,10 +8,14 @@ import Image from "next/image";
 
 
 
-function page() {
+export default async function page() {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const router = useRouter();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const [isLoading, setLoading] = useState(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const [data, setData] = useState(null);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const token = Cookies.get("token");
     if (!token) {
@@ -98,5 +102,3 @@ function page() {
     </div>
   );
 }
-
-export default page;
