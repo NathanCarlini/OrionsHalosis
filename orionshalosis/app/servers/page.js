@@ -1,9 +1,10 @@
 "use client";
+
+
 import Image from "next/image";
 import Link from "next/link";
-
 function LogOut(){
-    fetch("http://localhost:8080/logOut", { method:"PUT"})
+    fetch(`http://${process.env.CURRENT_URL}:8080/logOut`, { method:"PUT"})
 }
 
 export default function Page() {

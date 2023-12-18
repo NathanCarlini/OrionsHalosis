@@ -1,4 +1,4 @@
-require("dotenv").config();
+
 import { PrismaClient } from "@prisma/client";
 import { headers } from "next/headers";
 import jwt from "jsonwebtoken";

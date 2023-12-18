@@ -4,6 +4,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Page() {
+  const currentUrl = window.location.hostname;
+  const currentUrlProt = window.location.protocol;
+  const currentUrlPort = window.location.port;
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
   var data = {};
@@ -30,7 +33,7 @@ export default function Page() {
     });
     console.log(data);
     try {
-      const res = await fetch("http://localhost:3000/api/loginUsr", {
+      const res = await fetch(`${currentUrlProt}//${currentUrl}:${currentUrlPort}/api/createUsr`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

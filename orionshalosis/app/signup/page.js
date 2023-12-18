@@ -3,13 +3,15 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-
 export default function Page() {
+  const currentUrl = window.location.hostname;
+  const currentUrlProt = window.location.protocol;
+  const currentUrlPort = window.location.port;
   var data = {};
   const date = new Date();
   let verif;
   const router = useRouter();
-  
+
   const [isLoading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
@@ -52,7 +54,7 @@ export default function Page() {
     Object.entries(formData).forEach(([key, value]) => {
       data[key] = value;
     });
-    const res = await fetch("http://localhost:3000/api/createUsr", {
+    const res = await fetch(`${currentUrlProt}//${currentUrl}:${currentUrlPort}/api/createUsr`, {
       method: "POST",
       body: JSON.stringify(formData),
     });
@@ -141,7 +143,7 @@ export default function Page() {
               function loaderRouter() {
                 if (isLoading == true) {
                   window.setTimeout(loaderRouter, 200);
-                  console.log("boucle")
+                  console.log("boucle");
                 } else {
                   router.push("/");
                 }

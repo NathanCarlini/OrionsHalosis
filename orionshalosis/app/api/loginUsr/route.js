@@ -1,4 +1,3 @@
-require("dotenv").config();
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";

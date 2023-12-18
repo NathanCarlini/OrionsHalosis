@@ -9,6 +9,9 @@ import Image from "next/image";
 
 
 export default async function Page() {
+  const currentUrl = window.location.hostname;
+  const currentUrlProt = window.location.protocol;
+  const currentUrlPort = window.location.port;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const router = useRouter();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -24,7 +27,7 @@ export default async function Page() {
     }
     const validateToken = async () => {
       try {
-        const res = await fetch("/api/getData", {
+        const res = await fetch(`${currentUrlProt}//${currentUrl}:${currentUrlPort}/api/getData`, {
           method: "PUT",
           headers: { Authorization: `Bearer ${token}` },
         });
