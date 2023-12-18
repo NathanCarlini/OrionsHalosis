@@ -9,9 +9,6 @@ import Image from "next/image";
 
 
 export default async function Page() {
-  const currentUrl = window.location.hostname;
-  const currentUrlProt = window.location.protocol;
-  const currentUrlPort = window.location.port;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const router = useRouter();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -20,6 +17,9 @@ export default async function Page() {
   const [data, setData] = useState(null);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
+    const currentUrl = window.location.hostname;
+    const currentUrlProt = window.location.protocol;
+    const currentUrlPort = window.location.port;
     const token = Cookies.get("token");
     if (!token) {
       router.replace("/login"); // If no token is found, redirect to login page

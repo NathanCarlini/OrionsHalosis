@@ -4,14 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 export default function Page() {
-  const currentUrl = window.location.hostname;
-  const currentUrlProt = window.location.protocol;
-  const currentUrlPort = window.location.port;
   var data = {};
   const date = new Date();
   let verif;
   const router = useRouter();
-
+  
   const [isLoading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
@@ -21,7 +18,7 @@ export default function Page() {
     creationdate: date,
     experience: 0,
   });
-
+  
   const handleInput = (e) => {
     if ((e.target.id == "rePassword") != formData.password) {
       verif = "invalidpassword";
@@ -39,7 +36,7 @@ export default function Page() {
       });
     }
   };
-
+  
   function checkPwd() {
     const rePwd = document.getElementById("rePassword");
     console.log(rePwd.value);
@@ -48,8 +45,11 @@ export default function Page() {
       document.getElementById("sendBtn").disabled = true;
     }
   }
-
+  
   async function submitForm() {
+    const currentUrl = window.location.hostname;
+    const currentUrlProt = window.location.protocol;
+    const currentUrlPort = window.location.port;
     setLoading(true);
     Object.entries(formData).forEach(([key, value]) => {
       data[key] = value;

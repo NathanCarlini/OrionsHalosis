@@ -1,12 +1,9 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Page() {
-  const currentUrl = window.location.hostname;
-  const currentUrlProt = window.location.protocol;
-  const currentUrlPort = window.location.port;
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
   var data = {};
@@ -27,6 +24,9 @@ export default function Page() {
     });
   };
   async function submitForm() {
+    const currentUrl = window.location.hostname;
+    const currentUrlProt = window.location.protocol;
+    const currentUrlPort = window.location.port;
     setLoading(true);
     Object.entries(formData).forEach(([key, value]) => {
       data[key] = value;
