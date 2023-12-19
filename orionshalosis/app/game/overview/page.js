@@ -20,6 +20,8 @@ export default function Page() {
     const currentUrl = window.location.hostname;
     const currentUrlProt = window.location.protocol;
     const currentUrlPort = window.location.port;
+
+
     const token = Cookies.get("token");
     if (!token) {
       router.replace("/login"); // If no token is found, redirect to login page
