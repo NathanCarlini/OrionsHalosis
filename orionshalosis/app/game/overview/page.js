@@ -26,6 +26,8 @@ export default async function Page() {
       return;
     }
     const validateToken = async () => {
+      const currentUrl = window.location.hostname;
+      const currentUrlProt = window.location.protocol;
       try {
         const res = await fetch(`${currentUrlProt}//${currentUrl}/api/getData`, {
           method: "PUT",
