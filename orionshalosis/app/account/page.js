@@ -9,12 +9,12 @@ import { useRouter } from "next/navigation";
 // import useFetch from "./useFetch.js";
 function SaveInventory() {}
 function logOut() {
-  document.cookie = "token= ; path=/"
+  document.cookie = "token= ; path=/";
 }
 export default async function Page() {
   const router = useRouter();
-  const [isLoading, setLoading] = useState(true)
-  const [data, setData] = useState(null)
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState(null);
   useEffect(() => {
     const token = Cookies.get("token");
     if (!token) {
@@ -24,16 +24,19 @@ export default async function Page() {
     const validateToken = async () => {
       const currentUrl = window.location.hostname;
       const currentUrlProt = window.location.protocol;
+      const currentUrlPort = window.location.port;
+
       try {
-        const res = await fetch(`${currentUrlProt}//${currentUrl}/api/getData`, {
-          method: "PUT",
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        let body = await res.json()
-        setData(body)
-        setLoading(false)
+        const res = await fetch(`${currentUrlProt}//${currentUrl}${currentUrlPort}/api/getData`,
+          {
+            method: "PUT",
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
+        let body = await res.json();
+        setData(body);
+        setLoading(false);
         if (!res.ok) throw new Error("Token validation failed");
-        
       } catch (error) {
         console.error(error);
         router.replace("/login"); // Redirect to login if token validation fails
@@ -41,8 +44,8 @@ export default async function Page() {
     };
     validateToken();
   }, [router]);
-  if (isLoading) return <p>Loading...</p>
-  if (!data) return <p>No profile data</p>
+  if (isLoading) return <p>Loading...</p>;
+  if (!data) return <p>No profile data</p>;
   console.log(data.data);
   return (
     <div className="absolute flex h-full w-full flex-col bg-[url('/backgrounds/bg.png')] p-6 md:p-11">
@@ -63,8 +66,10 @@ export default async function Page() {
             <p className="bg-slate-400/40 px-2 py-1 font-black text-white md:text-xl">
               Beginner space Explorer lvl.5
             </p>
-            <div className="h-11 w-full rounded-full bg-[url('/backgrounds/galaxy.png')] items-center justify-center flex flex-col">
-            <p  className="text-center font-bold self-center">{data.data.experience} / 100</p>
+            <div className="flex h-11 w-full flex-col items-center justify-center rounded-full bg-[url('/backgrounds/galaxy.png')]">
+              <p className="self-center text-center font-bold">
+                {data.data.experience} / 100
+              </p>
             </div>
           </div>
         </div>
@@ -77,7 +82,11 @@ export default async function Page() {
           </Link>
           <Link
             className="h-fit rounded-full bg-red-500 px-4 py-2 text-center font-bold text-white md:text-lg"
-            href="/" onClick={() => { logOut(); router.replace("/")}}
+            href="/"
+            onClick={() => {
+              logOut();
+              router.replace("/");
+            }}
           >
             Log Out
           </Link>
@@ -156,5 +165,5 @@ export default async function Page() {
         </div>
       </section>
     </div>
-    )
+  );
 }

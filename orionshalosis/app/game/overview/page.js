@@ -28,8 +28,10 @@ export default async function Page() {
     const validateToken = async () => {
       const currentUrl = window.location.hostname;
       const currentUrlProt = window.location.protocol;
+    const currentUrlPort = window.location.port;
+
       try {
-        const res = await fetch(`${currentUrlProt}//${currentUrl}/api/getData`, {
+        const res = await fetch(`${currentUrlProt}//${currentUrl}${currentUrlPort}/api/getData`, {
           method: "PUT",
           headers: { Authorization: `Bearer ${token}` },
         });
