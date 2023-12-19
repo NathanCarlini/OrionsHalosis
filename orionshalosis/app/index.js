@@ -36,6 +36,7 @@ let missUser = 0;
 let currentState;
 let recent = 0;
 let state = false;
+let FP = false;
 function resources(m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2){
   if(player1 == false && capt1x2 == true){
     mat = m1 + 300;
@@ -58,7 +59,7 @@ io.on('connection', (socket) => {
   if (missUser == 1 && state == true){
     missUser = 0;
     console.log('second user connected after beingdisconnected');
-    io.emit('loadGameState', h1, h2, rpx1, rpx2, rpy1, rpy2, currentState);
+    io.emit('loadGameState', h1, h2, rpx1, rpx2, rpy1, rpy2, currentState, FP);
   }
   if (state == false){
     console.log('a user connected');
@@ -77,7 +78,10 @@ io.on('connection', (socket) => {
     io.emit('pause');
   });
         
-  socket.on('gameState', (halosis, halosis2, rocketPosx, rocketPosx2, rocketPosy, rocketPosy2, state) => {
+  socket.on('gameState', (halosis, halosis2, rocketPosx, rocketPosx2, rocketPosy, rocketPosy2, state, firstPlayer) => {
+    if (state.p1 == true){
+      FP = firstPlayer;
+    }
     h1 = halosis;
     h2 = halosis2;
     rpx1 = rocketPosx;
@@ -134,6 +138,10 @@ io.on('connection', (socket) => {
       io.emit('turnPlayer', m1, m2, player1, player2);
     }
   });
+
+  if (state == true && io.engine.clientsCount == 0){
+    socket.close();
+  }
 });
 
 

@@ -22,6 +22,7 @@ let capt1x15 = false;
 let turnP1 = 0;
 let turnP2 = 0;
 let camera = null;
+let firstPlayer = false;
 // const scene = new THREE.Scene();
 
 const raycaster = new THREE.Raycaster();
@@ -31,75 +32,7 @@ function init(){
     let state, rocketscene, rocketCurrent, rocketscene2, rocketCurrent2, flagCurrent, mat, mat2, way, targetPositionX, targetPositionY, sec;
     let planets = [];
 
-    // init planets p1
-    const sun = new Planets(15, 'sun', -10, 0);
-    const scene = sun.getPos()[5];
-    const mercury = new Planets(1, 'mercury', 15, 300);
-    const venus = new Planets(1.8, 'venus', 25, 200, 2);
-    const earth = new Planets(2, 'earth', 35, 0);
-    const mars = new Planets(1.4, 'mars', 45, 150, 1.5);
-    const jupiter = new Planets(5, 'jupiter', 60, 100);
-    const saturn = new Planets(4.5, 'saturn', 75, 250);
-    const uranus = new Planets(3.5, 'uranus', 90, 400);
-    const neptune = new Planets(3.1, 'neptune', 100, 700);
-    planets = sun.getPos()[3]; 
-
-    // init planet p2
-    let planets2 = new THREE.Group();
-    const sun2 = new Planets(15, 'sun', -10-200, 0);
-    const mercury2 = new Planets(1, 'mercury', 15-200, 300);
-    const venus2 = new Planets(1.8, 'venus', 25-200, 200, 2);
-    const earth2 = new Planets(2, 'earth', 35-200, 0);
-    const mars2 = new Planets(1.4, 'mars', 45-200, 150, 1.5);
-    const jupiter2 = new Planets(5, 'jupiter', 60-200, 100);
-    const saturn2 = new Planets(4.5, 'saturn', 75-200, 250);
-    const uranus2 = new Planets(3.5, 'uranus', 90-200, 400);
-    const neptune2 = new Planets(3.1, 'neptune', 100-200, 700);
-    planets2 = sun2.getPos()[4];
-
-    // camera
-    camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 5000);
-    camera.position.set(30, 0, 30);
-
-    const cubeTextureLoader = new THREE.CubeTextureLoader();
-    scene.background = cubeTextureLoader.load([
-        './static/resources/right.png',
-        './static/resources/left.png',
-        './static/resources/top.png',
-        './static/resources/bottom.png',
-        './static/resources/front.png',
-        './static/resources/back.png',
-    ]);
-    
-
-// rocket loader
-    rocketCurrent = new THREE.Group();
-    var rocket = new GLTFLoader();
-    rocket.load('./static/resources/glbs/rocketfuture.glb', function ( gltf ) {
-    // rocket.load('./static/resources/Rocketship.glb', function ( gltf ) {
-        gltf.animations;
-        rocketscene = gltf.scene;
-        rocketCurrent.add(rocketscene);
-        rocketscene.position.y = 0;
-        rocketscene.scale.set(0.15, 0.15, 0.15); 
-        scene.add( rocketCurrent );
-    },);
-    rocketCurrent.position.set(35, 1.85, 0);
-
-    rocketCurrent2 = new THREE.Group();
-    // rocket.load('./static/resources/glbs/rocketfuture.glb', function ( gltf ) {
-    rocket.load('./static/resources/glbs/Rocketship.glb', function ( gltf ) {
-        gltf.animations;
-        rocketscene2 = gltf.scene;
-        rocketCurrent2.add(rocketscene2);
-        rocketscene2.position.y = 0;
-        rocketscene2.scale.set(0.15, 0.15, 0.15); 
-        scene.add( rocketCurrent2 );
-    },);
-    rocketCurrent2.position.set(35-200, 1.85, 0);
-    camera.position.x = rocketCurrent.position.x;
-
-// flags loader
+    // flags loader
     var flag = new GLTFLoader();
     let flag0, flag1, flag2, flag3, flag4, flag5, flag6, flag7 = null;
     flagCurrent = new THREE.Group();
@@ -172,6 +105,74 @@ function init(){
         scene.add( flagCurrent2 );
     },);
     flagCurrent2.position.set(14.5, 0.75, 0);
+
+    // init planets p1
+    const sun = new Planets(15, 'sun', -10, 0);
+    const scene = sun.getPos()[5];
+    const mercury = new Planets(1, 'mercury', 15, 300);
+    const venus = new Planets(1.8, 'venus', 25, 200, 2);
+    const earth = new Planets(2, 'earth', 35, 0);
+    const mars = new Planets(1.4, 'mars', 45, 150, 1.5);
+    const jupiter = new Planets(5, 'jupiter', 60, 100);
+    const saturn = new Planets(4.5, 'saturn', 75, 250);
+    const uranus = new Planets(3.5, 'uranus', 90, 400);
+    const neptune = new Planets(3.1, 'neptune', 100, 700);
+    planets = sun.getPos()[3]; 
+
+    // init planet p2
+    let planets2 = new THREE.Group();
+    const sun2 = new Planets(15, 'sun', -10-200, 0);
+    const mercury2 = new Planets(1, 'mercury', 15-200, 300);
+    const venus2 = new Planets(1.8, 'venus', 25-200, 200, 2);
+    const earth2 = new Planets(2, 'earth', 35-200, 0);
+    const mars2 = new Planets(1.4, 'mars', 45-200, 150, 1.5);
+    const jupiter2 = new Planets(5, 'jupiter', 60-200, 100);
+    const saturn2 = new Planets(4.5, 'saturn', 75-200, 250);
+    const uranus2 = new Planets(3.5, 'uranus', 90-200, 400);
+    const neptune2 = new Planets(3.1, 'neptune', 100-200, 700);
+    planets2 = sun2.getPos()[4];
+
+    // camera
+    camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 5000);
+    camera.position.set(30, 0, 30);
+
+    const cubeTextureLoader = new THREE.CubeTextureLoader();
+    scene.background = cubeTextureLoader.load([
+        './static/resources/right.png',
+        './static/resources/left.png',
+        './static/resources/top.png',
+        './static/resources/bottom.png',
+        './static/resources/front.png',
+        './static/resources/back.png',
+    ]);
+    
+
+// rocket loader
+    rocketCurrent = new THREE.Group();
+    var rocket = new GLTFLoader();
+    rocket.load('./static/resources/glbs/rocketfuture.glb', function ( gltf ) {
+    // rocket.load('./static/resources/Rocketship.glb', function ( gltf ) {
+        gltf.animations;
+        rocketscene = gltf.scene;
+        rocketCurrent.add(rocketscene);
+        rocketscene.position.y = 0;
+        rocketscene.scale.set(0.15, 0.15, 0.15); 
+        scene.add( rocketCurrent );
+    },);
+    rocketCurrent.position.set(35, 1.85, 0);
+
+    rocketCurrent2 = new THREE.Group();
+    // rocket.load('./static/resources/glbs/rocketfuture.glb', function ( gltf ) {
+    rocket.load('./static/resources/glbs/Rocketship.glb', function ( gltf ) {
+        gltf.animations;
+        rocketscene2 = gltf.scene;
+        rocketCurrent2.add(rocketscene2);
+        rocketscene2.position.y = 0;
+        rocketscene2.scale.set(0.15, 0.15, 0.15); 
+        scene.add( rocketCurrent2 );
+    },);
+    rocketCurrent2.position.set(35-200, 1.85, 0);
+    camera.position.x = rocketCurrent.position.x;
 
 // light
     let light = new THREE.DirectionalLight(0xFFFFFF, 1.0);
@@ -584,7 +585,7 @@ function init(){
                     flagCurrent2.children[currentPlanet.number-1].visible = true;
                     if(halosis2[1].capt == true && halosis2[2].capt == true && halosis2[3].capt == true && halosis2[4].capt == true && halosis2[5].capt == true && halosis2[6].capt == true && halosis2[7].capt == true && halosis2[8].capt == true){
                         text.innerHTML = "Player 2 won the game!";
-                        socket.emit('resetTime', 10);
+                        socket.emit('resetTime', 1000);
                         camera.position.x = rocketCurrent2.position.x;
                         endData();
                     } else {
@@ -613,7 +614,7 @@ function init(){
         socket.emit('gameState', halosis, halosis2, rocketCurrent.position.x, rocketCurrent2.position.x, rocketCurrent.position.y, rocketCurrent2.position.y, state);
     });
 
-    socket.on('loadGameState', (h1, h2, rpx1, rpx2, rpy1, rpy2, currentState) => {
+    socket.on('loadGameState', (h1, h2, rpx1, rpx2, rpy1, rpy2, currentState, FP) => {
         for (let i = 0; i < h1.length; i++) {
             if(h1[i].capt == true){
                 flagCurrent.children[i-1].visible = true;
@@ -631,6 +632,10 @@ function init(){
         rocketCurrent.position.y = rpy1;
         rocketCurrent2.position.y = rpy2;
         state = currentState;
+        console.log(FP);
+        if (FP == false && state.p1 == true) {
+            firstPlayer = true;
+        }
         player1 = state.p2;
         player2 = state.p1;
         document.querySelector('.waiting').innerHTML = "";
@@ -679,16 +684,24 @@ function init(){
         mat2 = m2;
         resource.innerHTML = "Moon Stone : " + mat;
         resource2.innerHTML = "Moon Stone p2 : " + mat2;
-        if(player1 == true){
+        if(player1 == true && firstPlayer == true){
             turnP1++;
             text.innerHTML = "Your turn player 1!<br>You are currently on " + uppercaseFirstLetter(currentPlanet.name);
             document.addEventListener("keydown", onDocumentKeyDown, false);
             document.addEventListener('mousedown', onMouseDown, false);
-        } else if (player2 == true){
+        } else if (player1 == true && firstPlayer == false){
+            text.innerHTML = "You are currently spectating player 1...";
+            document.removeEventListener("keydown", onDocumentKeyDown, false);
+            document.removeEventListener('mousedown', onMouseDown, false);
+        } else if (player2 == true && firstPlayer == false){
             turnP2++;
             text.innerHTML = "Your turn player 2!<br>You are currently on " + uppercaseFirstLetter(currentPlanet.name);
             document.addEventListener("keydown", onDocumentKeyDown, false);
             document.addEventListener('mousedown', onMouseDown, false);
+        } else if (player2 == true && firstPlayer == true){
+            text.innerHTML = "You are currently spectating player 2...";
+            document.removeEventListener("keydown", onDocumentKeyDown, false);
+            document.removeEventListener('mousedown', onMouseDown, false);
         }
     })
     socket.on('startGame', () => {
@@ -703,6 +716,7 @@ function init(){
 
     socket.on('countInit', (players) => {
         if (players == 1){
+            firstPlayer = true;
             document.querySelector('.waiting').innerHTML = "Waiting for another player to join...";
         } else if (players == 2){
             document.querySelector('.waiting').innerHTML = "Another player has joined! Starting game...";
@@ -722,7 +736,7 @@ function init(){
     resource2.innerHTML = "Moon Stone p2 : " + mat2;
 
 // loop for the render and cam
-let recent = 0;
+    let recent = 0;
     function loop(){
         socket.emit('time');
         if(player1 == true){
