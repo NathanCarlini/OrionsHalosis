@@ -692,7 +692,7 @@ function init(){
         }
     })
     socket.on('startGame', () => {
-        whatPlanet()
+        whatPlanet();
         player1 = true;
         player2 = false;
         socket.emit('resetTime', 20);

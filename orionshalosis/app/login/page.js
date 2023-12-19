@@ -33,7 +33,7 @@ export default function Page() {
     });
     console.log(data);
     try {
-      const res = await fetch(`${currentUrlProt}//${currentUrl}:${currentUrlPort}/api/createUsr`, {
+      const res = await fetch(`${currentUrlProt}//${currentUrl}:${currentUrlPort}/api/loginUsr`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
