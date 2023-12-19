@@ -45,7 +45,7 @@ export default function Page() {
       document.getElementById("sendBtn").disabled = true;
     }
   }
-  
+  // test
   async function submitForm() {
     const currentUrl = window.location.hostname;
     const currentUrlProt = window.location.protocol;
