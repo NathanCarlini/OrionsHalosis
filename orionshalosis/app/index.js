@@ -1,16 +1,17 @@
-const { createServer } = require("https");
+const https = require("https");
 const { Server } = require("socket.io");
+const path = require("path");
 const cors = require("cors");
 const fs = require('fs');
 
-const httpsServer = createServer({
-  key: fs.readFileSync('./ssl/key.pem', 'utf8'),
-  cert: fs.readFileSync('./ssl/cert.pem', 'utf8')
+const httpsServer = https.createServer({
+  key: fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'ssl', 'cert.pem'))
 });
 
 const io = new Server(httpsServer, {
   cors: {
-    origin: `https://${process.env.CURRENT_URL}`,
+    origin: `http://localhost:3000`,
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true,
