@@ -50,6 +50,7 @@ export default function Page() {
     const currentUrl = window.location.hostname;
     const currentUrlProt = window.location.protocol;
     const currentUrlPort = window.location.port;
+    console.log(currentUrl);
     setLoading(true);
     Object.entries(formData).forEach(([key, value]) => {
       data[key] = value;
