@@ -27,7 +27,7 @@ export default async function Page() {
       const currentUrlPort = window.location.port;
 
       try {
-        const res = await fetch(`${currentUrlProt}//${currentUrl}${currentUrlPort}/api/getData`,
+        const res = await fetch(`${currentUrlProt}//${currentUrl}:${currentUrlPort}/api/getData`,
           {
             method: "PUT",
             headers: { Authorization: `Bearer ${token}` },
