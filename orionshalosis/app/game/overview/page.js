@@ -8,7 +8,7 @@ import Image from "next/image";
 
 
 
-export default async function Page() {
+export default function Page() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const router = useRouter();
   // eslint-disable-next-line react-hooks/exhaustive-deps
