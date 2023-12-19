@@ -1,23 +1,20 @@
-// index.js
-
-const http = require("http");
+const { createServer } = require("https");
 const { Server } = require("socket.io");
 const cors = require("cors");
+const fs = require('fs');
 
-const httpServer = http.createServer();
+const httpsServer = createServer({
+  key: fs.readFileSync('./ssl/key.pem', 'utf8'),
+  cert: fs.readFileSync('./ssl/cert.pem', 'utf8')
+});
 
-const io = new Server(httpServer, {
+const io = new Server(httpsServer, {
   cors: {
-    origin: `http://${process.env.CURRENT_URL}`,
+    origin: `https://${process.env.CURRENT_URL}`,
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true,
   },
-});
-
-const PORT = process.env.PORT || 3001;
-httpServer.listen(PORT, () => {
-  console.log(`Socket.io server is running on port ${PORT}`);
 });
 
 setInterval(timer, 1000)
@@ -136,4 +133,10 @@ io.on('connection', (socket) => {
       io.emit('turnPlayer', m1, m2, player1, player2);
     }
   });
+});
+
+
+const PORT = process.env.PORT || 3001;
+httpsServer.listen(PORT, () => {
+  console.log(`Socket.io server is running on port ${PORT}`);
 });

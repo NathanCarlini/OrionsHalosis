@@ -11,7 +11,7 @@ const MyThree = () =>{
     if (!scriptExecutedRef.current) {
         scriptExecutedRef.current = true;
 
-var socket = io(`http://${process.env.CURRENT_URL}:3001`);
+var socket = io(`https://localhost:3001`);
 let price = 0;
 let player1 = true;
 let player2 = false;
