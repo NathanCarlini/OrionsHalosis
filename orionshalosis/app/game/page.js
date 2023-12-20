@@ -47,7 +47,7 @@ export default function Page() {
     }, [router]);
     if (isLoading) return <p>Loading...</p>;
     if (!data) return <p>No profile data</p>;
-    console.log(data.data);
+    // console.log(data.data);
 
     return (
         <div className='bg-black'>
@@ -56,7 +56,7 @@ export default function Page() {
             <p className="resource hidden absolute left-4 bottom-4 w-full text-left z-10 text-xl text-white select-none">Moon Stone : </p>
             <p className="resource2 hidden absolute bottom-4 w-full text-center z-10 text-xl text-white select-none">Moon Stone p2 : 0</p>
             <p className="timer hidden absolute bottom-4 right-4 z-10 text-white select-none text-xl">Timer : 20</p>
-            <MyThree />
+            <MyThree props={data.data}/>
         </div>
     );
 }

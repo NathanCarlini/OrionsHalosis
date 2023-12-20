@@ -77,6 +77,17 @@ io.on('connection', (socket) => {
     missUser = 1;
     io.emit('pause');
   });
+
+  socket.on('props', (data, firstPlayer) => {
+    if(firstPlayer == true){
+      usernameP1 = data.username;
+      usernameP2 = null;
+    } else {
+      usernameP2 = data.username;
+      usernameP1 = null;
+    }
+    io.emit('props', usernameP1, usernameP2);
+  })
         
   socket.on('gameState', (halosis, halosis2, rocketPosx, rocketPosx2, rocketPosy, rocketPosy2, state, firstPlayer) => {
     if (state.p1 == true){
@@ -104,6 +115,12 @@ io.on('connection', (socket) => {
     m1 = mat;
     m2 = mat2;
     io.emit('price',m1,m2);
+  })
+
+  socket.on('endGame', (dataP1, dataP2) => {
+    console.log(dataP1["gameResult"], dataP2["gameResult"]);
+    
+    // call database to update game data
   })
         
   socket.on('resetTime', (timer) => {
