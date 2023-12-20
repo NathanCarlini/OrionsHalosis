@@ -1,11 +1,8 @@
 "use client";
 import MyThree from './static/script.js';
-import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import Link from "next/link";
-import Image from "next/image";
 
 export default function Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps

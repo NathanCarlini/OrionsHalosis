@@ -20,7 +20,11 @@ function MyThree(props) {
             let capt2x15 = false;
             let capt1x15 = false;
             let win = 0;
+            let dataEnd = [
+                { idgame: 1, player1:"", player2:"", victory: "", gamedate: "", player1resources: 0, player2resources: 0, player1planets: 1, player2planets: 1}
+            ];
             let data = props.props;
+            dataEnd[0].gamedate = new Date();
             let usernameP1 = '';
             let usernameP2 = '';
             let turnP1 = 0;
@@ -644,7 +648,6 @@ function MyThree(props) {
                     rocketCurrent.position.y = rpy1;
                     rocketCurrent2.position.y = rpy2;
                     state = currentState;
-                    console.log(FP);
                     if (FP == false && state.p1 == true) {
                         firstPlayer = true;
                     }
@@ -727,11 +730,16 @@ function MyThree(props) {
                     document.addEventListener('mousedown', onMouseDown, false);
                 })
 
-                socket.on('props', (nameP1, nameP2) => {
+                socket.on('props', (nameP1, nameP2, iduser1, iduser2) => {
                     if (nameP1 != null) {
                         usernameP1 = nameP1;
                     } else if (nameP2 != null) {
                         usernameP2 = nameP2;
+                    }
+                    if (iduser1 != null) {
+                        dataEnd[0].player1 = iduser1;
+                    } else if (iduser2 != null) {
+                        dataEnd[0].player2 = iduser2;
                     }
                 });
 
@@ -801,22 +809,17 @@ function MyThree(props) {
                 }
                 // get data for stats and reward players
 
-                let dataP1 = [];
-                let dataP2 = [];
                 let countP1 = 0;
                 let countP2 = 0;
                 function endData(win) {
                     if(win == 1){
-                        dataP1["gameResult"] = "win";
-                        dataP2["gameResult"] = "lose";
+                        dataEnd[0].victory = dataEnd[0].player1;
                     } else if(win == 2){
-                        dataP1["gameResult"] = "lose";
-                        dataP2["gameResult"] = "win";
+                        dataEnd[0].victory = dataEnd[0].player2;
                     }
-                    dataP1["resources"] = mat;
-                    dataP2["resources"] = mat2;
-                    dataP1["turn"] = turnP1;
-                    dataP2["turn"] = turnP1;
+                    dataEnd[0].player1resources = mat;
+                    dataEnd[0].player2resources = mat2;
+
                     countP1 = 0;
                     countP2 = 0;
                     for (let i = 1; i < planets.children.length; i++) {
@@ -829,10 +832,9 @@ function MyThree(props) {
                             countP2++;
                         }
                     }
-                    dataP1["capt"] = countP1;
-                    dataP2["capt"] = countP2;
-                    console.log(dataP1, dataP2);
-                    socket.emit('endGame', dataP1, dataP2);
+                    dataEnd[0].player1planets = countP1;
+                    dataEnd[0].player2planets = countP2;
+                    socket.emit('endGame', dataEnd[0]);
                 }
                 loop();
 

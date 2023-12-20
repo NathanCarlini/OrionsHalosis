@@ -86,7 +86,14 @@ io.on('connection', (socket) => {
       usernameP2 = data.username;
       usernameP1 = null;
     }
-    io.emit('props', usernameP1, usernameP2);
+    if(firstPlayer == true){
+      idP1 = data.iduser;
+      idP2 = null;
+    } else {
+      idP2 = data.iduser;
+      idP1 = null;
+    }
+    io.emit('props', usernameP1, usernameP2, idP1, idP2);
   })
         
   socket.on('gameState', (halosis, halosis2, rocketPosx, rocketPosx2, rocketPosy, rocketPosy2, state, firstPlayer) => {
@@ -115,12 +122,6 @@ io.on('connection', (socket) => {
     m1 = mat;
     m2 = mat2;
     io.emit('price',m1,m2);
-  })
-
-  socket.on('endGame', (dataP1, dataP2) => {
-    console.log(dataP1["gameResult"], dataP2["gameResult"]);
-    
-    // call database to update game data
   })
         
   socket.on('resetTime', (timer) => {
@@ -155,6 +156,20 @@ io.on('connection', (socket) => {
       io.emit('turnPlayer', m1, m2, player1, player2);
     }
   });
+
+  socket.on('endGame', (data) => {
+    if(recent == 0) {
+      recent = 1;
+      Object.entries(data).forEach(([key, value]) => {
+        data[key] = value;
+      });
+      fetch(`http://localhost:3000/api/gameResult`, {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      // call database to update game data
+    } else return;
+  })
 
   if (state == true && io.engine.clientsCount == 0){
     socket.close();
