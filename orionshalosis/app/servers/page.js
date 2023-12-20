@@ -4,7 +4,7 @@
 import Image from "next/image";
 import Link from "next/link";
 function LogOut(){
-    fetch(`http://${process.env.CURRENT_URL}:8080/logOut`, { method:"PUT"})
+    fetch(`/logOut`, { method:"PUT"})
 }
 
 export default function Page() {

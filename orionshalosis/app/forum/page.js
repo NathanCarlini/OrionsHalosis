@@ -13,11 +13,9 @@ function page() {
         </p>
       </div>
       <div>
-        <Link href="/forum/main">
           <button className="rounded-xl bg-marine-blue px-12 py-3 text-white text-3xl hover:bg-marine-blue-sec">
             Access
           </button>
-        </Link>
       </div>
     </div>
   );

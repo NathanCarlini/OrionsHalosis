@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 Buttons.getInitialProps = async () => {
-  const res = await fetch(`http://${process.env.CURRENT_URL}:8080/checkIfSession&Data`, {
+  const res = await fetch(`/checkIfSession&Data`, {
     method: "GET",
     next: { tags: ["collection"] },
   });
