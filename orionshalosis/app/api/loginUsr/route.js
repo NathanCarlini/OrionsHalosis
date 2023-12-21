@@ -9,13 +9,13 @@ export async function PUT(request) {
   const body = await request.json();
   const res = await prisma.account.findFirst ({
     where: {
-      email: body.email,
+      username: body.username,
     },
   });
   console.log(res);
   if (body.password == res.password) {
     console.log("tetetetete");
-    const token = jwt.sign({ userId: res.email }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: res.username }, process.env.JWT_SECRET, {
       expiresIn: "60m",
     });
     console.log(token);
