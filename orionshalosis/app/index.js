@@ -8,10 +8,10 @@ const httpsServer = https.createServer({
   key: fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
   cert: fs.readFileSync(path.join(__dirname, 'ssl', 'cert.pem'))
 });
-
+let path = window.location.origin;
 const io = new Server(httpsServer, {
   cors: {
-    origin: `http://localhost:3000`,
+    origin: `${path}:3000`,
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true,

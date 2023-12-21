@@ -11,9 +11,10 @@ function MyThree(props) {
         if (!scriptExecutedRef.current) {
             scriptExecutedRef.current = true;
 
+            let path = window.location.origin;
             let data = props.props;
             // var socket = io(`https://localhost:3001/${$data.gameId}`);
-            var socket = io(`https://localhost:3001`);
+            var socket = io(`${path}:3001`);
             let price = 0;
             let player1 = true;
             let player2 = false;
