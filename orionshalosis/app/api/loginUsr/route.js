@@ -13,7 +13,6 @@ export async function PUT(request) {
     },
   });
   console.log("body.password",body.password);
-  console.log("res",res);
   if (body.password == res.password) {
     console.log("tetetetete");
     const token = jwt.sign({ userId: res.email }, process.env.JWT_SECRET, {
