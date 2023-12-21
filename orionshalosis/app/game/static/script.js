@@ -11,6 +11,8 @@ function MyThree(props) {
         if (!scriptExecutedRef.current) {
             scriptExecutedRef.current = true;
 
+            let data = props.props;
+            // var socket = io(`https://localhost:3001/${$data.gameId}`);
             var socket = io(`https://localhost:3001`);
             let price = 0;
             let player1 = true;
@@ -20,10 +22,10 @@ function MyThree(props) {
             let capt2x15 = false;
             let capt1x15 = false;
             let win = 0;
+            console.log(data);
             let dataEnd = [
-                { idgame: 1, player1:"", player2:"", victory: "", gamedate: "", player1resources: 0, player2resources: 0, player1planets: 1, player2planets: 1}
+                { player1:"", player2:"", victory: "", gamedate: "", player1resources: 0, player2resources: 0, player1planets: 1, player2planets: 1, gameidentificator:data.gameId}
             ];
-            let data = props.props;
             dataEnd[0].gamedate = new Date();
             let usernameP1 = '';
             let usernameP2 = '';
@@ -44,7 +46,7 @@ function MyThree(props) {
                 var flag = new GLTFLoader();
                 let flag0, flag1, flag2, flag3, flag4, flag5, flag6, flag7 = null;
                 flagCurrent = new THREE.Group();
-                flag.load('./static/resources/glbs/Flag red.glb', function (gltf) {
+                flag.load('../static/resources/glbs/Flag red.glb', function (gltf) {
                     gltf.animations;
                     flag0 = gltf.scene;
                     flagCurrent.add(flag0);
@@ -79,7 +81,7 @@ function MyThree(props) {
                 flagCurrent.position.set(14.5, 0.75, 0);
 
                 let flagCurrent2 = new THREE.Group();
-                flag.load('./static/resources/glbs/Flag blue.glb', function (gltf) {
+                flag.load('../static/resources/glbs/Flag blue.glb', function (gltf) {
                     gltf.animations;
                     flag0 = gltf.scene;
                     flagCurrent2.add(flag0);
@@ -146,20 +148,20 @@ function MyThree(props) {
 
                 const cubeTextureLoader = new THREE.CubeTextureLoader();
                 scene.background = cubeTextureLoader.load([
-                    './static/resources/right.png',
-                    './static/resources/left.png',
-                    './static/resources/top.png',
-                    './static/resources/bottom.png',
-                    './static/resources/front.png',
-                    './static/resources/back.png',
+                    '../static/resources/right.png',
+                    '../static/resources/left.png',
+                    '../static/resources/top.png',
+                    '../static/resources/bottom.png',
+                    '../static/resources/front.png',
+                    '../static/resources/back.png',
                 ]);
 
 
                 // rocket loader
                 rocketCurrent = new THREE.Group();
                 var rocket = new GLTFLoader();
-                rocket.load('./static/resources/glbs/rocketfuture.glb', function (gltf) {
-                    // rocket.load('./static/resources/Rocketship.glb', function ( gltf ) {
+                rocket.load('../static/resources/glbs/rocketfuture.glb', function (gltf) {
+                    // rocket.load('../static/resources/Rocketship.glb', function ( gltf ) {
                     gltf.animations;
                     rocketscene = gltf.scene;
                     rocketCurrent.add(rocketscene);
@@ -170,8 +172,8 @@ function MyThree(props) {
                 rocketCurrent.position.set(35, 1.85, 0);
 
                 rocketCurrent2 = new THREE.Group();
-                // rocket.load('./static/resources/glbs/rocketfuture.glb', function ( gltf ) {
-                rocket.load('./static/resources/glbs/Rocketship.glb', function (gltf) {
+                // rocket.load('../static/resources/glbs/rocketfuture.glb', function ( gltf ) {
+                rocket.load('../static/resources/glbs/Rocketship.glb', function (gltf) {
                     gltf.animations;
                     rocketscene2 = gltf.scene;
                     rocketCurrent2.add(rocketscene2);

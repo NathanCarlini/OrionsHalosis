@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import Image from "next/image";
-
+import uuid4 from "uuid4";
 
 
 export default function Page() {
@@ -107,6 +107,21 @@ export default function Page() {
             <a className="h-fit bg-tropical-green px-3 py-2 font-bold">1/2</a>
           </div>
         </div>
+        <p
+            onClick={async() => {
+              const gameId = uuid4();
+              data.data.gameId = gameId;
+              await fetch(`http://localhost:3000/api/gameResult`, {
+                method: "POST",
+                body: JSON.stringify({
+                  player1:data.data.iduser, player2:data.data.iduser, victory: null, gamedate: new Date(), player1resources: 0, player2resources: 0, player1planets: 1, player2planets: 1, gameidentificator:gameId
+                }),
+              });
+              router.push(`/game/${gameId}`);
+            }}
+            className="h-fit w-fit bg-main-blue px-3 py-2 font-bold">
+          Create a server
+        </p>
       </section>
     </div>
   );

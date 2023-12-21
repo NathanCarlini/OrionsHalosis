@@ -46,7 +46,8 @@
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.6",
     "three": "^0.159.0",
-    "utf-8-validate": "^5.0.10"
+    "utf-8-validate": "^5.0.10",
+    "uuid4": "^2.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^10",
