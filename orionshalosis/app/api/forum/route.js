@@ -1,4 +1,3 @@
-
 import { PrismaClient } from "@prisma/client";
 import { headers } from "next/headers";
 import jwt from "jsonwebtoken";
@@ -6,24 +5,56 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-  export async function GET(request) {
-    const body = await request.json();
-    const posts = await prisma.post.findMany({
+export async function PUT(request) {
+  try {
+    const body = await request.json()
+    console.log("body : ", body.topicname);
+      const topic = await prisma.topic.findMany({
         where:{
-            //filtrer par topic
+          topicname : body.topicname
         }
     });
-    res.status(200).json(posts);
-  }
-
-  export async function POST(request) {
-    const { title, content, userId } = request.body;
-    const post = await prisma.post.create({
-      data: {
-        title,
-        content,
-        userId,
-      },
+    // console.log(topic);
+    const posts = await prisma.post.findMany({
+      where:{
+        topic: topic.id
+      }
     });
-    res.status(201).json(post);
+    console.log(posts);
+    return NextResponse.json(posts);
+
+
+
+  } catch (error) {
+    console.log("body.topicname");
+    return NextResponse.json(
+      { message: "Unauthorized" },
+      {
+        status: 400,
+      },
+    );
   }
+}
+
+// export async function POST(request) {
+//   // const { title, content, userId } = request.body;
+//   // const post = await prisma.post.create({
+//   //   data: {
+//   //     title,
+//   //     content,
+//   //     userId,
+//   //   },
+//   // });
+//   try {
+//     Response.json("200");
+//     NextResponse.json("200");
+//   } catch (error) {
+//     console.error("Token verification failed", error);
+//     return NextResponse.json(
+//       { message: "Unauthorized" },
+//       {
+//         status: 400,
+//       },
+//     );
+//   }
+// }

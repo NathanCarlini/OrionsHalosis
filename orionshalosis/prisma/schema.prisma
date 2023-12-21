@@ -3,24 +3,56 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING")
+  provider = "postgresql"
+  url      = "postgres://default:K0LfzqY6IZpR@ep-red-mode-26806983-pooler.us-east-1.postgres.vercel-storage.com:5432/verceldb?pgbouncer=true&connect_timeout=15"
 }
 
 model account {
   iduser                                     Int            @id @default(autoincrement())
-  username                                   String         @db.VarChar @unique
+  username                                   String         @db.VarChar
   password                                   String
-  email                                      String?         @db.VarChar @unique
+  email                                      String         @db.VarChar
   avatar                                     String
   experience                                 Int?
   rockets                                    String[]       @db.VarChar
   creationdate                               DateTime?      @db.Timestamp(6)
   deletiondate                               DateTime?      @db.Timestamp(6)
   deleted                                    Boolean        @default(false)
+  level                                      Int?           @default(1)
+  wongames                                   Int?
+  losedgames                                 Int?
+  planetscaptured                            Int?
+  comment                                    comment[]
+  game_game_player1Toaccount                 game[]         @relation("game_player1Toaccount")
+  game_game_player2Toaccount                 game[]         @relation("game_player2Toaccount")
   inventory_inventory_accountToaccount       inventory[]    @relation("inventory_accountToaccount") @ignore
+  post                                       post[]
   rolesaccount_rolesaccount_accountToaccount rolesaccount[] @relation("rolesaccount_accountToaccount") @ignore
+}
+
+model comment {
+  idcomment Int       @id @default(autoincrement())
+  datepost  DateTime? @db.Timestamp(6)
+  content   String
+  idpost    Int?
+  author    Int?
+  account   account?  @relation(fields: [author], references: [iduser], onDelete: NoAction, onUpdate: NoAction)
+  post      post?     @relation(fields: [idpost], references: [idpost], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model game {
+  idgame                        Int       @id @default(autoincrement())
+  player1                       Int
+  player2                       Int
+  victory                       Int?
+  gamedate                      DateTime? @db.Timestamp(6)
+  player1resources              Int?
+  player2resources              Int?
+  player1planets                Int?
+  player2planets                Int?
+  gameidentificator             String?
+  account_game_player1Toaccount account   @relation("game_player1Toaccount", fields: [player1], references: [iduser], onDelete: NoAction, onUpdate: NoAction)
+  account_game_player2Toaccount account   @relation("game_player2Toaccount", fields: [player2], references: [iduser], onDelete: NoAction, onUpdate: NoAction)
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
@@ -43,6 +75,18 @@ model item {
   type_item_typeTotype           type        @relation("item_typeTotype", fields: [type], references: [idtype], onDelete: NoAction, onUpdate: NoAction)
 }
 
+model post {
+  idpost                  Int       @id @default(autoincrement())
+  title                   String    @db.VarChar(255)
+  datepost                DateTime? @db.Timestamp(6)
+  content                 String
+  author                  Int?
+  topic                   Int?
+  comment                 comment[]
+  account                 account?  @relation(fields: [author], references: [iduser], onDelete: NoAction, onUpdate: NoAction)
+  topic_post_topicTotopic topic?    @relation("post_topicTotopic", fields: [topic], references: [idtopic], onDelete: NoAction, onUpdate: NoAction, map: "topic")
+}
+
 model role {
   idrole                               Int            @id @default(autoincrement())
   name                                 String         @db.VarChar
@@ -58,6 +102,12 @@ model rolesaccount {
   role_rolesaccount_roleTorole          role?    @relation("rolesaccount_roleTorole", fields: [role], references: [idrole], onDelete: NoAction, onUpdate: NoAction)
 
   @@ignore
+}
+
+model topic {
+  idtopic                Int     @id @default(autoincrement())
+  topicname              String? @db.VarChar(255)
+  post_post_topicTotopic post[]  @relation("post_topicTotopic")
 }
 
 model type {
