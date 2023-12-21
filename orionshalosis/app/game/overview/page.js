@@ -34,7 +34,7 @@ export default function Page() {
 
       try {
         const res = await fetch(`/api/getData`, {
-          method: "PUT",
+          method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });
         let body = await res.json();
