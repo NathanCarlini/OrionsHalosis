@@ -23,7 +23,7 @@ export default async function Page() {
     }
     const validateToken = async () => {
       try {
-        const res = await fetch(`/api/getData`,
+        const res = await fetch(`https://orions-halosis.vercel.app/api/getData`,
           {
             method: "GET",
             headers: { Authorization: `Bearer ${token}` },
