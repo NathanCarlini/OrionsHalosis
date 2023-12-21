@@ -58,12 +58,12 @@ export default function Page() {
   return (
     <div className="absolute flex h-full w-full flex-col p-6">
       <h1 className="text-4xl font-sans font-bold w-full text-center mb-12">{Name} </h1>
-      <div className="grid grid-cols-3 w-full h-full">
+      <div className="grid grid-cols-[1fr_2fr] w-full h-full">
 
       {/* ici profil */}
-        <div className="flex w-fit flex-row justify-between bg-red-500">
+        <div className="flex w-fit flex-row justify-between p-4 bg-gray-600 rounded-l-xl">
           <div className="flex flex-row gap-5">
-            <div className="relative aspect-square h-28 w-40 bg-slate-400/40 md:h-40">
+            <div className="relative aspect-square h-24 w-40 bg-slate-400/40 md:h-40">
               <Image
                 src="/Ornn_0.jpg"
                 layout="fill"
@@ -78,16 +78,18 @@ export default function Page() {
               <p className="bg-slate-400/40 px-2 py-1 font-black text-white md:text-xl">
                 Beginner space Explorer lvl.5
               </p>
-              <div className="flex h-11 w-full flex-col items-center justify-center rounded-full bg-[url('/backgrounds/galaxy.png')]">
-                <p className="self-center text-center font-bold">
-                  {data.data.experience} / 100
-                </p>
-              </div>
             </div>
           </div>
         </div>
-        <div className="bg-green-500">sdfshffgjsgdfjsdhgfjg</div>
-        <div className="bg-blue-500">sdfshffgjsgdfjsdhgfjg</div>
+        <div className="bg-gray-500 p-3 flex flex-col gap-4 rounded-r-xl">
+          {postData.map((post) => (
+            <div className="flex flex-col">
+              <p className="text-black text-xl font-bold">{post.title}</p>
+              <p className="text-black text-lg">{post.content}</p>
+              <p className="text-black text-sm">{post.datepost}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
