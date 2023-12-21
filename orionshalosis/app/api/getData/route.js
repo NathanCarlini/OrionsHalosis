@@ -7,32 +7,32 @@ import { NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export async function GET(request) {
-  // try {
-    // const headersInstance = headers();
-    // const authHeader = headersInstance.get("authorization");
+  try {
+    const headersInstance = headers();
+    const authHeader = headersInstance.get("authorization");
 
-    // const token = authHeader.split(" ")[1];
+    const token = authHeader.split(" ")[1];
 
-    // const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // if (!decoded) {
-    //   return NextResponse.json(
-    //     { message: "Expired" },
-    //     {
-    //       status: 400,
-    //     },
-    //   );
-    // } else if (decoded.exp < Math.floor(Date.now() / 1000)) {
-    //   return NextResponse.json(
-    //     { message: "Expired" },
-    //     {
-    //       status: 400,
-    //     },
-    //   );
-    // } else {
-      const res = await prisma.account.findUnique({
+    if (!decoded) {
+      return NextResponse.json(
+        { message: "Expired" },
+        {
+          status: 400,
+        },
+      );
+    } else if (decoded.exp < Math.floor(Date.now() / 1000)) {
+      return NextResponse.json(
+        { message: "Expired" },
+        {
+          status: 400,
+        },
+      );
+    } else {
+      const res = await prisma.account.findFirst({
         where: {
-          email: "swan@swan.fr",
+          email: decoded.userId,
         },
       });
       return NextResponse.json(
@@ -41,14 +41,14 @@ export async function GET(request) {
           status: 200,
         },
       );
-    // }
-  // } catch (error) {
-  //   console.error("Token verification failed", error);
-  //   return NextResponse.json(
-  //     { message: "Unauthorized" },
-  //     {
-  //       status: 400,
-  //     },
-  //   );
-  // }
+    }
+  } catch (error) {
+    console.error("Token verification failed", error);
+    return NextResponse.json(
+      { message: "Unauthorized" },
+      {
+        status: 400,
+      },
+    );
+  }
 }
