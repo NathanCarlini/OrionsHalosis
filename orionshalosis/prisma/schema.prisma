@@ -10,7 +10,9 @@ datasource db {
 model account {
   iduser                                     Int            @id @default(autoincrement())
   username                                   String         @db.VarChar
+  username                                   String         @db.VarChar
   password                                   String
+  email                                      String         @db.VarChar
   email                                      String         @db.VarChar
   avatar                                     String
   experience                                 Int?
@@ -59,7 +61,7 @@ model game {
 model inventory {
   account                            Int?
   item                               Int?
-  account_inventory_accountToaccount account? @relation("inventory_accountToaccount", fields: [account], references: [iduser], onDelete: NoAction, onUpdate: NoAction)
+  
   item_inventory_itemToitem          item?    @relation("inventory_itemToitem", fields: [item], references: [iditem], onDelete: NoAction, onUpdate: NoAction)
 
   @@ignore
@@ -87,6 +89,18 @@ model post {
   topic_post_topicTotopic topic?    @relation("post_topicTotopic", fields: [topic], references: [idtopic], onDelete: NoAction, onUpdate: NoAction, map: "topic")
 }
 
+model post {
+  idpost                  Int       @id @default(autoincrement())
+  title                   String    @db.VarChar(255)
+  datepost                DateTime? @db.Timestamp(6)
+  content                 String
+  author                  Int?
+  topic                   Int?
+  comment                 comment[]
+  account                 account?  @relation(fields: [author], references: [iduser], onDelete: NoAction, onUpdate: NoAction)
+  topic_post_topicTotopic topic?    @relation("post_topicTotopic", fields: [topic], references: [idtopic], onDelete: NoAction, onUpdate: NoAction, map: "topic")
+}
+
 model role {
   idrole                               Int            @id @default(autoincrement())
   name                                 String         @db.VarChar
@@ -98,7 +112,6 @@ model role {
 model rolesaccount {
   account                               Int?
   role                                  Int?
-  account_rolesaccount_accountToaccount account? @relation("rolesaccount_accountToaccount", fields: [account], references: [iduser], onDelete: NoAction, onUpdate: NoAction)
   role_rolesaccount_roleTorole          role?    @relation("rolesaccount_roleTorole", fields: [role], references: [idrole], onDelete: NoAction, onUpdate: NoAction)
 
   @@ignore

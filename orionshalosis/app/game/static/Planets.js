@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-// import scene from './script.js';
 // init planets (to optimize by using them in a different script)
 let planets2 = new THREE.Group();
 let planets = new THREE.Group();
@@ -13,10 +12,10 @@ const Planets = class {
             num++;
         }
         const Geometry = new THREE.SphereGeometry( size, 32, 32 );
-        const texturePlanet = new THREE.TextureLoader().load('./static/resources/'+texture+'.jpg' ); 
+        const texturePlanet = new THREE.TextureLoader().load('../static/resources/'+texture+'.jpg' ); 
         if (texture == "earth"){
-            const textureEarthBump = new THREE.TextureLoader().load('./static/resources/earthbump.jpg' ); 
-            const textureEarthSpec = new THREE.TextureLoader().load('./static/resources/earthspec.jpg' );
+            const textureEarthBump = new THREE.TextureLoader().load('../static/resources/earthbump.jpg' ); 
+            const textureEarthSpec = new THREE.TextureLoader().load('../static/resources/earthspec.jpg' );
             const Material = new THREE.MeshPhongMaterial({map: texturePlanet, bumpMap: textureEarthBump, specular: textureEarthSpec}); 
             const Mesh = new THREE.Mesh(Geometry, Material);
             Mesh.position.x = position;
@@ -64,7 +63,7 @@ const Planets = class {
             scene.add( line );
         
             const loader = new FontLoader();
-            loader.load( './static/resources/font/space-font.json', function ( font ) {
+            loader.load( '../static/resources/font/space-font.json', function ( font ) {
                 const geometry = new TextGeometry( 'Price : '+price, {
                     font: font,
                     size: 0.4,
@@ -78,7 +77,7 @@ const Planets = class {
                 scene.add(textMesh);
             } );
             if (typeof moonStone !== 'undefined'){
-                loader.load( './static/resources/font/space-font.json', function ( font ) {
+                loader.load( '../static/resources/font/space-font.json', function ( font ) {
                     const geometry = new TextGeometry( 'Resource x'+moonStone, {
                         font: font,
                         size: 0.4,

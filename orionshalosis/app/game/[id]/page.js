@@ -1,21 +1,16 @@
 "use client";
-import MyThree from './static/script.js';
-import jwt from "jsonwebtoken";
+import MyThree from '../static/script.js';
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { withRouter } from 'next/router'
 import Cookies from "js-cookie";
-import Link from "next/link";
-import Image from "next/image";
 
-export default function Page() {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+export default function Page(props) {
     const router = useRouter();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
     const [isLoading, setLoading] = useState(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const [data, setData] = useState(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => {
+    useEffect(() => {       
         const currentUrl = window.location.hostname;
         const currentUrlProt = window.location.protocol;
         const currentUrlPort = window.location.port;
@@ -47,8 +42,9 @@ export default function Page() {
     }, [router]);
     if (isLoading) return <p>Loading...</p>;
     if (!data) return <p>No profile data</p>;
-    console.log(data.data);
-
+    const currentUrl = window.location.pathname.slice(6);
+    data.data.gameId = currentUrl;
+    // take info from url and send it to data
     return (
         <div className='bg-black'>
             <p className="halosis absolute top-5 w-full text-center z-10 text-2xl block text-white select-none">Welcome to Orion's Halosis {data.data.username}!</p>
@@ -56,7 +52,7 @@ export default function Page() {
             <p className="resource hidden absolute left-4 bottom-4 w-full text-left z-10 text-xl text-white select-none">Moon Stone : </p>
             <p className="resource2 hidden absolute bottom-4 w-full text-center z-10 text-xl text-white select-none">Moon Stone p2 : 0</p>
             <p className="timer hidden absolute bottom-4 right-4 z-10 text-white select-none text-xl">Timer : 20</p>
-            <MyThree />
+            <MyThree props={data.data}/>
         </div>
     );
 }
