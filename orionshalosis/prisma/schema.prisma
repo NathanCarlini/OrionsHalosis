@@ -23,9 +23,11 @@ model account {
   losedgames                                 Int?
   planetscaptured                            Int?
   comment                                    comment[]
-  
-  
+  game_game_player1Toaccount                 game[]         @relation("game_player1Toaccount")
+  game_game_player2Toaccount                 game[]         @relation("game_player2Toaccount")
+  inventory_inventory_accountToaccount       inventory[]    @relation("inventory_accountToaccount") @ignore
   post                                       post[]
+  rolesaccount_rolesaccount_accountToaccount rolesaccount[] @relation("rolesaccount_accountToaccount") @ignore
 }
 
 model comment {
@@ -49,14 +51,15 @@ model game {
   player1planets                Int?
   player2planets                Int?
   gameidentificator             String?
-  
+  account_game_player1Toaccount account   @relation("game_player1Toaccount", fields: [player1], references: [iduser], onDelete: NoAction, onUpdate: NoAction)
+  account_game_player2Toaccount account   @relation("game_player2Toaccount", fields: [player2], references: [iduser], onDelete: NoAction, onUpdate: NoAction)
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model inventory {
   account                            Int?
   item                               Int?
-  
+  account_inventory_accountToaccount account? @relation("inventory_accountToaccount", fields: [account], references: [iduser], onDelete: NoAction, onUpdate: NoAction)
   item_inventory_itemToitem          item?    @relation("inventory_itemToitem", fields: [item], references: [iditem], onDelete: NoAction, onUpdate: NoAction)
 
   @@ignore
@@ -95,6 +98,7 @@ model role {
 model rolesaccount {
   account                               Int?
   role                                  Int?
+  account_rolesaccount_accountToaccount account? @relation("rolesaccount_accountToaccount", fields: [account], references: [iduser], onDelete: NoAction, onUpdate: NoAction)
   role_rolesaccount_roleTorole          role?    @relation("rolesaccount_roleTorole", fields: [role], references: [idrole], onDelete: NoAction, onUpdate: NoAction)
 
   @@ignore
@@ -102,7 +106,7 @@ model rolesaccount {
 
 model topic {
   idtopic                Int     @id @default(autoincrement())
-  name                   String? @db.VarChar(255)
+  topicname              String? @db.VarChar(255)
   post_post_topicTotopic post[]  @relation("post_topicTotopic")
 }
 

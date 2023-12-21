@@ -8,7 +8,7 @@ export default function Page() {
   const router = useRouter();
   var data = {};
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -24,9 +24,6 @@ export default function Page() {
     });
   };
   async function submitForm() {
-    const currentUrl = window.location.hostname;
-    const currentUrlProt = window.location.protocol;
-    const currentUrlPort = window.location.port;
     setLoading(true);
     Object.entries(formData).forEach(([key, value]) => {
       data[key] = value;
@@ -56,11 +53,11 @@ export default function Page() {
           Log In
         </h1>
         <div className="">
-          <p className="text-xl font-bold">Email :</p>
+          <p className="text-xl font-bold">Username :</p>
           <input
             onChange={handleInput}
             type="text"
-            id="email"
+            id="username"
             className="h-8 w-full border border-black text-black"
           ></input>
         </div>

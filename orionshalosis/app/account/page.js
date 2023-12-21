@@ -22,10 +22,6 @@ export default async function Page() {
       return;
     }
     const validateToken = async () => {
-      const currentUrl = window.location.hostname;
-      const currentUrlProt = window.location.protocol;
-      const currentUrlPort = window.location.port;
-
       try {
         const res = await fetch(`/api/getData`,
           {
