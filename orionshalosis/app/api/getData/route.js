@@ -32,7 +32,7 @@ export async function GET(request) {
     // } else {
       const res = await prisma.account.findUnique({
         where: {
-          email: decoded.userId,
+          email: "swan@swan.fr",
         },
       });
       return NextResponse.json(
