@@ -55,29 +55,37 @@ function resources(m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x
   return m1, m2;
 }
 
+let room = "";
 io.on('connection', (socket) => {
+  socket.on('joinRoom', (roomName) => {
+    room = roomName;
+    console.log(room)
+    socket.join(room);
+  });
+
   if (missUser == 1 && state == true){
     missUser = 0;
     console.log('second user connected after beingdisconnected');
-    io.emit('loadGameState', h1, h2, rpx1, rpx2, rpy1, rpy2, currentState, FP);
+    io.to(room).emit('loadGameState', h1, h2, rpx1, rpx2, rpy1, rpy2, currentState, FP);
   }
   if (state == false){
     console.log('a user connected');
     players = io.engine.clientsCount;
     console.log(players);
+    roomNumber = 0;
     io.emit('countInit', players);
   }
   socket.on('startGame', () => {
     state = true;
-    io.emit('startGame');
+    io.to(room).emit('startGame');
   });
         
   socket.on('disconnect', () => {
     console.log('user disconnected');
     missUser = 1;
-    io.emit('pause');
+    io.to(room).emit('pause');
   });
-
+  
   socket.on('props', (data, firstPlayer) => {
     if(firstPlayer == true){
       usernameP1 = data.username;
@@ -93,7 +101,7 @@ io.on('connection', (socket) => {
       idP2 = data.iduser;
       idP1 = null;
     }
-    io.emit('props', usernameP1, usernameP2, idP1, idP2);
+    io.to(room).emit('props', usernameP1, usernameP2, idP1, idP2);
   })
         
   socket.on('gameState', (halosis, halosis2, rocketPosx, rocketPosx2, rocketPosy, rocketPosy2, state, firstPlayer) => {
@@ -110,7 +118,7 @@ io.on('connection', (socket) => {
   });
         
   socket.on('move', (targetX, targetY, dir) => {
-    io.emit('move', targetX, targetY, dir);
+    io.to(room).emit('move', targetX, targetY, dir);
   })
         
   socket.on('price', (player1, player2, price) => {
@@ -121,7 +129,7 @@ io.on('connection', (socket) => {
     }
     m1 = mat;
     m2 = mat2;
-    io.emit('price',m1,m2);
+    io.to(room).emit('price',m1,m2);
   })
         
   socket.on('resetTime', (timer) => {
@@ -130,14 +138,14 @@ io.on('connection', (socket) => {
     } else {
       sec = 20;
     }
-    io.emit('resetTime');
+    io.to(room).emit('resetTime');
   })
         
   socket.on('time', () => {
     if (sec == 20){
       recent = 0;
     }
-    io.emit('time',sec);
+    io.to(room).emit('time',sec);
   });
         
   socket.on('turnPlayer', (m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, rec) => {
@@ -153,10 +161,10 @@ io.on('connection', (socket) => {
         player2 = false;
         player1 = true;
       }
-      io.emit('turnPlayer', m1, m2, player1, player2);
+      io.to(room).emit('turnPlayer', m1, m2, player1, player2);
     }
   });
-
+  
   socket.on('endGame', (data) => {
     if(recent == 0) {
       recent = 1;
@@ -167,15 +175,15 @@ io.on('connection', (socket) => {
         method: "POST",
         body: JSON.stringify(data),
       });
-      // call database to update game data
-    } else return;
+      io.sockets.clients(room).forEach(function(s){
+        s.leave(room);
+    });
+    }
   })
-
-  if (state == true && io.engine.clientsCount == 0){
-    socket.close();
-  }
+  
 });
 
+io.sockets.in(room)
 
 const PORT = process.env.PORT || 3001;
 httpsServer.listen(PORT, () => {

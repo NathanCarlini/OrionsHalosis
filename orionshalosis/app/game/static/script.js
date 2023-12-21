@@ -12,8 +12,9 @@ function MyThree(props) {
             scriptExecutedRef.current = true;
 
             let data = props.props;
-            // var socket = io(`https://localhost:3001/${$data.gameId}`);
+            let room = data.gameId;
             var socket = io(`https://localhost:3001`);
+            socket.emit('joinRoom', room);
             let price = 0;
             let player1 = true;
             let player2 = false;
@@ -22,7 +23,6 @@ function MyThree(props) {
             let capt2x15 = false;
             let capt1x15 = false;
             let win = 0;
-            console.log(data);
             let dataEnd = [
                 { player1:"", player2:"", victory: "", gamedate: "", player1resources: 0, player2resources: 0, player1planets: 1, player2planets: 1, gameidentificator:data.gameId}
             ];
@@ -692,6 +692,7 @@ function MyThree(props) {
                     time.innerHTML = "Timer : " + sec;
                 })
                 socket.on('turnPlayer', (m1, m2, p1, p2) => {
+                    console.log("turnPlayer");
                     recent = 1;
                     price = 0;
                     whatPlanet()
@@ -722,6 +723,7 @@ function MyThree(props) {
                     }
                 })
                 socket.on('startGame', () => {
+                    console.log("startGame");
                     socket.emit("props", data, firstPlayer);
                     whatPlanet();
                     player1 = true;
@@ -733,6 +735,7 @@ function MyThree(props) {
                 })
 
                 socket.on('props', (nameP1, nameP2, iduser1, iduser2) => {
+                    console.log("props");
                     if (nameP1 != null) {
                         usernameP1 = nameP1;
                     } else if (nameP2 != null) {
@@ -746,10 +749,13 @@ function MyThree(props) {
                 });
 
                 socket.on('countInit', (players) => {
+                    
+                    console.log("countInit");
                     if (players == 1) {
                         firstPlayer = true;
                         document.querySelector('.waiting').innerHTML = "Waiting for another player to join...";
                     } else if (players == 2) {
+                        socket.emit('joinRoom', room);
                         document.querySelector('.waiting').innerHTML = "Another player has joined! Starting game...";
                         setTimeout(function () {
                             document.querySelector('.waiting').innerHTML = "";

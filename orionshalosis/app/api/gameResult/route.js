@@ -6,7 +6,6 @@ const prisma = new PrismaClient();
 export async function POST(request) {
   const body = await request.json();
   
-
   const test = await prisma.game.findFirst({
     where: {
       gameidentificator: body.gameidentificator
@@ -17,7 +16,7 @@ export async function POST(request) {
     await prisma.game.create({
       data: body,
     });
-    return NextResponse.json("created a new game");
+    return NextResponse.json("created a new blank game");
   } else {
     body.idgame = test.idgame;
     await prisma.game.update({

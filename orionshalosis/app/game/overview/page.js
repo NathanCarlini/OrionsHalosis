@@ -50,7 +50,6 @@ export default function Page() {
   }, [router]);
   if (isLoading) return <p>Loading...</p>;
   if (!data) return <p>No profile data</p>;
-  console.log(data.data);
   return (
     <div className="absolute pt-2 md:pt-8 flex h-full w-full gap-10 flex-row justify-between bg-[url('/backgrounds/bg.png')] p-6 md:p-11">
       <section className="flex flex-col gap-3">

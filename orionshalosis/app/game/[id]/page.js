@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { withRouter } from 'next/router'
 import Cookies from "js-cookie";
 
-export default function Page(props) {
+export default function Page() {
     const router = useRouter();
     
     const [isLoading, setLoading] = useState(true);
@@ -44,7 +44,6 @@ export default function Page(props) {
     if (!data) return <p>No profile data</p>;
     const currentUrl = window.location.pathname.slice(6);
     data.data.gameId = currentUrl;
-    // take info from url and send it to data
     return (
         <div className='bg-black'>
             <p className="halosis absolute top-5 w-full text-center z-10 text-2xl block text-white select-none">Welcome to Orion's Halosis {data.data.username}!</p>
