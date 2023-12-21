@@ -75,15 +75,15 @@ export default function Page() {
           <p
             onClick={() => {
               submitForm();
-              function loaderRouter() {
-                if (isLoading == true) {
-                  window.setTimeout(loaderRouter, 800);
-                  console.log("boucle");
-                } else {
-                  router.push("/");
-                }
-              }
-              loaderRouter();
+              // function loaderRouter() {
+              //   if (isLoading == true) {
+              //     window.setTimeout(loaderRouter, 800);
+              //     console.log("boucle");
+              //   } else {
+              //     router.push("/");
+              //   }
+              // }
+              // loaderRouter();
             }}
             className="w-full max-w-[200px] self-center rounded-full bg-black px-12 py-2 text-center text-xl font-black capitalize text-white duration-300 hover:bg-slate-500"
           >
