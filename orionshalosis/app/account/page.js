@@ -25,7 +25,7 @@ export default async function Page() {
       try {
         const res = await fetch(`/api/getData`,
           {
-            method: "PUT",
+            method: "GET",
             headers: { Authorization: `Bearer ${token}` },
           },
         );

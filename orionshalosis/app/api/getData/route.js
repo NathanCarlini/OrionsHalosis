@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function PUT(request) {
+export async function GET(request) {
   try {
     const headersInstance = headers();
     const authHeader = headersInstance.get("authorization");
