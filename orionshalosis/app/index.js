@@ -170,10 +170,6 @@ io.on('connection', (socket) => {
       // call database to update game data
     } else return;
   })
-
-  if (state == true && io.engine.clientsCount == 0){
-    socket.close();
-  }
 });
 
 
