@@ -23,6 +23,7 @@ export default function Page() {
     if ((e.target.id == "rePassword") != formData.password) {
       verif = "invalidpassword";
       console.log(verif);
+      console.log(window.location.port);
     }
     if (e.target.id != "rePassword") {
       const fieldName = e.target.id;

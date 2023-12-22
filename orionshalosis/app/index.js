@@ -11,7 +11,7 @@ const httpsServer = https.createServer({
 // const windowPath = window.location.origin;
 const io = new Server(httpsServer, {
   cors: {
-    origin: `https://orions-halosis.vercel.app:3000`,
+    origin: `https://orions-halosis.vercel.app`,
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true,
