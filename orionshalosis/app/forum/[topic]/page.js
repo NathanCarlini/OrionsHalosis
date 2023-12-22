@@ -70,7 +70,6 @@ export default function Page() {
       datoi[key] = value;
     });
     // setFormData({ userId: dataa.data.iduser });
-    console.log(formData);
   };
   async function submitForm() {
     Object.entries(formData).forEach(([key, value]) => {
