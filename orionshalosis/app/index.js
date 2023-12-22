@@ -11,7 +11,7 @@ const httpsServer = https.createServer({
 // const windowPath = window.location.origin;
 const io = new Server(httpsServer, {
   cors: {
-    origin: `https://orions-halosis.vercel.app:3000`,
+    origin: `http://localhost/:3000`,
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true,
@@ -163,7 +163,7 @@ io.on('connection', (socket) => {
       Object.entries(data).forEach(([key, value]) => {
         data[key] = value;
       });
-      fetch(`https://orions-halosis.vercel.app/api/gameResult`, {
+      fetch(`http://localhost//api/gameResult`, {
         method: "POST",
         body: JSON.stringify(data),
       });
