@@ -4,11 +4,16 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Image from "next/image";
 export default function Page() {
-
+  var datoi = {};
   const router = useRouter();
   const [isLoading, setLoading] = useState(true);
   const [postData, setPostData] = useState(null);
-  const [data, setData] = useState(null);
+  const [dataa, setData] = useState(null);
+  const [formData, setFormData] = useState({
+    title: "",
+    content: "",
+    userId: "",
+  });
   let Name = "Q&A";
 
   useEffect(() => {
@@ -52,18 +57,51 @@ export default function Page() {
     };
     getPost();
   }, [router]);
+
+  const handleInput = (e) => {
+    const fieldName = e.target.id;
+    const fieldValue = e.target.value;
+    setFormData((prevState) => ({
+      ...prevState,
+      [fieldName]: fieldValue,
+      userId: dataa.data.iduser,
+    }));
+    Object.entries(formData).forEach(([key, value]) => {
+      datoi[key] = value;
+    });
+    // setFormData({ userId: dataa.data.iduser });
+    console.log(formData);
+  };
+  async function submitForm() {
+    Object.entries(formData).forEach(([key, value]) => {
+      datoi[key] = value;
+    });
+    try {
+      const res = await fetch(`/api/forum`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
   if (isLoading) return <p>Loading...</p>;
   if (!postData) return <p>No profile data</p>;
 
   return (
-    <div className="absolute flex h-full w-full flex-col p-6">
-      <h1 className="text-4xl font-sans font-bold w-full text-center mb-12">{Name} </h1>
-      <div className="grid grid-cols-[1fr_2fr] w-full h-full">
-
-      {/* ici profil */}
-        <div className="flex w-fit flex-row justify-between p-4 bg-gray-600 rounded-l-xl">
+    <div className="absolute flex h-full w-full flex-col bg-[url('/backgrounds/blue-bg.jpg')] p-6">
+      <h1 className="mb-12 w-full text-center font-sans text-4xl font-bold">
+        {Name}{" "}
+      </h1>
+      <div className="grid h-full w-full grid-cols-3 gap-3">
+        {/* ici profil */}
+        <div className="flex w-fit flex-row justify-between rounded-l-xl  p-4">
           <div className="flex flex-row gap-5">
-            <div className="relative aspect-square h-24 w-40 bg-slate-400/40 md:h-40">
+            <div className="relative aspect-square h-24 w-40 bg-slate-400/40  md:h-40">
               <Image
                 src="/Ornn_0.jpg"
                 layout="fill"
@@ -73,7 +111,7 @@ export default function Page() {
             </div>
             <div className="flex h-full flex-col gap-4">
               <p className="text- w-fit bg-slate-400/40 px-2 py-1 font-black text-white md:text-xl">
-                {data.data.username}
+                {dataa.data.username}
               </p>
               <p className="bg-slate-400/40 px-2 py-1 font-black text-white md:text-xl">
                 Beginner space Explorer lvl.5
@@ -81,14 +119,47 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="bg-gray-500 p-3 flex flex-col gap-4 rounded-r-xl">
+        <div className="flex flex-col gap-4 rounded-xl bg-gray-500 bg-opacity-50 p-3">
           {postData.map((post) => (
-            <div className="flex flex-col">
-              <p className="text-black text-xl font-bold">{post.title}</p>
-              <p className="text-black text-lg">{post.content}</p>
-              <p className="text-black text-sm">{post.datepost}</p>
+            <div className="hover: flex flex-col border border-gray-700 p-3">
+              <p className="text-xl font-bold text-white">{post.title}</p>
+              <p className="text-lg text-white">{post.content}</p>
+              <p className="text-sm text-white">{post.datepost}</p>
             </div>
           ))}
+        </div>
+        <div className="flex w-full flex-col gap-8 rounded-xl bg-gray-500 bg-opacity-50 p-3">
+          <p className="text-center text-2xl font-bold text-white">
+            Post content
+          </p>
+          <form
+            className="flex w-full flex-col gap-5"
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <input
+              type="text"
+              onChange={handleInput}
+              id="title"
+              placeholder="Title of your post"
+              className="h-10 w-full rounded-xl bg-gray-500 bg-opacity-30"
+            />
+            <input
+              type="text"
+              onChange={handleInput}
+              id="content"
+              placeholder="Content"
+              className="h-32 w-full rounded-xl  bg-gray-500 bg-opacity-30"
+            />
+            <p
+              onClick={() => {
+                submitForm();
+              }}
+            >
+              Add Post
+            </p>
+          </form>
         </div>
       </div>
     </div>
