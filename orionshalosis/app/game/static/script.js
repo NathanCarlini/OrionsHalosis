@@ -865,6 +865,11 @@ function MyThree(props) {
             }
             init();
         }
+        return () => {
+            if (socket.readyState === 1) { // <-- This is important
+                socket.close();
+            }
+        }
     }, []);
     return (
         <canvas id="container" className="hidden"></canvas>
