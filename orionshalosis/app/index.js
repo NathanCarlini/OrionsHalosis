@@ -5,8 +5,8 @@ const cors = require("cors");
 const fs = require('fs');
 
 const httpsServer = https.createServer({
-  key: fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, 'ssl', 'cert.pem'))
+  // key: fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
+  // cert: fs.readFileSync(path.join(__dirname, 'ssl', 'cert.pem'))
 });
 // const windowPath = window.location.origin;
 const io = new Server(httpsServer, {
