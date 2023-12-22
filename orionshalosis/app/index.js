@@ -15,6 +15,7 @@ const io = new Server(httpsServer, {
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true,
+    pingTimeout: 60000,
   },
 });
 
