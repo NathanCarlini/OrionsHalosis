@@ -108,7 +108,7 @@ export default function Page() {
             onClick={async() => {
               const gameId = uuid4();
               data.data.gameId = gameId;
-              await fetch(`http://localhost:3000/api/gameResult`, {
+              await fetch(`https://orions-halosis.vercel.app/api/gameResult`, {
                 method: "POST",
                 body: JSON.stringify({
                   player1:data.data.iduser, player2:data.data.iduser, victory: null, gamedate: new Date(), player1resources: 0, player2resources: 0, player1planets: 1, player2planets: 1, gameidentificator:gameId
