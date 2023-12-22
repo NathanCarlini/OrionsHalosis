@@ -1,7 +1,7 @@
 
 import { PrismaClient } from "@prisma/client";
 import { headers } from "next/headers";
-import jwt from "jsonwebtoken";
+import jwt, { decode } from "jsonwebtoken";
 import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
@@ -14,7 +14,7 @@ export async function GET(request) {
     const token = authHeader.split(" ")[1];
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+    console.log(decoded);
     if (!decoded) {
       return NextResponse.json(
         { message: "Expired" },
@@ -30,17 +30,33 @@ export async function GET(request) {
         },
       );
     } else {
-      const res = await prisma.account.findFirst({
-        where: {
-          email: decoded.userId,
-        },
-      });
-      return NextResponse.json(
-        { data: res },
-        {
-          status: 200,
-        },
-      );
+      if(decoded.userId.includes("@")){
+        const res = await prisma.account.findFirst({
+          where: {
+            email: decoded.userId,
+          },
+        });
+        console.log(res);
+        return NextResponse.json(
+          { data: res },
+          {
+            status: 200,
+          },
+        );
+      }else{
+        const res = await prisma.account.findFirst({
+          where: {
+            username: decoded.userId,
+          },
+        });
+        console.log(res);
+        return NextResponse.json(
+          { data: res },
+          {
+            status: 200,
+          },
+        );
+      }
     }
   } catch (error) {
     console.error("Token verification failed", error);

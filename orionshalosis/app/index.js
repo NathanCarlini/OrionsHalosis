@@ -8,10 +8,10 @@ const httpsServer = https.createServer({
   key: fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
   cert: fs.readFileSync(path.join(__dirname, 'ssl', 'cert.pem'))
 });
-const windowPath = window.location.origin;
+// const windowPath = window.location.origin;
 const io = new Server(httpsServer, {
   cors: {
-    origin: `${windowPath}:3000`,
+    origin: `https://orions-halosis.vercel.app:3000`,
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true,
@@ -163,7 +163,7 @@ io.on('connection', (socket) => {
       Object.entries(data).forEach(([key, value]) => {
         data[key] = value;
       });
-      fetch(`http://localhost:3000/api/gameResult`, {
+      fetch(`https://orions-halosis.vercel.app/api/gameResult`, {
         method: "POST",
         body: JSON.stringify(data),
       });

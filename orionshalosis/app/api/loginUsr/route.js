@@ -15,7 +15,7 @@ export async function PUT(request) {
   console.log("body.password",body.password);
   if (body.password == res.password) {
     console.log("tetetetete");
-    const token = jwt.sign({ userId: res.email }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: res.username }, process.env.JWT_SECRET, {
       expiresIn: "60m",
     });
     console.log(token);
