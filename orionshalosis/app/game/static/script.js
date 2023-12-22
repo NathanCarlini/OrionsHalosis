@@ -13,7 +13,7 @@ function MyThree(props) {
 
             let data = props.props;
             // var socket = io(`https://localhost:3001/${$data.gameId}`);
-            var socket = io(`https://orions-halosis.vercel.app:3001`);
+            var socket = io(`https://orions-halosis.vercel.app:3001`, { transports: ["websocket"] });
             let price = 0;
             let player1 = true;
             let player2 = false;
@@ -864,6 +864,11 @@ function MyThree(props) {
                 // }
             }
             init();
+        }
+        return () => {
+            if (socket.readyState === 1) { // <-- This is important
+                socket.close();
+            }
         }
     }, []);
     return (
