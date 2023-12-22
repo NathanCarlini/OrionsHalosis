@@ -174,7 +174,7 @@ io.on('connection', (socket) => {
 });
 
 
-// const PORT = process.env.PORT || 3001;
-httpsServer.listen( () => {
-  // console.log(`Socket.io server is running on port ${PORT}`);
+const PORT = process.env.PORT || 3001;
+httpsServer.listen(PORT, () => {
+  console.log(`Socket.io server is running on port ${PORT}`);
 });
