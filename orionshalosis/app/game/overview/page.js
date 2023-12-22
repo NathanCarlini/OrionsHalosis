@@ -28,10 +28,6 @@ export default function Page() {
       return;
     }
     const validateToken = async () => {
-      const currentUrl = window.location.hostname;
-      const currentUrlProt = window.location.protocol;
-    const currentUrlPort = window.location.port;
-
       try {
         const res = await fetch(`/api/getData`, {
           method: "PUT",
@@ -39,6 +35,7 @@ export default function Page() {
         });
         let body = await res.json();
         setData(body);
+        console.log(data);
         setLoading(false);
         if (!res.ok) throw new Error("Token validation failed");
       } catch (error) {

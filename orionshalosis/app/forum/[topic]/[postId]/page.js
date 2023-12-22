@@ -2,22 +2,34 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-export function Page() {
+export default function Page() {
+  const { postId } = router.query;
   const router = useRouter();
   const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState(null);
+  const [commentData, setCommentData] = useState(null);
+  const [postData, setPostData] = useState(null);
   useEffect(() => {
+    console.log({ postId });
     const getPost = async () => {
       try {
-        const res = await fetch(
-          `/api/getData`,
+        const post = await fetch(
+          `/api/forum/post`,
           {
-            method: "PUT",
+            method: "GET",
             headers: { Authorization: `Bearer ${token}` },
           },
         );
-        let body = await res.json();
-        setData(body);
+        const comment = await fetch(
+          `/api/forum/${postId}/comments`,
+          {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
+        let postBody = await post.json();
+        let commentBody = await comment.json();
+        setPostData(postBody);
+        setCommentData(commentBody);
         setLoading(false);
         if (!res.ok) throw new Error("Token validation failed");
       } catch (error) {
@@ -25,6 +37,7 @@ export function Page() {
         router.replace("/login"); // Redirect to login if token validation fails
       }
     };
+    getPost();
   }, [router]);
   if (isLoading) return <p>Loading...</p>;
   if (!data) return <p>No profile data</p>;
@@ -47,7 +60,7 @@ export function Page() {
             e.preventDefault();
             const content = e.target.content.value;
             addComment(content);
-            e.target.content.value = "";
+            e.target.content.value = '';
           }}
         >
           <textarea name="content" rows={4} required />
@@ -58,5 +71,3 @@ export function Page() {
     </div>
   );
 }
-
-export default index;

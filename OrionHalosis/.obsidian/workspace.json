@@ -8,29 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "dedd25cb7b1bc073",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "7f76bee0f7b19cb7",
-            "type": "leaf",
-            "state": {
-              "type": "canvas",
-              "state": {
-                "file": "Untitled.canvas",
-                "viewState": {
-                  "x": 21.5,
-                  "y": 177.125,
-                  "zoom": 0
-                }
-              }
-            }
-          },
-          {
             "id": "bcaabaaac468833d",
             "type": "leaf",
             "state": {
@@ -38,15 +15,14 @@
               "state": {
                 "file": "Untitled.canvas",
                 "viewState": {
-                  "x": -90,
-                  "y": 140,
-                  "zoom": 0
+                  "x": -101.7642872781451,
+                  "y": 575.0080438252978,
+                  "zoom": -1.1102230246251565e-16
                 }
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
