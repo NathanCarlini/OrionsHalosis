@@ -1,7 +1,6 @@
 "use client"
 import Image from "next/image";
 import Link from "next/link";
-import ItemRenderLoop from "../ItemRenderLoop";
 import { useRouter } from 'next/navigation';
 
 export default function Page() {
@@ -22,10 +21,6 @@ export default function Page() {
                     <li className="flex flex-col">
                         <p className="font-black text-lg md:text-xl lg:text-2xl text-center">Active players :</p>
                         <p className="font-black text-black text-4xl text-center">50</p>
-                    </li>
-                    <li className="flex flex-col">
-                        <p className="font-black text-lg md:text-xl lg:text-2xl text-center">Servers :</p>
-                        <p className="font-black text-black text-4xl text-center">200</p>
                     </li>
                 </ul>
             </div>

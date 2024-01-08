@@ -1,8 +1,27 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
 import prisma from '../lib/prisma';
 import Footer from "./Footer";
+import { useEffect, useState } from "react";
+
 export default function Home() {
+  const [data, setData] = useState(null);
+  const [isLoading, setLoading] = useState(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+  async function getData(){
+    const res = await fetch(`http://localhost:3000/api/getStats`, {
+      method: "GET",
+    });
+    let data = await res.json();
+    setData(data);
+    setLoading(false);
+  }
+  getData();
+  }, []);
+  if (isLoading) return <p>Loading...</p>;
+  if (!data) return <p>No profile data</p>;
   return (
     <>
       <section className="flex h-[95vh] w-full flex-row items-end justify-center">
@@ -41,13 +60,26 @@ export default function Home() {
         <p className="pt-10 pb-5 text-xl md:text-2xl lg:text-3xl  font-black text-white">
           Look at the data 👀
         </p>
-        <div className="flex w-full flex-row items-center justify-between">
+        <div className="flex w-full flex-row items-center justify-between mb-6">
           {/* divs for graphs  */}
-          <div></div>
-          <div></div>
-          <div></div>
+          <div className="flex flex-col bg-slate-400/40 justify-center w-full">
+            <ul className="inline-flex py-2 px-6 justify-between">
+              <li className="flex flex-col">
+                <p className="font-black text-lg md:text-xl lg:text-2xl text-center">Games :</p>
+                <p className="font-black text-black text-4xl text-center">{data[0]}</p>
+              </li>
+              <li className="flex flex-col">
+                <p className="font-black text-lg md:text-xl lg:text-2xl text-center">Players overall :</p>
+                <p className="font-black text-black text-4xl text-center">{data[1]}</p>
+              </li>
+              <li className="flex flex-col">
+                <p className="font-black text-lg md:text-xl lg:text-2xl text-center">Active players :</p>
+                <p className="font-black text-black text-4xl text-center">{data[2]}</p>
+              </li>
+            </ul>
+          </div>
         </div>
-        <Link href="/stats" className="max-w-fit bg-main-blue p-2 text-lg md:text-xl lg:text-2xl font-bold text-white">
+        <Link href="/statistics" className="max-w-fit bg-main-blue p-2 text-lg md:text-xl lg:text-2xl font-bold text-white">
           See more data
         </Link>
       </section>
