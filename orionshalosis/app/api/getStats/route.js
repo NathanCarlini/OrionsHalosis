@@ -8,7 +8,7 @@ export async function GET() {
     const gameData = await prisma.game.findMany();
     const playerData = await prisma.account.findMany();
     for (let i = 0; i < playerData.length; i++) {
-        
+
     }
     let numberGames = gameData.length;
     let numberPlayer = playerData.length;
@@ -18,13 +18,26 @@ export async function GET() {
         player.push(gameData[i].player2 );
         player.push(gameData[i].player1 );
     }
+    let planetsCaptured = 0;
+    for (let i = 0; i < gameData.length; i++) {
+        planetsCaptured = planetsCaptured + gameData[i].player1planets + gameData[i].player2planets;
+    }
     var uniq = player.reduce(function(a,b){
         if (a.indexOf(b) < 0 ) a.push(b);
         return a;
     },[]);
     activePlayer = uniq.length;
-     
-    let data = [numberGames, numberPlayer, activePlayer]
+
+    // Filter the best players by level and then by experience
+    const bestPlayers = playerData.sort((a, b) => {
+        if (a.level !== b.level) {
+            return b.level - a.level; 
+        } else {
+            return b.experience - a.experience;
+        }
+    });
+
+    let data = [numberGames, numberPlayer, activePlayer, bestPlayers, planetsCaptured]
     return NextResponse.json(data);
 
 }
