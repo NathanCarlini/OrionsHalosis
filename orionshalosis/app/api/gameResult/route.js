@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { headers } from "next/headers";
-import { NextResponse } from "next/server";
 const prisma = new PrismaClient();
+import { NextResponse } from "next/server";
 
 export async function POST(request) {
   const body = await request.json();
@@ -29,16 +29,15 @@ export async function POST(request) {
 
     const player1 = await prisma.account.findUnique({
       where: {
-        iduser: gameData.player1,
+        iduser: body.player1,
       }, 
     });
     const player2 = await prisma.account.findUnique({
       where: {
-        iduser: gameData.player2,
+        iduser: body.player2,
       }, 
     });
-    console.log(player1, player2)
-    if (gameData.victory == player1.iduser) {
+    if (body.victory == player1.iduser) {
       player1.wongames += 1;
       player1.level += 1;
       player2.losedgames += 1;
@@ -47,7 +46,7 @@ export async function POST(request) {
         player2.level += 1;
         player2.experience -= 100;
       }
-    } else if (gameData.victory == player2.iduser) {
+    } else if (body.victory == player2.iduser) {
       player2.wongames += 1;
       player2.level += 1;
       player1.losedgames += 1;
@@ -57,19 +56,18 @@ export async function POST(request) {
         player1.experience -= 100;
       }
     }
-    player1.planetscaptured = gameData.player1planets;
-    player2.planetscaptured = gameData.player2planets;
+    player1.planetscaptured = player1.planetscaptured + body.player1planets;
+    player2.planetscaptured = player2.planetscaptured + body.player2planets;
 
-    console.log(player1, player2)
     await prisma.account.update({
       where: {
-        iduser: player1.iduser,
+        iduser: body.player1,
       },
       data: player1,
     });
     await prisma.account.update({
       where: {
-        iduser: player2.iduser,
+        iduser: body.player2,
       },
       data: player2,
     }); // try catch
