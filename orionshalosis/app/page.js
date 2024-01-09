@@ -11,8 +11,8 @@ export default function Home() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
   async function getData(){
-    const res = await fetch(`http://localhost:3000/api/getStats`, {
-      method: "GET",
+    const res = await fetch(`http://localhost:3000/api/getStatsHome`, {
+      method: "GET"
     });
     let data = await res.json();
     setData(data);

@@ -7,9 +7,6 @@ export async function GET() {
     
     const gameData = await prisma.game.findMany();
     const playerData = await prisma.account.findMany();
-    for (let i = 0; i < playerData.length; i++) {
-        
-    }
     let numberGames = gameData.length;
     let numberPlayer = playerData.length;
     let activePlayer = 0;

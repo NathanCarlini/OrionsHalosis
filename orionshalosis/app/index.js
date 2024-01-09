@@ -165,7 +165,7 @@ io.on('connection', socket => { // l'idée ici c'est de supprimer
       Object.entries(data).forEach(([key, value]) => {
         data[key] = value;
       });
-      fetch(`http://localhost/api/gameResult`, {
+      fetch(`http://localhost:3000/api/gameResult`, {
         method: "POST",
         body: JSON.stringify(data),
       });
