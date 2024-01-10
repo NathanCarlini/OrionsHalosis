@@ -1,8 +1,10 @@
-import Image from "next/image";
+"use client"
 import Link from "next/link";
-import prisma from '../lib/prisma';
+import { useRouter } from "next/navigation";
 import Footer from "./Footer";
 export default function Home() {
+  const router = useRouter();
+
   return (
     <>
       <section className="flex h-[95vh] w-full flex-row items-end justify-center">

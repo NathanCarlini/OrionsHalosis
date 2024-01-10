@@ -22,9 +22,6 @@ export default async function Page() {
       return;
     }
     const validateToken = async () => {
-      const currentUrl = window.location.hostname;
-      const currentUrlProt = window.location.protocol;
-      const currentUrlPort = window.location.port;
 
       try {
         const res = await fetch(`/api/getData`,
@@ -53,7 +50,7 @@ export default async function Page() {
         <div className="flex flex-row gap-3">
           <div className="relative aspect-square h-28 w-40 bg-slate-400/40 md:h-40">
             <Image
-              src="/Ornn_0.jpg"
+              src={"/" + data.data.avatar}
               layout="fill"
               objectFit="cover"
               alt="user avatar"

@@ -14,9 +14,12 @@ export default function Page() {
     content: "",
     userId: "",
   });
-  let Name = "Q&A";
+  let Name = window.location.pathname
+  Name = Name.slice(7)
 
   useEffect(() => {
+    router.reload()
+    console.log(Name);
     const token = Cookies.get("token");
     if (!token) {
       router.replace("/login"); // If no token is found, redirect to login page
@@ -47,7 +50,6 @@ export default function Page() {
         });
         let postBody = await post.json();
         setPostData(postBody);
-        console.log(postData);
         setLoading(false);
         if (!post.ok) throw new Error("Token validation failed");
       } catch (error) {
@@ -94,7 +96,7 @@ export default function Page() {
 
   return (
     <div className="absolute flex h-full w-full flex-col bg-[url('/backgrounds/blue-bg.jpg')] p-6">
-      <h1 className="mb-12 w-full text-center font-sans text-4xl font-bold">
+      <h1 className="mb-12 w-full text-center font-sans text-4xl font-bold capitalize">
         {Name}{" "}
       </h1>
       <div className="grid h-full w-full grid-cols-3 gap-3">
@@ -103,7 +105,7 @@ export default function Page() {
           <div className="flex flex-row gap-5">
             <div className="relative aspect-square h-24 w-40 bg-slate-400/40  md:h-40">
               <Image
-                src="/Ornn_0.jpg"
+                src={"/" + dataa.data.avatar}
                 layout="fill"
                 objectFit="cover"
                 alt="user avatar"
@@ -120,13 +122,13 @@ export default function Page() {
           </div>
         </div>
         <div className="flex flex-col gap-4 rounded-xl bg-gray-500 bg-opacity-50 p-3">
-          {postData.map((post) => (
+          {postData ? postData.map((post) => (
             <div className="hover: flex flex-col border border-gray-700 p-3">
               <p className="text-xl font-bold text-white">{post.title}</p>
               <p className="text-lg text-white">{post.content}</p>
               <p className="text-sm text-white">{post.datepost}</p>
             </div>
-          ))}
+          )) : <p className="text-white text-xl">No Posts Yet on this category</p>}
         </div>
         <div className="flex w-full flex-col gap-8 rounded-xl bg-gray-500 bg-opacity-50 p-3">
           <p className="text-center text-2xl font-bold text-white">
@@ -153,6 +155,7 @@ export default function Page() {
               className="h-32 w-full rounded-xl  bg-gray-500 bg-opacity-30"
             />
             <p
+              className="cursor-pointer"
               onClick={() => {
                 submitForm();
               }}

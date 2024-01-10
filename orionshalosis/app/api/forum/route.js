@@ -9,20 +9,20 @@ export async function PUT(request) {
   try {
     const body = await request.json();
     console.log("body : ", body.topicname);
-    const topic = await prisma.topic.findMany({
+    const topic = await prisma.topic.findFirst({
       where: {
         topicname: body.topicname,
       },
     });
-    // console.log(topic);
+    console.log("topic : ", topic);
     const posts = await prisma.post.findMany({
       where: {
-        topic: topic.id,
+        topic: topic.idtopic,
       },
     });
+    console.log("posts : ", posts);
     return NextResponse.json(posts);
   } catch (error) {
-    console.log("body.topicname");
     return NextResponse.json(
       { message: "Unauthorized" },
       {

@@ -11,18 +11,13 @@ export default function Page(props) {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState(null);
     useEffect(() => {       
-        const currentUrl = window.location.hostname;
-        const currentUrlProt = window.location.protocol;
-        const currentUrlPort = window.location.port;
         const token = Cookies.get("token");
         if (!token) {
         router.replace("/login"); // If no token is found, redirect to login page
         return;
         }
         const validateToken = async () => {
-        const currentUrl = window.location.hostname;
-        const currentUrlProt = window.location.protocol;
-        const currentUrlPort = window.location.port;
+
 
         try {
             const res = await fetch(`/api/getData`, {
