@@ -60,7 +60,7 @@ export default async function Page() {
               {data.data.username}
             </p>
             <p className="bg-slate-400/40 px-2 py-1 font-black text-white md:text-xl">
-              Beginner space Explorer lvl.5
+              Beginner space Explorer lvl.{data.data.level}
             </p>
             <div className="flex h-11 w-full flex-col items-center justify-center rounded-full bg-[url('/backgrounds/galaxy.png')]">
               <p className="self-center text-center font-bold">
@@ -71,7 +71,7 @@ export default async function Page() {
         </div>
         <div className="flex flex-col gap-5 pl-2">
           <Link
-            href="/statistics"
+            href="/account/statistics"
             className="h-fit w-max rounded-full bg-main-blue px-4 py-2 font-bold text-white md:text-lg "
           >
             My Statistics

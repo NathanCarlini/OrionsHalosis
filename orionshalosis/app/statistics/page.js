@@ -21,7 +21,6 @@ export default function Home() {
   }, []);
   if (isLoading) return <p>Loading...</p>;
   if (!data) return <p>No profile data</p>;
-  console.log(data[3][0])
     return (
         <div className="h-full w-full bg-[url('/backgrounds/bg.png')] p-12">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-white text-center p-8 pt-2">Global statistics</h1>
