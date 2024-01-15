@@ -51,9 +51,7 @@ function resources(m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x
   return m1, m2;
 }
 
-io.on('connection', socket => { // l'idée ici c'est de supprimer 
-  //l'état de fonction comme montré dans la doc et de voir si le join room fonctionne 
-  // pour voir un exemple de join room voir la branche test room game qui contient un problème de data
+io.on('connection', socket => { 
   // if (missUser == 1 && state == true){
   //   missUser = 0;
   //   console.log('second user connected after beingdisconnected');
@@ -67,7 +65,7 @@ io.on('connection', socket => { // l'idée ici c'est de supprimer
   }
   socket.on('startGame', (room) => {
     state = true;
-    setInterval(timer, 1000)
+    setInterval(timer, 1000) // le chrono la c'est chiant
     function timer(){
       sec--;
     }
