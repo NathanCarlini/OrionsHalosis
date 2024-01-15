@@ -18,25 +18,21 @@ const io = new Server(httpsServer, {
   },
 });
 
-setInterval(timer, 1000)
-let sec = 10000000;
-function timer(){
-  sec--;
-}
 
+let sec = 10000000;
 let mat = 150;
 let mat2 = 0;
-let h1 = 0;
-let h2 = 0;
-let rpx1 = 0;
-let rpx2 = 0;
-let rpy1 = 0;
-let rpy2 = 0;
+// let h1 = 0;
+// let h2 = 0;
+// let rpx1 = 0;
+// let rpx2 = 0;
+// let rpy1 = 0;
+// let rpy2 = 0;
 let missUser = 0;
-let currentState;
+// let currentState;
 let recent = 0;
 let state = false;
-let FP = false;
+// let FP = false;
 function resources(m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2){
   if(player1 == false && capt1x2 == true){
     mat = m1 + 300;
@@ -58,20 +54,26 @@ function resources(m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x
 io.on('connection', socket => { // l'idée ici c'est de supprimer 
   //l'état de fonction comme montré dans la doc et de voir si le join room fonctionne 
   // pour voir un exemple de join room voir la branche test room game qui contient un problème de data
-  if (missUser == 1 && state == true){
-    missUser = 0;
-    console.log('second user connected after beingdisconnected');
-    io.emit('loadGameState', h1, h2, rpx1, rpx2, rpy1, rpy2, currentState, FP);
-  }
+  // if (missUser == 1 && state == true){
+  //   missUser = 0;
+  //   console.log('second user connected after beingdisconnected');
+  //   io.emit('loadGameState', h1, h2, rpx1, rpx2, rpy1, rpy2, currentState, FP);
+  // }
   if (state == false){
     console.log('a user connected');
     players = io.engine.clientsCount;
     console.log(players);
     io.emit('countInit', players);
   }
-  socket.on('startGame', () => {
+  socket.on('startGame', (room) => {
     state = true;
-    io.emit('startGame');
+    setInterval(timer, 1000)
+    function timer(){
+      sec--;
+    }
+    socket.join(room);
+    io.to(room).emit("YES");
+    io.to(room).emit('startGame');
   });
         
   socket.on('disconnect', () => {
@@ -80,7 +82,7 @@ io.on('connection', socket => { // l'idée ici c'est de supprimer
     io.emit('pause');
   });
 
-  socket.on('props', (data, firstPlayer) => {
+  socket.on('props', (data, firstPlayer, room) => {
     if(firstPlayer == true){
       usernameP1 = data.username;
       usernameP2 = null;
@@ -95,7 +97,7 @@ io.on('connection', socket => { // l'idée ici c'est de supprimer
       idP2 = data.iduser;
       idP1 = null;
     }
-    io.emit('props', usernameP1, usernameP2, idP1, idP2);
+    io.to(room).emit('props', usernameP1, usernameP2, idP1, idP2);
   })
         
   socket.on('gameState', (halosis, halosis2, rocketPosx, rocketPosx2, rocketPosy, rocketPosy2, state, firstPlayer) => {
@@ -111,11 +113,11 @@ io.on('connection', socket => { // l'idée ici c'est de supprimer
     currentState = state;
   });
         
-  socket.on('move', (targetX, targetY, dir) => {
-    io.emit('move', targetX, targetY, dir);
+  socket.on('move', (targetX, targetY, dir, room) => {
+    io.to(room).emit('move', targetX, targetY, dir);
   })
         
-  socket.on('price', (player1, player2, price) => {
+  socket.on('price', (player1, player2, price, room) => {
     if(player1 == true){
       mat = mat - price;
     } else if(player2 == true){
@@ -123,26 +125,26 @@ io.on('connection', socket => { // l'idée ici c'est de supprimer
     }
     m1 = mat;
     m2 = mat2;
-    io.emit('price',m1,m2);
+    io.to(room).emit('price',m1,m2);
   })
         
-  socket.on('resetTime', (timer) => {
+  socket.on('resetTime', (timer, room) => {
     if (typeof timer !== 'undefined'){
       sec = timer;
     } else {
       sec = 20;
     }
-    io.emit('resetTime');
+    io.to(room).emit('resetTime');
   })
         
-  socket.on('time', () => {
+  socket.on('time', (room) => {
     if (sec == 20){
       recent = 0;
     }
-    io.emit('time',sec);
+    io.to(room).emit('time',sec);
   });
         
-  socket.on('turnPlayer', (m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, rec) => {
+  socket.on('turnPlayer', (m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, rec, room) => {
     if (recent == 0 && rec == 0){
       recent = 1;
       resources(m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2);
@@ -155,11 +157,11 @@ io.on('connection', socket => { // l'idée ici c'est de supprimer
         player2 = false;
         player1 = true;
       }
-      io.emit('turnPlayer', m1, m2, player1, player2);
+      io.to(room).emit('turnPlayer', m1, m2, player1, player2);
     }
   });
 
-  socket.on('endGame', (data) => {
+  socket.on('endGame', (data, room) => {
     if(recent == 0) {
       recent = 1;
       Object.entries(data).forEach(([key, value]) => {
@@ -171,11 +173,10 @@ io.on('connection', socket => { // l'idée ici c'est de supprimer
       });
       // call database to update game data
     } else return;
+    io.sockets.clients(room).forEach(function(s){
+      s.leave(room);
+    });
   })
-
-  if (state == true && io.engine.clientsCount == 0){
-    socket.close();
-  }
 });
 
 

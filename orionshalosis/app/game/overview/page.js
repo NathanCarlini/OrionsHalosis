@@ -66,7 +66,7 @@ export default function Page() {
               {data.data.username}
             </p>
             <p className="bg-slate-400/40 px-2 py-1 font-black text-white md:text-xl">
-              Beginner space Explorer lvl.5
+              Beginner space Explorer lvl.{data.data.level}
             </p>
             <div className="flex h-11 w-full flex-col items-center justify-center rounded-full bg-[url('/backgrounds/galaxy.png')]">
               <p className="self-center text-center font-bold">
