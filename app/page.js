@@ -17,7 +17,7 @@ export default function Home() {
         >
           <source src="/mars101.mp4" type="video/mp4" />
         </video>
-        <Link href="/game/inscription">
+        <Link href="/game/overview">
           <div className="mb-28 bg-main-blue z-[2] relative p-4 rounded-3xl text-lg md:text-xl lg:text-2xl font-bold text-white duration-500 hover:text-main-blue hover:bg-white">
             Play for free
           </div>
