@@ -25,7 +25,7 @@ function MyThree(props) {
             let capt2x15 = false;
             let capt1x15 = false;
             let win = 0;
-            console.log(data);
+            // console.log(data);
             let dataEnd = [
                 { player1:"", player2:"", victory: "", gamedate: "", player1resources: 0, player2resources: 0, player1planets: 1, player2planets: 1, gameidentificator:data.gameId}
             ];
@@ -694,7 +694,7 @@ function MyThree(props) {
                 socket.on('resetTime', (timer) => {
                     sec = timer;
                     time.innerHTML = "Timer : " + sec;
-                })
+                });
                 socket.on('turnPlayer', (m1, m2, p1, p2) => {
                     recent = 1;
                     price = 0;
@@ -848,7 +848,7 @@ function MyThree(props) {
                     }
                     dataEnd[0].player1planets = countP1;
                     dataEnd[0].player2planets = countP2;
-                    socket.emit('endGame', dataEnd[0], room);
+                    socket.emit('endGame', dataEnd[0]);
                 }
                 loop();
     

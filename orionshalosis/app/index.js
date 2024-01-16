@@ -13,11 +13,10 @@ const io = new Server(httpsServer, {
   cors: {
     origin: `http://localhost:3000`,
     methods: ["GET", "POST"],
-    allowedHeaders: ["my-custom-header"],
+    allowedHeaders: [""],
     credentials: true,
   },
 });
-
 let room = "";
 let sec = 10000000000;
 setInterval(timer, 1000)
@@ -26,17 +25,8 @@ function timer(){
 }
 let mat = 150;
 let mat2 = 0;
-// let h1 = 0;
-// let h2 = 0;
-// let rpx1 = 0;
-// let rpx2 = 0;
-// let rpy1 = 0;
-// let rpy2 = 0;
-let missUser = 0;
-// let currentState;
 let recent = 0;
 let state = false;
-// let FP = false;
 function resources(m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2){
   if(player1 == false && capt1x2 == true){
     mat = m1 + 300;
@@ -56,14 +46,10 @@ function resources(m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x
 }
 
 io.on('connection', socket => { 
-  // if (missUser == 1 && state == true){
-  //   missUser = 0;
-  //   console.log('second user connected after beingdisconnected');
-  //   io.emit('loadGameState', h1, h2, rpx1, rpx2, rpy1, rpy2, currentState, FP);
-  // }
+
   socket.on('roomInfo', (roomInfo) => {
     room = roomInfo
-    if(io.engine.clientsCount == 2 && state == false){
+    if(io.engine.clientsCount >= 2 && state == false){
       players = io.engine.clientsCount;
       state = true;
       io.emit('countInit', players, room);
@@ -81,12 +67,6 @@ io.on('connection', socket => {
     socket.join(room);
     io.to(room).emit('startGame');
   });
-        
-  // socket.on('disconnect', () => {
-  //   console.log('user disconnected');
-  //   missUser = 1;
-  //   io.emit('pause');
-  // });
 
   socket.on('props', (data, firstPlayer, room) => {
     if(firstPlayer == true){
@@ -167,26 +147,28 @@ io.on('connection', socket => {
     }
   });
 
-  socket.on('endGame', (data, room) => {
+  socket.on('disconnect', () => {
+    socket.disconnect(true)
+  });
+
+  socket.on('endGame', (data) => {
     if(recent == 0) {
       recent = 1;
-      console.log(data);
       Object.entries(data).forEach(([key, value]) => {
         data[key] = value;
       });
       fetch(`http://localhost:3000/api/gameResult`, {
         method: "POST",
         body: JSON.stringify(data),
-      });
+      })
+      .then((res) => 
+        console.log(res.json()),
+        socket.disconnect(true)
+      );
       // call database to update game data
-    } else return;
-    sec = 100000000000;
-    mat = 150;
-    mat2 = 0;
-    recent = 0;
-    state = false;
-    room = "";
-    socket.leave(room);
+    } else {
+      socket.disconnect(true)
+    }
   })
 });
 
