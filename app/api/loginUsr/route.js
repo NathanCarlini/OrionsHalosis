@@ -26,12 +26,14 @@ export async function PUT(request) {
   //     },
   //   );
   // }
-  console.log(body.password);
-  console.log(res.password);
-  bcrypt
+  console.log("body" , body.password);
+  console.log("res" , res.password);
+  let datar
+  let data = await bcrypt
     .compare(body.password, res.password)
-    .then((res) => {
-      if (res == true) {
+    .then((res) => {datar = res})
+    console.log("data", datar);
+      if (datar == true) {
         const token = jwt.sign({ userId: res.username }, process.env.JWT_SECRET, {
           expiresIn: "60m",
         });
@@ -44,6 +46,5 @@ export async function PUT(request) {
           },
         );
       }
-    })
-    .catch((err) => console.error(err.message));
+    
 }
