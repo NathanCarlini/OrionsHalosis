@@ -12,9 +12,11 @@ function MyThree(props) {
             scriptExecutedRef.current = true;
             let data = props.props;
             let room = data.gameId;
+            
             let path = window.location.origin;
             // var socket = io(`https://localhost:3001/${$data.gameId}`);
             var socket = io(`https://localhost:3001`);
+            socket.emit('roomInfo', room);
             let price = 0;
             let player1 = true;
             let player2 = false;
@@ -421,7 +423,7 @@ function MyThree(props) {
                                     } if (halosis[i].left == intersects[0].object.name && currentPlanet.number == i && halosis[i].left == "sun" && anim == false && currentPlanet.name == "mercury") {
                                         targetPositionX = sun.getPos()[1];
                                         text.innerHTML = "In the sun? Really? Well you lost...";
-                                        sec = "lose";
+                                        sec = 1000;
                                         way = -1;
                                         socket.emit('move', targetPositionX, targetPositionY, way, room);
                                     } if (halosis[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false && halosis[i - 1].capt == true && currentPlanet.name != "mercury") {
@@ -462,7 +464,7 @@ function MyThree(props) {
                                     } if (halosis2[i].left == intersects[0].object.name && currentPlanet.number == i && currentPlanet.name == "mercury" && anim == false) {
                                         targetPositionX = sun2.getPos()[1];
                                         text.innerHTML = "In the sun? Really? Well you lost...";
-                                        sec = "lose";
+                                        sec = 1000;
                                         way = -1;
                                         socket.emit('move', targetPositionX, targetPositionY, way, room);
                                     } if (halosis2[i].left == intersects[0].object.name && currentPlanet.number == i && anim == false && halosis2[i - 1].capt == true && currentPlanet.name != "mercury") {
@@ -621,51 +623,51 @@ function MyThree(props) {
                 }
 
                 // socket handling :
-                socket.on('pause', () => {
-                    socket.emit('resetTime', 120, room);
-                    text.innerHTML = "Game paused, a player is disconnected...";
-                    state = {
-                        p1: player1,
-                        p2: player2,
-                    }
-                    player1 = false;
-                    player2 = false;
-                    socket.emit('gameState', halosis, halosis2, rocketCurrent.position.x, rocketCurrent2.position.x, rocketCurrent.position.y, rocketCurrent2.position.y, state);
-                });
+                // socket.on('pause', () => {
+                //     socket.emit('resetTime', 120, room);
+                //     text.innerHTML = "Game paused, a player is disconnected...";
+                //     state = {
+                //         p1: player1,
+                //         p2: player2,
+                //     }
+                //     player1 = false;
+                //     player2 = false;
+                //     socket.emit('gameState', halosis, halosis2, rocketCurrent.position.x, rocketCurrent2.position.x, rocketCurrent.position.y, rocketCurrent2.position.y, state);
+                // });
 
-                socket.on('loadGameState', (h1, h2, rpx1, rpx2, rpy1, rpy2, currentState, FP) => {
-                    for (let i = 0; i < h1.length; i++) {
-                        if (h1[i].capt == true) {
-                            flagCurrent.children[i - 1].visible = true;
-                            halosis[i].capt = true;
-                        }
-                    }
-                    for (let i = 0; i < h2.length; i++) {
-                        if (h2[i].capt == true) {
-                            flagCurrent2.children[i - 1].visible = true;
-                            halosis2[i].capt = true;
-                        }
-                    }
-                    rocketCurrent.position.x = rpx1;
-                    rocketCurrent2.position.x = rpx2;
-                    rocketCurrent.position.y = rpy1;
-                    rocketCurrent2.position.y = rpy2;
-                    state = currentState;
-                    if (FP == false && state.p1 == true) {
-                        firstPlayer = true;
-                    }
-                    player1 = state.p2;
-                    player2 = state.p1;
-                    document.querySelector('.waiting').innerHTML = "";
-                    document.querySelector('.waiting').style.display = "none";
-                    document.querySelector('.resource').classList.remove("hidden");
-                    document.querySelector('.resource2').classList.remove("hidden");
-                    document.querySelector('canvas').classList.remove("hidden");
-                    document.querySelector('#container').classList.remove("hidden");
-                    document.querySelector('.timer').classList.remove("hidden");
-                    socket.emit('resetTime');
-                    socket.emit('turnPlayer', mat, mat2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, recent, room);
-                });
+                // socket.on('loadGameState', (h1, h2, rpx1, rpx2, rpy1, rpy2, currentState, FP) => {
+                //     for (let i = 0; i < h1.length; i++) {
+                //         if (h1[i].capt == true) {
+                //             flagCurrent.children[i - 1].visible = true;
+                //             halosis[i].capt = true;
+                //         }
+                //     }
+                //     for (let i = 0; i < h2.length; i++) {
+                //         if (h2[i].capt == true) {
+                //             flagCurrent2.children[i - 1].visible = true;
+                //             halosis2[i].capt = true;
+                //         }
+                //     }
+                //     rocketCurrent.position.x = rpx1;
+                //     rocketCurrent2.position.x = rpx2;
+                //     rocketCurrent.position.y = rpy1;
+                //     rocketCurrent2.position.y = rpy2;
+                //     state = currentState;
+                //     if (FP == false && state.p1 == true) {
+                //         firstPlayer = true;
+                //     }
+                //     player1 = state.p2;
+                //     player2 = state.p1;
+                //     document.querySelector('.waiting').innerHTML = "";
+                //     document.querySelector('.waiting').style.display = "none";
+                //     document.querySelector('.resource').classList.remove("hidden");
+                //     document.querySelector('.resource2').classList.remove("hidden");
+                //     document.querySelector('canvas').classList.remove("hidden");
+                //     document.querySelector('#container').classList.remove("hidden");
+                //     document.querySelector('.timer').classList.remove("hidden");
+                //     socket.emit('resetTime');
+                //     socket.emit('turnPlayer', mat, mat2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, recent, room);
+                // });
 
                 socket.on('move', (targetX, targetY, dir) => {
                     socket.emit('resetTime', 10, room);
@@ -683,6 +685,7 @@ function MyThree(props) {
                     resource.innerHTML = "Moon Stone : " + mat;
                     resource2.innerHTML = "Moon Stone p2 : " + mat2;
                 });
+
                 const time = document.querySelector(".timer")
                 socket.on('time', (timer) => {
                     sec = timer;
@@ -746,28 +749,31 @@ function MyThree(props) {
                     }
                 });
 
-                socket.on('countInit', (players) => {
+                socket.on('countInit', (players, roomReceived) => {
+                    room = data.gameId;
+                    socket.emit('roomInfo', room);
+                    console.log(players, roomReceived, room)
                     if (players == 1) {
                         firstPlayer = true;
                         document.querySelector('.waiting').innerHTML = "Waiting for another player to join...";
+                        socket.emit('roomInfo', room);
                     } else if (players == 2) {
-                        document.querySelector('.waiting').innerHTML = "Another player has joined! Starting game...";
-                        setTimeout(function () {
-                            document.querySelector('.waiting').innerHTML = "";
-                            document.querySelector('.waiting').style.display = "none";
-                            document.querySelector('.resource').classList.remove("hidden");
-                            document.querySelector('.resource2').classList.remove("hidden");
-                            document.querySelector('canvas').classList.remove("hidden");
-                            document.querySelector('#container').classList.remove("hidden");
-                            document.querySelector('.timer').classList.remove("hidden");
-                        }, 1500);
-                        socket.emit('startGame', room);
+                        console.log(roomReceived, room);
+                        if(roomReceived == room){
+                            document.querySelector('.waiting').innerHTML = "Another player has joined! Starting game...";
+                            setTimeout(function () {
+                                document.querySelector('.waiting').innerHTML = "";
+                                document.querySelector('.waiting').style.display = "none";
+                                document.querySelector('.resource').classList.remove("hidden");
+                                document.querySelector('.resource2').classList.remove("hidden");
+                                document.querySelector('canvas').classList.remove("hidden");
+                                document.querySelector('#container').classList.remove("hidden");
+                                document.querySelector('.timer').classList.remove("hidden");
+                            }, 1500);
+                            socket.emit('startGame', room);
+                        }
                     }
                 });
-
-                socket.on('YES', () => {
-                    console.log('OMG');
-                })
 
                 mat = 150;
                 mat2 = 0;

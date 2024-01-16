@@ -18,8 +18,12 @@ const io = new Server(httpsServer, {
   },
 });
 
-
-let sec = 10000000;
+let room = "";
+let sec = 10000000000;
+setInterval(timer, 1000)
+function timer(){
+  sec--;
+}
 let mat = 150;
 let mat2 = 0;
 // let h1 = 0;
@@ -57,28 +61,32 @@ io.on('connection', socket => {
   //   console.log('second user connected after beingdisconnected');
   //   io.emit('loadGameState', h1, h2, rpx1, rpx2, rpy1, rpy2, currentState, FP);
   // }
+  socket.on('roomInfo', (roomInfo) => {
+    room = roomInfo
+    if(io.engine.clientsCount == 2 && state == false){
+      players = io.engine.clientsCount;
+      state = true;
+      io.emit('countInit', players, room);
+    }
+    state = false;
+  });
+
   if (state == false){
-    console.log('a user connected');
     players = io.engine.clientsCount;
-    console.log(players);
-    io.emit('countInit', players);
+    state = true;
+    io.emit('countInit', players, room);
   }
   socket.on('startGame', (room) => {
     state = true;
-    setInterval(timer, 1000) // le chrono la c'est chiant
-    function timer(){
-      sec--;
-    }
     socket.join(room);
-    io.to(room).emit("YES");
     io.to(room).emit('startGame');
   });
         
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-    missUser = 1;
-    io.emit('pause');
-  });
+  // socket.on('disconnect', () => {
+  //   console.log('user disconnected');
+  //   missUser = 1;
+  //   io.emit('pause');
+  // });
 
   socket.on('props', (data, firstPlayer, room) => {
     if(firstPlayer == true){
@@ -132,14 +140,14 @@ io.on('connection', socket => {
     } else {
       sec = 20;
     }
-    io.to(room).emit('resetTime');
+    io.to(room).emit('resetTime', sec);
   })
         
   socket.on('time', (room) => {
     if (sec == 20){
       recent = 0;
     }
-    io.to(room).emit('time',sec);
+    io.to(room).emit('time', sec);
   });
         
   socket.on('turnPlayer', (m1, m2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, rec, room) => {
@@ -162,6 +170,7 @@ io.on('connection', socket => {
   socket.on('endGame', (data, room) => {
     if(recent == 0) {
       recent = 1;
+      console.log(data);
       Object.entries(data).forEach(([key, value]) => {
         data[key] = value;
       });
@@ -171,9 +180,13 @@ io.on('connection', socket => {
       });
       // call database to update game data
     } else return;
-    io.sockets.clients(room).forEach(function(s){
-      s.leave(room);
-    });
+    sec = 100000000000;
+    mat = 150;
+    mat2 = 0;
+    recent = 0;
+    state = false;
+    room = "";
+    socket.leave(room);
   })
 });
 
