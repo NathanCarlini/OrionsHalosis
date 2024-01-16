@@ -728,12 +728,13 @@ function MyThree(props) {
                 socket.on('startGame', () => {
                     socket.emit("props", data, firstPlayer, room);
                     whatPlanet();
-                    player1 = true;
-                    player2 = false;
+                    player1 = false;
+                    player2 = true;
+                    socket.emit('turnPlayer', mat, mat2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, recent, room);
                     socket.emit('resetTime', 20, room);
-                    text.innerHTML = "Your turn "+usernameP1+"!<br>You are currently on " + uppercaseFirstLetter(currentPlanet.name);
-                    document.addEventListener("keydown", onDocumentKeyDown, false);
-                    document.addEventListener('mousedown', onMouseDown, false);
+                    // text.innerHTML = "Your turn "+usernameP1+"!<br>You are currently on " + uppercaseFirstLetter(currentPlanet.name);
+                    // document.addEventListener("keydown", onDocumentKeyDown, false);
+                    // document.addEventListener('mousedown', onMouseDown, false);
                 })
 
                 socket.on('props', (nameP1, nameP2, iduser1, iduser2) => {
@@ -775,7 +776,7 @@ function MyThree(props) {
                     }
                 });
 
-                mat = 150;
+                mat = 0;
                 mat2 = 0;
                 resource.innerHTML = "Moon Stone : " + mat;
                 resource2.innerHTML = "Moon Stone p2 : " + mat2;

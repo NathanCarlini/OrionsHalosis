@@ -161,13 +161,16 @@ io.on('connection', socket => {
         method: "POST",
         body: JSON.stringify(data),
       })
-      .then((res) => 
-        console.log(res.json()),
+      .then(function(res) { 
+        return res.json()
+      }).then(function() {
         socket.disconnect(true)
-      );
+      })
+      
       // call database to update game data
     } else {
       socket.disconnect(true)
+      state = false;
     }
   })
 });
