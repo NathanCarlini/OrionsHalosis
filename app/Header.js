@@ -29,9 +29,9 @@ export default function Header() {
           Orions Halosis
         </Link>
         <div className="flex flex-row gap-2 md:gap-10 lg:gap-16">
-          <Link className="flex items-center hover:underline" href="/wiki">
+          {/* <Link className="flex items-center hover:underline" href="/wiki">
             Wiki
-          </Link>
+          </Link> */}
           <Link className="flex items-center hover:underline" href="/forum">
             Forum
           </Link>
