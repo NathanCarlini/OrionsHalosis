@@ -18,7 +18,7 @@ const io = new Server(httpsServer, {
   },
 });
 let room = "";
-let sec = 10000000000;
+let sec = 1000000000000;
 setInterval(timer, 1000)
 function timer(){
   sec--;
@@ -53,8 +53,9 @@ io.on('connection', socket => {
       players = io.engine.clientsCount;
       state = true;
       io.emit('countInit', players, room);
+    } else {
+      state = false;
     }
-    state = false;
   });
 
   if (state == false){
@@ -166,11 +167,9 @@ io.on('connection', socket => {
       }).then(function() {
         socket.disconnect(true)
       })
-      
       // call database to update game data
     } else {
       socket.disconnect(true)
-      state = false;
     }
   })
 });

@@ -24,20 +24,10 @@ export default function Home() {
   if (!data) return <p>No profile data</p>;
   return (
     <>
-      <section className="flex h-[95vh] w-full flex-row items-end justify-center">
-        <video
-          autoPlay
-          muted
-          loop
-          disablePictureInPicture
-          className="absolute top z-[1] h-full w-full object-cover"
-        >
-          <source src="/mars101.mp4" type="video/mp4" />
-        </video>
-        <Link href="/game/inscription">
-          <div className="mb-28 bg-main-blue z-[2] relative p-4 rounded-3xl text-lg md:text-xl lg:text-2xl font-bold text-white duration-500 hover:text-main-blue hover:bg-white">
+      <section className="flex h-[95vh] w-full flex-col items-center justify-end">
+        <iframe className="z-[1] h-full w-full object-cover" allow='allow-same-origin allow-forms allow-popups allow-scripts allow-presentation' src="https://www.youtube.com/embed/LwlacDELssg?si=E_t5BcT5tgxeeH3j&amp;controls=0&amp;autoplay=1" type="video/mp4"></iframe>
+        <Link href="/game/inscription" className="w-fit bg-main-blue mb-12 z-[10] absolute p-4 rounded-3xl text-lg md:text-xl lg:text-2xl font-bold text-white duration-500 hover:text-main-blue hover:bg-white">
             Play for free
-          </div>
         </Link>
       </section>
       <section className="bg-random-grey pb-88 px-8 md:px-84 flex flex-col ">

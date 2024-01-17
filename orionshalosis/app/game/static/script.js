@@ -12,9 +12,7 @@ function MyThree(props) {
             scriptExecutedRef.current = true;
             let data = props.props;
             let room = data.gameId;
-            
             let path = window.location.origin;
-            // var socket = io(`https://localhost:3001/${$data.gameId}`);
             var socket = io(`https://localhost:3001`);
             socket.emit('roomInfo', room);
             let price = 0;
@@ -25,7 +23,6 @@ function MyThree(props) {
             let capt2x15 = false;
             let capt1x15 = false;
             let win = 0;
-            // console.log(data);
             let dataEnd = [
                 { player1:"", player2:"", victory: "", gamedate: "", player1resources: 0, player2resources: 0, player1planets: 1, player2planets: 1, gameidentificator:data.gameId}
             ];
@@ -732,9 +729,6 @@ function MyThree(props) {
                     player2 = true;
                     socket.emit('turnPlayer', mat, mat2, player1, player2, capt1x15, capt2x15, capt1x2, capt2x2, recent, room);
                     socket.emit('resetTime', 20, room);
-                    // text.innerHTML = "Your turn "+usernameP1+"!<br>You are currently on " + uppercaseFirstLetter(currentPlanet.name);
-                    // document.addEventListener("keydown", onDocumentKeyDown, false);
-                    // document.addEventListener('mousedown', onMouseDown, false);
                 })
 
                 socket.on('props', (nameP1, nameP2, iduser1, iduser2) => {
@@ -752,27 +746,22 @@ function MyThree(props) {
 
                 socket.on('countInit', (players, roomReceived) => {
                     room = data.gameId;
-                    socket.emit('roomInfo', room);
-                    console.log(players, roomReceived, room)
                     if (players == 1) {
                         firstPlayer = true;
                         document.querySelector('.waiting').innerHTML = "Waiting for another player to join...";
                         socket.emit('roomInfo', room);
-                    } else if (players == 2) {
-                        console.log(roomReceived, room);
-                        if(roomReceived == room){
-                            document.querySelector('.waiting').innerHTML = "Another player has joined! Starting game...";
-                            setTimeout(function () {
-                                document.querySelector('.waiting').innerHTML = "";
-                                document.querySelector('.waiting').style.display = "none";
-                                document.querySelector('.resource').classList.remove("hidden");
-                                document.querySelector('.resource2').classList.remove("hidden");
-                                document.querySelector('canvas').classList.remove("hidden");
-                                document.querySelector('#container').classList.remove("hidden");
-                                document.querySelector('.timer').classList.remove("hidden");
-                            }, 1500);
-                            socket.emit('startGame', room);
-                        }
+                    } else if (players == 2 && roomReceived == room) {
+                        document.querySelector('.waiting').innerHTML = "Another player has joined! Starting game...";
+                        setTimeout(function () {
+                            document.querySelector('.waiting').innerHTML = "";
+                            document.querySelector('.waiting').style.display = "none";
+                            document.querySelector('.resource').classList.remove("hidden");
+                            document.querySelector('.resource2').classList.remove("hidden");
+                            document.querySelector('canvas').classList.remove("hidden");
+                            document.querySelector('#container').classList.remove("hidden");
+                            document.querySelector('.timer').classList.remove("hidden");
+                        }, 1500);
+                        socket.emit('startGame', room);
                     }
                 });
 
@@ -852,27 +841,6 @@ function MyThree(props) {
                     socket.emit('endGame', dataEnd[0]);
                 }
                 loop();
-    
-                // function liveData() {
-                //     countP1 = 0;
-                //     countP2 = 0;
-                //     for (let i = 1; i < planets.children.length; i++) {
-                //         if (halosis[i].capt == true) {
-                //             countP1++;
-                //         }
-                //     }
-                //     for (let i = 1; i < planets.children.length; i++) {
-                //         if (halosis2[i].capt == true) {
-                //             countP2++;
-                //         }
-                //     }
-                //     dataP1["resources"] = mat;
-                //     dataP2["resources"] = mat;
-                //     dataP1["turn"] = turnP1;
-                //     dataP2["turn"] = turnP2;
-                //     dataP1["capt"] = countP1;
-                //     dataP2["capt"] = countP2;
-                // }
             }
             init();
         }
