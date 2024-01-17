@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import prisma from '../lib/prisma';
-import Footer from "./Footer";
+import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 
 export default function Home() {

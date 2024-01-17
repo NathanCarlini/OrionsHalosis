@@ -10,7 +10,7 @@ export async function POST(request) {
   });
   // const user = await authenticateUser(username, password);
   const token = jwt.sign({ userId: body.email }, process.env.JWT_SECRET, {
-    expiresIn: "60m",
+    expiresIn: "365d",
   });
   return NextResponse.json({ token });
 }

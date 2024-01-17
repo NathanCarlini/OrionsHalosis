@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import "./globals.css";
+import "../globals.css";
 import React from "react";
 export default function Header() {
   return (
