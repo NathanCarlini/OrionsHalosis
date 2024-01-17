@@ -34,7 +34,6 @@ export default function Page() {
         });
         let body = await res.json();
         setData(body);
-        console.log(data);
         setLoading(false);
         if (!res.ok) throw new Error("Token validation failed");
       } catch (error) {
@@ -46,7 +45,6 @@ export default function Page() {
   }, [router]);
   if (isLoading) return <p>Loading...</p>;
   if (!data) return <p>No profile data</p>;
-  console.log(data.data);
   return (
     <div className="absolute flex h-full w-full flex-row justify-between gap-10 bg-[url('/backgrounds/bg.png')] p-6 pt-2 md:p-11 md:pt-8">
       <section className="flex flex-col gap-3">

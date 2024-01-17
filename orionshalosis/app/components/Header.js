@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Link from "next/link";
-import "./globals.css";
+import "../globals.css";
 import React from "react";
 export default function Header() {
   let choser = 0;

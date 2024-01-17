@@ -72,7 +72,6 @@ export default function Page() {
       datoi[key] = value;
     });
     // setFormData({ userId: dataa.data.iduser });
-    console.log(formData);
   };
   async function submitForm() {
     Object.entries(formData).forEach(([key, value]) => {
@@ -123,7 +122,7 @@ export default function Page() {
         </div>
         <div className="flex flex-col gap-4 rounded-xl bg-gray-500 bg-opacity-50 p-3">
           {postData ? postData.map((post) => (
-            <div className="hover: flex flex-col border border-gray-700 p-3">
+            <div key={post.idpost} className="hover: flex flex-col border border-gray-700 p-3">
               <p className="text-xl font-bold text-white">{post.title}</p>
               <p className="text-lg text-white">{post.content}</p>
               <p className="text-sm text-white">{post.datepost}</p>
