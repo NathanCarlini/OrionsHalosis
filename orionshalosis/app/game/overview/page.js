@@ -21,7 +21,6 @@ export default function Page() {
     const currentUrlProt = window.location.protocol;
     const currentUrlPort = window.location.port;
 
-
     const token = Cookies.get("token");
     if (!token) {
       router.replace("/login"); // If no token is found, redirect to login page
@@ -35,7 +34,6 @@ export default function Page() {
         });
         let body = await res.json();
         setData(body);
-        console.log(data);
         setLoading(false);
         if (!res.ok) throw new Error("Token validation failed");
       } catch (error) {
@@ -47,7 +45,6 @@ export default function Page() {
   }, [router]);
   if (isLoading) return <p>Loading...</p>;
   if (!data) return <p>No profile data</p>;
-  console.log(data.data);
   return (
     <div className="absolute pt-2 md:pt-8 flex h-full w-full gap-10 flex-row justify-between bg-[url('/backgrounds/bg.png')] p-6 md:p-11">
       <section className="flex flex-col gap-3">
@@ -66,7 +63,7 @@ export default function Page() {
               {data.data.username}
             </p>
             <p className="bg-slate-400/40 px-2 py-1 font-black text-white md:text-xl">
-              Beginner space Explorer lvl.5
+              Beginner space Explorer lvl.{data.data.level}
             </p>
             <div className="flex h-11 w-full flex-col items-center justify-center rounded-full bg-[url('/backgrounds/galaxy.png')]">
               <p className="self-center text-center font-bold">
