@@ -18,7 +18,7 @@ export default function Page() {
   Name = Name.slice(7)
 
   useEffect(() => {
-    router.reload()
+    // router.reload()
     console.log(Name);
     const token = Cookies.get("token");
     if (!token) {

@@ -43,24 +43,9 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex flex-row">
-          {choser == "0" ? (
-          <div className="flex flex-row gap-3">
-            <Link href="/signup">
-              <div className=" rounded-full bg-black px-2 py-1 text-white duration-500 hover:bg-slate-500 md:px-8 md:py-2">
-                Sign up
-              </div>
-            </Link>
-            <Link href="/login">
-              <div className=" rounded-full bg-white px-2 py-1 text-black duration-500 hover:bg-slate-500 hover:text-white md:px-8 md:py-2">
-                Log In
-              </div>
-            </Link>
-          </div>
-          ) : (
           <Link href="/account">
             <Image src="/defaultuser1.png" alt="test" width={40} height={40} />
           </Link>
-          )}
         </div>
         {/* <button
           id="dropdownDefaultButton"
