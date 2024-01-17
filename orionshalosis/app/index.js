@@ -158,7 +158,7 @@ io.on('connection', socket => {
       Object.entries(data).forEach(([key, value]) => {
         data[key] = value;
       });
-      fetch(`http://localhost:3000/api/gameResult`, {
+      fetch(`/api/gameResult`, {
         method: "POST",
         body: JSON.stringify(data),
       })

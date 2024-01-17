@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,68 +10,93 @@ export default function Home() {
   const [isLoading, setLoading] = useState(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-  async function getData(){
-    const res = await fetch(`http://localhost:3000/api/getStatsHome`, {
-      method: "GET"
-    });
-    let data = await res.json();
-    setData(data);
-    setLoading(false);
-  }
-  getData();
+    async function getData() {
+      const res = await fetch(`/api/getStatsHome`, {
+        method: "GET",
+      });
+      let data = await res.json();
+      setData(data);
+      setLoading(false);
+    }
+    getData();
   }, []);
   if (isLoading) return <p>Loading...</p>;
   if (!data) return <p>No profile data</p>;
-  const router = useRouter();
 
   return (
     <>
       <section className="flex h-[95vh] w-full flex-col items-center justify-end">
-        <iframe className="z-[1] h-full w-full object-cover" allow='allow-same-origin allow-forms allow-popups allow-scripts allow-presentation' src="https://www.youtube.com/embed/LwlacDELssg?si=E_t5BcT5tgxeeH3j&amp;controls=0&amp;autoplay=1" type="video/mp4"></iframe>
-        <Link href="/game/inscription" className="w-fit bg-main-blue mb-12 z-[10] absolute p-4 rounded-3xl text-lg md:text-xl lg:text-2xl font-bold text-white duration-500 hover:text-main-blue hover:bg-white">
-            Play for free
+        <video
+          autoPlay
+          muted
+          loop
+          disablePictureInPicture
+          className="top absolute z-[1] h-full w-full object-cover"
+        >
+          <source src="/mars.mp4" type="video/mp4" />
+        </video>{" "}
+        <Link
+          href="/game/inscription"
+          className="absolute z-[10] mb-12 w-fit rounded-3xl bg-main-blue p-4 text-lg font-bold text-white duration-500 hover:bg-white hover:text-main-blue md:text-xl lg:text-2xl"
+        >
+          Play for free
         </Link>
       </section>
-      <section className="bg-random-grey pb-88 px-8 md:px-84 flex flex-col ">
-        <p className="my-10 text-xl md:text-2xl lg:text-3xl font-black text-black">
+      <section className="flex flex-col bg-random-grey px-8 pb-88 md:px-84 ">
+        <p className="my-10 text-xl font-black text-black md:text-2xl lg:text-3xl">
           How does the game work ?
         </p>
         <div className="flex max-h-[400px] w-full flex-row justify-evenly gap-3">
-          <div className="aspect-square max-h-[400px] bg-[url('/backgrounds/mars.png')] bg-cover bg-no-repeat p-2 text-base md:text-xl lg:text-2xl font-medium text-white">
+          <div className="aspect-square max-h-[400px] bg-[url('/backgrounds/mars.png')] bg-cover bg-no-repeat p-2 text-base font-medium text-white md:text-xl lg:text-2xl">
             Capture planets to get resources
           </div>
-          <div className="aspect-square max-h-[400px] bg-black bg-cover bg-no-repeat p-2 text-base md:text-xl lg:text-2xl font-medium text-white">
+          <div className="aspect-square max-h-[400px] bg-black bg-cover bg-no-repeat p-2 text-base font-medium text-white md:text-xl lg:text-2xl">
             Use cards to damage your opponent
           </div>
-          <div className="aspect-square max-h-[400px] bg-[url('/Planetary_System.png')] bg-cover bg-no-repeat p-2 text-base md:text-xl lg:text-2xl font-medium text-white">
+          <div className="aspect-square max-h-[400px] bg-[url('/Planetary_System.png')] bg-cover bg-no-repeat p-2 text-base font-medium text-white md:text-xl lg:text-2xl">
             First to capture the whole planetary system wins !
           </div>
         </div>
       </section>
-      <section className="px-84 w-full bg-darkdark-blue pb-10">
-        <p className="pt-10 pb-5 text-xl md:text-2xl lg:text-3xl  font-black text-white">
+      <section className="w-full bg-darkdark-blue px-84 pb-10">
+        <p className="pb-5 pt-10 text-xl font-black text-white  md:text-2xl lg:text-3xl">
           Look at the data 👀
         </p>
-        <div className="flex w-full flex-row items-center justify-between mb-6">
+        <div className="mb-6 flex w-full flex-row items-center justify-between">
           {/* divs for graphs  */}
-          <div className="flex flex-col bg-slate-400/40 justify-center w-full">
-            <ul className="inline-flex py-2 px-6 justify-between">
+          <div className="flex w-full flex-col justify-center bg-slate-400/40">
+            <ul className="inline-flex justify-between px-6 py-2">
               <li className="flex flex-col">
-                <p className="font-black text-lg md:text-xl lg:text-2xl text-center">Games :</p>
-                <p className="font-black text-black text-4xl text-center">{data[0]}</p>
+                <p className="text-center text-lg font-black md:text-xl lg:text-2xl">
+                  Games :
+                </p>
+                <p className="text-center text-4xl font-black text-black">
+                  {data[0]}
+                </p>
               </li>
               <li className="flex flex-col">
-                <p className="font-black text-lg md:text-xl lg:text-2xl text-center">Players overall :</p>
-                <p className="font-black text-black text-4xl text-center">{data[1]}</p>
+                <p className="text-center text-lg font-black md:text-xl lg:text-2xl">
+                  Players overall :
+                </p>
+                <p className="text-center text-4xl font-black text-black">
+                  {data[1]}
+                </p>
               </li>
               <li className="flex flex-col">
-                <p className="font-black text-lg md:text-xl lg:text-2xl text-center">Active players :</p>
-                <p className="font-black text-black text-4xl text-center">{data[2]}</p>
+                <p className="text-center text-lg font-black md:text-xl lg:text-2xl">
+                  Active players :
+                </p>
+                <p className="text-center text-4xl font-black text-black">
+                  {data[2]}
+                </p>
               </li>
             </ul>
           </div>
         </div>
-        <Link href="/statistics" className="max-w-fit bg-main-blue p-2 text-lg md:text-xl lg:text-2xl font-bold text-white">
+        <Link
+          href="/statistics"
+          className="max-w-fit bg-main-blue p-2 text-lg font-bold text-white md:text-xl lg:text-2xl"
+        >
           See more data
         </Link>
       </section>

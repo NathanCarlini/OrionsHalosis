@@ -39,7 +39,7 @@ export default function Page() {
     };
     validateToken();
     const getData = async (id) => {
-      const resStats = await fetch(`http://localhost:3000/api/getStatsAcc`, {
+      const resStats = await fetch(`/api/getStatsAcc`, {
         method: "PUT",
         body: JSON.stringify({ iduser: id }),
       });

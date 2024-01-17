@@ -4,7 +4,6 @@ import { Doughnut  } from "react-chartjs-2";
 ChartJS.register(DoughnutController, ArcElement);
 
 function DougChart(data) {
-    console.log("data doug : ", data);
     return (
         <div>
             
