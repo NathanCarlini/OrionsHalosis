@@ -26,7 +26,7 @@ export async function POST(request) {
     data: dataFormat,
   });
   const token = jwt.sign({ userId: dataFormat.email }, process.env.JWT_SECRET, {
-    expiresIn: "60m",
+    expiresIn: "365d",
   });
 
 

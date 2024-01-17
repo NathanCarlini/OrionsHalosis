@@ -6,8 +6,7 @@ import { withRouter } from 'next/router'
 import Cookies from "js-cookie";
 
 export default function Page(props) {
-    const router = useRouter();
-    
+    const router = useRouter();    
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState(null);
     useEffect(() => {       
@@ -17,7 +16,6 @@ export default function Page(props) {
         return;
         }
         const validateToken = async () => {
-
 
         try {
             const res = await fetch(`/api/getData`, {

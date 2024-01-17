@@ -40,6 +40,7 @@
     "next": "13.5.4",
     "qs": "^6.11.2",
     "react": "^18",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "session": "^0.1.0",
     "socket.io": "^4.7.2",
