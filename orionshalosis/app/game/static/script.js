@@ -7,13 +7,17 @@ import io from "socket.io-client";
 
 function MyThree(props) {
     const scriptExecutedRef = useRef(false);
-    useEffect(() => {
+    useEffect(() => socketInitializer(), [])
+
+    const socketInitializer = async () => {
+      await fetch('/api/socket');
+      socket = io()
         if (!scriptExecutedRef.current) {
             scriptExecutedRef.current = true;
             let data = props.props;
             let room = data.gameId;
             let path = window.location.origin;
-            var socket = io(`https://localhost:3001`);
+
             socket.emit('roomInfo', room);
             let price = 0;
             let player1 = true;
@@ -844,7 +848,7 @@ function MyThree(props) {
             }
             init();
         }
-    }, []);
+    }
     return (
         <canvas id="container" className="hidden"></canvas>
     );
