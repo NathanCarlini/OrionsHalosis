@@ -1,15 +1,15 @@
-const https = require("https");
+const http = require("http");
 const { Server } = require("socket.io");
 const path = require("path");
 const cors = require("cors");
 const fs = require('fs');
 
-const httpsServer = https.createServer({
-  key: fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, 'ssl', 'cert.pem'))
+const httpServer = http.createServer({
+  // key: fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
+  // cert: fs.readFileSync(path.join(__dirname, 'ssl', 'cert.pem'))
 });
 // const windowPath = window.location.origin;
-const io = new Server(httpsServer, {
+const io = new Server(httpServer, {
   cors: {
     origin: `http://localhost:3000`,
     methods: ["GET", "POST"],
@@ -176,6 +176,6 @@ io.on('connection', socket => {
 
 
 const PORT = process.env.PORT || 3001;
-httpsServer.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`Socket.io server is running on port ${PORT}`);
 });

@@ -13,7 +13,7 @@ function MyThree(props) {
             let data = props.props;
             let room = data.gameId;
             let path = window.location.origin;
-            var socket = io(`https://localhost:3001`);
+            var socket = io(`http://localhost:3001`);
             socket.emit('roomInfo', room);
             let price = 0;
             let player1 = true;

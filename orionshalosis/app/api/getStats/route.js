@@ -28,12 +28,12 @@ export async function GET() {
     },[]);
     activePlayer = uniq.length;
 
-    // Filter the best players by level and then by experience
+    // Filter the best players by level and then by victory
     const bestPlayers = playerData.sort((a, b) => {
         if (a.level !== b.level) {
             return b.level - a.level; 
         } else {
-            return b.experience - a.experience;
+            return b.wongames - a.wongames;
         }
     });
 

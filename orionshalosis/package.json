@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "test": "concurrently --kill-others \"next dev\" \"node ./app/index.js\"",
+    "dev": "concurrently --kill-others \"next dev\" \"node ./app/index.js\"",
+    "test": "next dev",
     "build": "next build",
     "postinstall": "prisma generate",
     "start": "next start",
