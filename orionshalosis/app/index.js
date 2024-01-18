@@ -11,7 +11,7 @@ const httpsServer = https.createServer({
 // const windowPath = window.location.origin;
 const io = new Server(httpsServer, {
   cors: {
-    origin: `http://localhost:3000`,
+    origin: `https://planets.mmi-limoges.fr:3000`,
     methods: ["GET", "POST"],
     allowedHeaders: [""],
     credentials: true,

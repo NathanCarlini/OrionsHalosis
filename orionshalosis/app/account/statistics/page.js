@@ -96,7 +96,7 @@ export default function Page() {
         </ul>
       </div> */}
       <div className="h-full w-full bg-slate-400/40">
-        <div className="flex h-[40%] w-[70%] flex-row gap-2  ">
+        <div className="flex h-[40%] w-[70%] flex-row gap-12  ">
           <div className=" flex h-full max-w-[60%] flex-col ">
             <p className="mb-3 text-center text-lg font-black text-white md:text-xl lg:text-2xl">
               {" "}
