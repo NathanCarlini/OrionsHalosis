@@ -51,8 +51,8 @@ export default function Page() {
       <div className="flex w-fit flex-row justify-between">
         <div className="flex flex-row gap-5">
           <div className="relative aspect-square h-28 w-40 bg-slate-400/40 md:h-40">
-            <Image
-              src="/Ornn_0.jpg"
+          <Image
+              src={"/" + data.data.avatar}
               layout="fill"
               objectFit="cover"
               alt="user avatar"

@@ -3,6 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
 export default function Page() {
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
@@ -12,6 +14,7 @@ export default function Page() {
     password: "",
   });
 
+  
   const handleInput = (e) => {
     const fieldName = e.target.id;
     const fieldValue = e.target.value;
@@ -41,6 +44,7 @@ export default function Page() {
       let { token } = await res.json();
       console.log(token);
       document.cookie = `token=${token}; path=/`;
+      // await sleep(3000);
       setLoading(false);
     } catch (error) {
       console.error("Error:", error);
@@ -71,28 +75,21 @@ export default function Page() {
           ></input>
           <p className="text-blue-700">You forgot your password ?</p>
         </div>
-        <div className="mb-6 mt-2 flex grow flex-col justify-evenly">
+        <div className="mb-6 mt-2 flex grow flex-col justify-evenly gap-3">
           <p
-            onClick={() => {
+            onClick={async () => {
               submitForm();
-              // function loaderRouter() {
-              //   if (isLoading == true) {
-              //     window.setTimeout(loaderRouter, 800);
-              //     console.log("boucle");
-              //   } else {
-              //     router.push("/");
-              //   }
-              // }
-              // loaderRouter();
+              await sleep(3000);
+              router.push("/")
             }}
-            className="w-full max-w-[200px] self-center rounded-full bg-black px-12 py-2 text-center text-xl font-black capitalize text-white duration-300 hover:bg-slate-500"
+            className="w-full max-w-[200px] cursor-pointer self-center rounded-full bg-black px-12 py-2 text-center text-xl font-black capitalize text-white duration-300 hover:bg-slate-500"
           >
             Login
           </p>
           <p>Create an account : </p>
           <Link
             href="/signup"
-            className="w-full max-w-[175px] self-center rounded-full bg-black px-12 py-2 text-center text-xl font-black capitalize text-white duration-300 hover:bg-slate-500"
+            className="w-full max-w-[175px] cursor-pointer self-center rounded-full bg-black px-12 py-2 text-center text-xl font-black capitalize text-white duration-300 hover:bg-slate-500"
           >
             Sign Up
           </Link>

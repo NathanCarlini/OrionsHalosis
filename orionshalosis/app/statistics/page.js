@@ -10,7 +10,7 @@ export default function Home() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
   async function getData(){
-    const res = await fetch(`http://localhost:3000/api/getStats`, {
+    const res = await fetch(`/api/getStats`, {
       method: "GET"
     });
     let data = await res.json();

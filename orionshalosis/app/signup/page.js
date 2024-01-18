@@ -8,7 +8,6 @@ export default function Page() {
   const date = new Date();
   let verif;
   const router = useRouter();
-  
   const [isLoading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
@@ -18,12 +17,32 @@ export default function Page() {
     creationdate: date,
     experience: 0,
   });
-  
-  const handleInput = (e) => {
-    if ((e.target.id == "rePassword") != formData.password) {
-      verif = "invalidpassword";
-      console.log(verif);
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  function checkPwd (){
+    let p = document.getElementById("rePassword")
+    let d = document.getElementById("sendBtn")
+    if ((p.value) != formData.password
+    ) {
+      p.classList.add("bg-red-400")
+      d.onclick = async () => {
+        //submitForm();
+        //await sleep(3000);
+        //router.push("/");
+      }
+    } else if ((p.value) == formData.password
+    
+    ) {
+      p.classList.remove("bg-red-400")
+      d.onclick = async () => {
+        submitForm();
+        await sleep(3000);
+        router.push("/");
+      }
     }
+  };
+
+  const handleInput = (e) => {
     if (e.target.id != "rePassword") {
       const fieldName = e.target.id;
       const fieldValue = e.target.value;
@@ -34,23 +53,14 @@ export default function Page() {
       Object.entries(formData).forEach(([key, value]) => {
         data[key] = value;
       });
+    } else if (e.target.id == "rePassword"){
+      checkPwd()
     }
   };
+
   
-  function checkPwd() {
-    const rePwd = document.getElementById("rePassword");
-    console.log(rePwd.value);
-    console.log(formData.password);
-    if (rePwd.value != formData.password) {
-      document.getElementById("sendBtn").disabled = true;
-    }
-  }
   // test
   async function submitForm() {
-    const currentUrl = window.location.hostname;
-    const currentUrlProt = window.location.protocol;
-    const currentUrlPort = window.location.port;
-    console.log(currentUrl);
     setLoading(true);
     Object.entries(formData).forEach(([key, value]) => {
       data[key] = value;
@@ -127,7 +137,8 @@ export default function Page() {
           </label>
           <input
             onChange={handleInput}
-            onBlur={checkPwd}
+            // onBlur={checkPwd}
+            // onFocus={checkPwd}
             type="password"
             name="rePassword"
             id="rePassword"
@@ -139,19 +150,13 @@ export default function Page() {
           {verif ? <p>{verif}</p> : ""}
           <p
             id="sendBtn"
-            onClick={() => {
-              submitForm();
-              function loaderRouter() {
-                if (isLoading == true) {
-                  window.setTimeout(loaderRouter, 200);
-                  console.log("boucle");
-                } else {
-                  router.push("/");
-                }
-              }
-              loaderRouter();
-            }}
-            className="w-full max-w-[200px] self-center rounded-full bg-black px-12 py-5 text-center text-xl font-black capitalize text-white duration-300 hover:bg-slate-500"
+            // onClick={
+            //   async () => {
+            //   submitForm();
+            //   await sleep(3000);
+            //   router.push("/");
+            // }}
+            className="w-full max-w-[200px] cursor-pointer self-center rounded-full bg-black px-12 py-5 text-center text-xl font-black capitalize text-white duration-300 hover:bg-slate-500"
           >
             Sign Up
           </p>

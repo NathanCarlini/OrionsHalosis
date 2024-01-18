@@ -13,10 +13,20 @@ export default function page() {
           answers about life and everything (okay maybe not this)
         </p>
       </div>
-      <div>
+      <div className="flex flex-row justify-evenly gap-8">
+        <Link href="/forum/meme">
+          <button className="rounded-xl bg-marine-blue px-12 py-3 text-3xl text-white hover:bg-marine-blue-sec">
+            Memes and stuff
+          </button>
+        </Link>
         <Link href="/forum/Q&A">
           <button className="rounded-xl bg-marine-blue px-12 py-3 text-3xl text-white hover:bg-marine-blue-sec">
-            Access
+            Q&A Forum
+          </button>
+        </Link>
+        <Link href="/forum/bugcatchers">
+          <button className="rounded-xl bg-marine-blue px-12 py-3 text-3xl text-white hover:bg-marine-blue-sec">
+            Bugcatchers Forum
           </button>
         </Link>
       </div>
