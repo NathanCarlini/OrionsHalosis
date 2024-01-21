@@ -6,6 +6,8 @@ import Image from "next/image";
 export default function Page() {
   var datoi = {};
   const router = useRouter();
+  let Name
+  const [topic, setTopic] = useState(null)
   const [isLoading, setLoading] = useState(true);
   const [postData, setPostData] = useState(null);
   const [dataa, setData] = useState(null);
@@ -14,12 +16,11 @@ export default function Page() {
     content: "",
     userId: "",
   });
-  let Name = window.location.pathname
-  Name = Name.slice(7)
-
+  
   useEffect(() => {
+    Name = window.location.pathname
+    Name = Name.slice(7)
     // router.reload()
-    console.log(Name);
     const token = Cookies.get("token");
     if (!token) {
       router.replace("/login"); // If no token is found, redirect to login page
@@ -42,6 +43,21 @@ export default function Page() {
     };
     validateToken();
 
+    const getPostTopic = async () => {
+      try {
+        const post = await fetch(`/api/getTopic`, {
+          method: "PUT",
+          body: JSON.stringify({ topicname: Name }),
+        });
+        let topicI = await post.json();
+        setTopic(topicI.idtopic)
+
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getPostTopic()
+
     const getPost = async () => {
       try {
         const post = await fetch(`/api/forum/`, {
@@ -57,20 +73,24 @@ export default function Page() {
         router.replace("/login"); // Redirect to login if token validation fails
       }
     };
+    console.log(topic);
     getPost();
   }, [router]);
 
   const handleInput = (e) => {
     const fieldName = e.target.id;
     const fieldValue = e.target.value;
+    console.log(topic);
     setFormData((prevState) => ({
       ...prevState,
       [fieldName]: fieldValue,
       userId: dataa.data.iduser,
+      topic: topic
     }));
     Object.entries(formData).forEach(([key, value]) => {
       datoi[key] = value;
     });
+    console.log(formData);
     // setFormData({ userId: dataa.data.iduser });
   };
   async function submitForm() {

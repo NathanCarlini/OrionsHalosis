@@ -8,19 +8,16 @@ const prisma = new PrismaClient();
 export async function PUT(request) {
   try {
     const body = await request.json();
-    console.log("body : ", body.topicname);
     const topic = await prisma.topic.findFirst({
       where: {
         topicname: body.topicname,
       },
     });
-    console.log("topic : ", topic);
     const posts = await prisma.post.findMany({
       where: {
         topic: topic.idtopic,
       },
     });
-    console.log("posts : ", posts);
     return NextResponse.json(posts);
   } catch (error) {
     return NextResponse.json(
@@ -34,7 +31,6 @@ export async function PUT(request) {
 
 export async function POST(request) {
   const body = await request.json();
-  console.log(body);
   try {
     await prisma.post.create({
       data: {
