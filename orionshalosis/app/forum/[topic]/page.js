@@ -6,8 +6,8 @@ import Image from "next/image";
 export default function Page() {
   var datoi = {};
   const router = useRouter();
-  let Name
-  const [topic, setTopic] = useState(null)
+  let Name;
+  const [topic, setTopic] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [postData, setPostData] = useState(null);
   const [dataa, setData] = useState(null);
@@ -15,11 +15,13 @@ export default function Page() {
     title: "",
     content: "",
     userId: "",
+    topic: "",
   });
-  
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
   useEffect(() => {
-    Name = window.location.pathname
-    Name = Name.slice(7)
+    Name = window.location.pathname;
+    Name = Name.slice(7);
     // router.reload()
     const token = Cookies.get("token");
     if (!token) {
@@ -50,13 +52,12 @@ export default function Page() {
           body: JSON.stringify({ topicname: Name }),
         });
         let topicI = await post.json();
-        setTopic(topicI.idtopic)
-
+        setTopic(topicI.idtopic);
       } catch (error) {
         console.error(error);
       }
-    }
-    getPostTopic()
+    };
+    getPostTopic();
 
     const getPost = async () => {
       try {
@@ -85,7 +86,7 @@ export default function Page() {
       ...prevState,
       [fieldName]: fieldValue,
       userId: dataa.data.iduser,
-      topic: topic
+      topic: topic,
     }));
     Object.entries(formData).forEach(([key, value]) => {
       datoi[key] = value;
@@ -105,6 +106,7 @@ export default function Page() {
         },
         body: JSON.stringify(formData),
       });
+      return res;
     } catch (error) {
       console.error("Error:", error);
     }
@@ -141,13 +143,20 @@ export default function Page() {
           </div>
         </div>
         <div className="flex flex-col gap-4 rounded-xl bg-gray-500 bg-opacity-50 p-3">
-          {postData ? postData.map((post) => (
-            <div key={post.idpost} className="hover: flex flex-col border border-gray-700 p-3">
-              <p className="text-xl font-bold text-white">{post.title}</p>
-              <p className="text-lg text-white">{post.content}</p>
-              <p className="text-sm text-white">{post.datepost}</p>
-            </div>
-          )) : <p className="text-white text-xl">No Posts Yet on this category</p>}
+          {postData ? (
+            postData.map((post) => (
+              <div
+                key={post.idpost}
+                className="hover: flex flex-col border border-gray-700 p-3"
+              >
+                <p className="text-xl font-bold text-white">{post.title}</p>
+                <p className="text-lg text-white">{post.content}</p>
+                <p className="text-sm text-white">{post.datepost}</p>
+              </div>
+            ))
+          ) : (
+            <p className="text-xl text-white">No Posts Yet on this category</p>
+          )}
         </div>
         <div className="flex w-full flex-col gap-8 rounded-xl bg-gray-500 bg-opacity-50 p-3">
           <p className="text-center text-2xl font-bold text-white">
@@ -173,14 +182,16 @@ export default function Page() {
               placeholder="Content"
               className="h-32 w-full rounded-xl  bg-gray-500 bg-opacity-30"
             />
-            <p
+            <button
               className="cursor-pointer"
-              onClick={() => {
+              onClick={async () => {
                 submitForm();
+                await sleep(2000);
+                router.push(`/forum/${Name}`);
               }}
             >
               Add Post
-            </p>
+            </button>
           </form>
         </div>
       </div>

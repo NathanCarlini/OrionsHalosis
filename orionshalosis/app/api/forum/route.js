@@ -38,6 +38,7 @@ export async function POST(request) {
         content: body.content,
         author: body.userId,
         datepost: new Date(),
+        topic: body.topic
       },
     });
     return NextResponse.json("200");
