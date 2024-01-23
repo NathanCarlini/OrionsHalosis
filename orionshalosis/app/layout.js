@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="flex min-h-screen flex-col">
+      <body className="flex min-h-screen flex-col bg-marine-blue">
         <Header vis="1" className="sticky top-0" />
         <main className="relative h-full w-full grow">{children}</main>
       </body>

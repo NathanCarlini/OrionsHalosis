@@ -17,7 +17,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="z-[2] flex w-full flex-row items-center justify-between bg-marine-blue px-1 py-[0.5rem] text-sm font-bold md:px-2 md:text-lg lg:px-4 lg:text-xl">
+      <header className="z-[2] flex w-full flex-row items-center justify-between px-1 py-[0.5rem] text-sm font-bold md:px-2 md:text-lg lg:px-4 lg:text-xl">
         <div className="flex flex-row gap-2 md:gap-10 lg:gap-16">
         <Link className="flex items-center gap-3 text-center" href="/">
           <Image

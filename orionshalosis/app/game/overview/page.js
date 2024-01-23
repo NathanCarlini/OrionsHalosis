@@ -83,7 +83,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="flex h-full w-full flex-col items-center gap-2  bg-slate-400/40">
+        <div className="flex h-full w-full flex-col items-center gap-2  rounded-2xl bg-slate-400/40">
           <div className=" flex h-full max-w-[60%] flex-col ">
             <p className="mb-3 text-center text-lg font-black text-white md:text-xl lg:text-2xl">
               {" "}
@@ -93,7 +93,7 @@ export default function Page() {
             <DougChart data={[stats[1], stats[0] - stats[1]]} />
           </div>
           <div className="flex h-full flex-col gap-2 ">
-            <div className="flex grow flex-col mt-5">
+            <div className="mt-5 flex grow flex-col">
               <p className="text-center text-lg font-bold md:text-xl lg:text-2xl">
                 Games Played :
               </p>
@@ -112,9 +112,9 @@ export default function Page() {
           </div>
         </div>
       </section>
-      <section className="h-full w-[60%] bg-slate-400/40 p-3 md:p-4">
+      <section className="h-full w-[60%] rounded-2xl bg-slate-400/40 p-3 md:p-4">
         <h1 className="mb-4 text-center text-xl font-bold text-white md:text-2xl">
-          List of servers open
+          Create a Game
         </h1>
         <div className="flex flex-col gap-5">
           <div className="flex flex-row items-center justify-between">
@@ -125,41 +125,38 @@ export default function Page() {
               alt="image map server"
             ></Image>
             <a className="h-fit bg-gray-600 px-3 py-2 font-bold">
-              Name of the server
-            </a>
-            <a className="h-fit bg-gray-600 px-3 py-2 font-bold">
               Difficulty 1
             </a>
-            <a className="h-fit cursor-pointer bg-main-blue px-3 py-2 font-bold">
-              Join as spectator
-            </a>
             <a className="h-fit bg-tropical-green px-3 py-2 font-bold">1/2</a>
+            <p
+              onClick={async () => {
+                const gameId = uuid4();
+                data.data.gameId = gameId;
+                await fetch(`/api/gameResult`, {
+                  method: "POST",
+                  body: JSON.stringify({
+                    player1: data.data.iduser,
+                    player2: data.data.iduser,
+                    victory: null,
+                    gamedate: new Date(),
+                    player1resources: 0,
+                    player2resources: 0,
+                    player1planets: 1,
+                    player2planets: 1,
+                    gameidentificator: gameId,
+                  }),
+                });
+                router.push(`/game/${gameId}`);
+              }}
+              className="h-fit w-fit bg-main-blue px-3 py-2 font-bold"
+            >
+              Create a server
+            </p>
           </div>
         </div>
-        <p
-          onClick={async () => {
-            const gameId = uuid4();
-            data.data.gameId = gameId;
-            await fetch(`/api/gameResult`, {
-              method: "POST",
-              body: JSON.stringify({
-                player1: data.data.iduser,
-                player2: data.data.iduser,
-                victory: null,
-                gamedate: new Date(),
-                player1resources: 0,
-                player2resources: 0,
-                player1planets: 1,
-                player2planets: 1,
-                gameidentificator: gameId,
-              }),
-            });
-            router.push(`/game/${gameId}`);
-          }}
-          className="h-fit w-fit bg-main-blue px-3 py-2 font-bold"
-        >
-          Create a server
-        </p>
+        <h1 className="mb-4 mt-10 text-center text-xl font-bold text-white md:text-2xl">
+          Open Servers
+        </h1>
       </section>
     </div>
   );

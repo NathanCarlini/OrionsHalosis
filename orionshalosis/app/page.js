@@ -36,8 +36,8 @@ export default function Home() {
           <source src="/mars.mp4" type="video/mp4" />
         </video>{" "}
         <Link
-          href="/game/inscription"
-          className="absolute z-[10] mb-12 w-fit rounded-3xl bg-main-blue p-4 text-lg font-bold text-white duration-500 hover:bg-white hover:text-main-blue md:text-xl lg:text-2xl"
+          href="/register"
+          className="absolute z-[10] mb-12 w-fit rounded-3xl bg-marine-blue p-4 text-lg font-bold text-white duration-500 hover:bg-white hover:text-marine-blue md:text-xl lg:text-2xl"
         >
           Play for free
         </Link>
@@ -47,13 +47,13 @@ export default function Home() {
           How does the game work ?
         </p>
         <div className="flex max-h-[400px] w-full flex-row justify-evenly gap-3">
-          <div className="aspect-square max-h-[400px] bg-[url('/backgrounds/mars.png')] bg-cover bg-no-repeat p-2 text-base font-medium text-white md:text-xl lg:text-2xl">
+          <div className="aspect-square max-h-[400px] bg-[url('/backgrounds/mars.png')] bg-cover bg-no-repeat p-2 text-base font-medium text-white md:text-xl lg:text-2xl ">
             Capture planets to get resources
           </div>
-          <div className="aspect-square max-h-[400px] bg-black bg-cover bg-no-repeat p-2 text-base font-medium text-white md:text-xl lg:text-2xl">
+          <div className="aspect-square max-h-[400px] bg-[url('/backgrounds/galaxy.png')] bg-cover bg-no-repeat p-2 text-base font-medium text-white md:text-xl lg:text-2xl ">
             Use cards to damage your opponent
           </div>
-          <div className="aspect-square max-h-[400px] bg-[url('/Planetary_System.png')] bg-cover bg-no-repeat p-2 text-base font-medium text-white md:text-xl lg:text-2xl">
+          <div className="aspect-square max-h-[400px] bg-[url('/Planetary_System.png')] bg-cover bg-no-repeat p-2 text-base font-medium text-white md:text-xl lg:text-2xl ">
             First to capture the whole planetary system wins !
           </div>
         </div>
@@ -64,7 +64,7 @@ export default function Home() {
         </p>
         <div className="mb-6 flex w-full flex-row items-center justify-between">
           {/* divs for graphs  */}
-          <div className="flex w-full flex-col justify-center bg-slate-400/40">
+          <div className="flex w-full flex-col justify-center bg-slate-400/40 rounded-lg">
             <ul className="inline-flex justify-between px-6 py-2">
               <li className="flex flex-col">
                 <p className="text-center text-lg font-black md:text-xl lg:text-2xl">
@@ -95,7 +95,7 @@ export default function Home() {
         </div>
         <Link
           href="/statistics"
-          className="max-w-fit bg-main-blue p-2 text-lg font-bold text-white md:text-xl lg:text-2xl"
+          className="max-w-fit bg-marine-blue p-2 text-lg font-bold text-white md:text-xl lg:text-2xl rounded-xl duration-500 hover:bg-white hover:text-marine-blue"
         >
           See more data
         </Link>

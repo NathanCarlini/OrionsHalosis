@@ -2,17 +2,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import DougChart from "@/app/components/DougChart";
 
-// import useFetch from "./useFetch.js";
 function SaveInventory() {}
 function logOut() {
   document.cookie = "token= ; path=/";
 }
 export default async function Page() {
   const router = useRouter();
+  const [stats, setStats] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   useEffect(() => {
@@ -30,13 +30,25 @@ export default async function Page() {
           },
         );
         let body = await res.json();
+        let id = body.data.iduser;
+        getData(id);
+
         setData(body);
-        setLoading(false);
         if (!res.ok) throw new Error("Token validation failed");
       } catch (error) {
         console.error(error);
         router.replace("/login"); // Redirect to login if token validation fails
       }
+    };
+    const getData = async (id) => {
+      const resStats = await fetch(`/api/getStatsAcc`, {
+        method: "PUT",
+        body: JSON.stringify({ iduser: id }),
+      });
+      let dataStats = await resStats.json();
+      setStats(dataStats);
+      // WR = ((stats[1]/stats[0])*100).toFixed(1)
+      setLoading(false);
     };
     validateToken();
   }, [router]);
@@ -45,8 +57,8 @@ export default async function Page() {
   console.log(data.data);
   return (
     <div className="absolute flex h-full w-full flex-col bg-[url('/backgrounds/bg.png')] p-6 md:p-11">
-      <section className="flex flex-row justify-between">
-        <div className="flex flex-row gap-3">
+      <section className="flex flex-row justify-between ">
+        <div className="flex flex-row gap-3 ">
           <div className="relative aspect-square h-28 w-40 bg-slate-400/40 md:h-40">
             <Image
               src={"/" + data.data.avatar}
@@ -89,50 +101,34 @@ export default async function Page() {
         </div>
       </section>
       <section className="mb-2 mt-6 flex flex-row justify-evenly gap-2 md:mb-6 md:mt-12 md:gap-11">
-        <div className="flex h-full w-full flex-col bg-slate-400/40 px-6 py-4 md:px-16 md:py-10 ">
-          <p className="text-center text-xl font-bold md:text-3xl">
-            Your infos
-          </p>
-          <form className="flex flex-col">
-            <label className="mb-3 mt-3" htmlFor="username">
-              Username :
-            </label>
-            <input
-              className="w-full bg-white text-black md:h-10"
-              id="username"
-              name="username"
-              type="text"
-              placeholder={data.data.username}
-            ></input>
-            <label className="mb-3 mt-5" htmlFor="">
-              Your e-mail :
-            </label>
-            <input
-              className="w-full bg-white text-black md:h-10"
-              id="email"
-              name="email"
-              type="email"
-              placeholder={data.data.email}
-            ></input>
-            <label className="mb-3 mt-5" htmlFor="">
-              Current password :
-            </label>
-            <input
-              className="w-full bg-white text-black md:h-10"
-              id="password"
-              name="password"
-              type="password"
-            ></input>
-            <label className="mb-3 mt-5" htmlFor="">
-              New password :
-            </label>
-            <input
-              className="mb-8 w-full bg-white text-black md:h-10"
-              id=""
-              name=""
-              type="text"
-            ></input>
-          </form>
+        <div className="flex h-full w-full flex-col bg-slate-400/40 rounded-2xl px-6 py-4 md:px-10 md:py-10 ">
+        <div className="flex h-[40%] w-[70%] flex-row gap-12  ">
+          <div className=" flex h-full w-fit flex-col ">
+            <p className="mb-3 text-center text-lg font-black text-white md:text-xl lg:text-2xl">
+              {" "}
+              WinRate
+            </p>
+            <DougChart data={[stats[1], stats[0] - stats[1]]} />
+          </div>
+          <div className="flex h-full flex-col gap-2 ">
+            <div className="flex grow flex-col ">
+              <p className="text-center text-lg font-black md:text-xl lg:text-2xl">
+                Your level :
+              </p>
+              <p className="text-center text-4xl font-black text-black">
+                {stats[2]}
+              </p>
+            </div>
+            <div className="grow ">
+              <p className="text-center text-lg font-black md:text-xl lg:text-2xl">
+                Planets under your control :
+              </p>
+              <p className="text-center text-4xl font-black text-black">
+                {stats[3]}
+              </p>
+            </div>
+          </div>
+        </div>
         </div>
         <div className="flex h-full w-full flex-col bg-slate-400/40 px-6 py-4 md:px-16 md:py-10">
           <p className="text-center text-xl font-bold md:text-3xl">Inventory</p>

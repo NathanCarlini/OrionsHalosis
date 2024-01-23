@@ -15,17 +15,17 @@ export default function page() {
       </div>
       <div className="flex flex-row justify-evenly gap-8">
         <Link href="/forum/meme">
-          <button className="rounded-xl bg-marine-blue px-12 py-3 text-3xl text-white hover:bg-marine-blue-sec">
+          <button className="rounded-xl bg-marine-blue px-12 py-3 text-3xl text-white duration-500 hover:bg-marine-blue-sec">
             Memes and stuff
           </button>
         </Link>
         <Link href="/forum/Q&A">
-          <button className="rounded-xl bg-marine-blue px-12 py-3 text-3xl text-white hover:bg-marine-blue-sec">
+          <button className="rounded-xl bg-marine-blue px-12 py-3 text-3xl text-white duration-500 hover:bg-marine-blue-sec">
             Q&A Forum
           </button>
         </Link>
         <Link href="/forum/bugcatchers">
-          <button className="rounded-xl bg-marine-blue px-12 py-3 text-3xl text-white hover:bg-marine-blue-sec">
+          <button className="rounded-xl bg-marine-blue px-12 py-3 text-3xl text-white duration-500 hover:bg-marine-blue-sec">
             Bugcatchers Forum
           </button>
         </Link>
